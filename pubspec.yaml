@@ -28,17 +28,51 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  adaptive_theme: ^3.3.0
+  another_flutter_splash_screen: ^1.2.0
+  auto_route: ^7.8.2
+  auto_route_generator: ^7.3.1
+  cached_network_image: ^3.3.0
+  cupertino_icons: ^1.0.2
+  dio: ^5.3.3
+  easy_localization: ^3.0.2
+  file_picker: ^6.0.0
+ 
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  flutter_bounceable: ^1.1.0
+  flutter_chat_ui: ^1.6.9
+  flutter_hooks: ^0.20.3
+  flutter_map: ^5.0.0
+  flutter_multi_formatter: ^2.11.14
+  flutter_native_splash: ^2.3.5
+  flutter_screenutil: ^5.8.4
+  flutter_svg: ^2.0.7
+  flutter_verification_code: ^1.1.7
+  freezed: ^2.4.2
+  freezed_annotation: ^2.4.1
+  hooks_riverpod: ^2.3.8
+  image_picker: ^1.0.4
+  intl: ^0.18.1
+  json_serializable: ^6.7.1
+  latlong2: ^0.9.0
+  left_scroll_actions: ^2.1.2
+  liquid_progress_indicator_v2: ^0.5.0
+  mask_text_input_formatter: ^2.5.0
+  open_filex: ^4.3.4
+  riverpod: ^2.3.7
+  riverpod_lint: ^2.0.1
+  shared_preferences: ^2.2.1
+  tuple: ^2.0.2
+  url_launcher: ^6.1.14
+  validatorless: ^1.2.3
+  webview_flutter: ^4.4.1
+  webview_flutter_android: ^3.12.0
+  webview_flutter_wkwebview: ^3.9.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  build_runner: ^2.4.6
+  flutter_launcher_icons: "^0.13.1"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -46,10 +80,16 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+
+
+# flutter_native_splash-development.yaml
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
