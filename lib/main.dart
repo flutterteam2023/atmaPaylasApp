@@ -25,7 +25,12 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Atma Paylaş',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                scrolledUnderElevation: 0,
+              ),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple,),
             useMaterial3: true,
             
           ),
