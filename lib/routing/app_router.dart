@@ -40,7 +40,7 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: Register2Route.page,
-          initial: true,
+          initial: false,
         ),
         AutoRoute(
           page: RegisterCitySelectRoute.page,
@@ -68,8 +68,9 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: NegativeNotificationRoute.page,
-          initial: false,
+          initial: true,
         ),
+       
         
       ];
 }
