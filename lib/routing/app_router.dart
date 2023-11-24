@@ -7,8 +7,14 @@ import 'package:atma_paylas_app/features/Authentication/presentation/pages/regis
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verif_detail_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/welcome_view.dart';
+import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_info_add_view.dart';
+import 'package:atma_paylas_app/features/CreateAds/presentation/pages/create_ads_view.dart';
+import 'package:atma_paylas_app/features/CreateAds/presentation/pages/transition_category_view.dart';
+import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
+import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 
 
 import '../features/Authentication/presentation/pages/negative_notification_view.dart';
@@ -68,8 +74,29 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: NegativeNotificationRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: HomeRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: ShareAdsRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: CreateAdsRoute.page,
           initial: true,
         ),
+
+        AutoRoute(
+          page: TransitionCategoryRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: AdsInfoAddRoute.page,
+          initial: false
+        )
        
         
       ];
