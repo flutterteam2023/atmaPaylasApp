@@ -15,10 +15,22 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AdsDetailRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AdsDetailView(),
+      );
+    },
     AdsInfoAddRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const AdsInfoAddView(),
+      );
+    },
+    AdsSuccessCreateRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AdsSuccessCreateView(),
       );
     },
     CreateAdsRoute.name: (routeData) {
@@ -125,6 +137,20 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [AdsDetailView]
+class AdsDetailRoute extends PageRouteInfo<void> {
+  const AdsDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          AdsDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AdsDetailRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [AdsInfoAddView]
 class AdsInfoAddRoute extends PageRouteInfo<void> {
   const AdsInfoAddRoute({List<PageRouteInfo>? children})
@@ -134,6 +160,20 @@ class AdsInfoAddRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdsInfoAddRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AdsSuccessCreateView]
+class AdsSuccessCreateRoute extends PageRouteInfo<void> {
+  const AdsSuccessCreateRoute({List<PageRouteInfo>? children})
+      : super(
+          AdsSuccessCreateRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AdsSuccessCreateRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -6,21 +6,22 @@ import 'package:flutter_svg/svg.dart';
 
 class CustomFilledButton extends StatelessWidget {
   const CustomFilledButton({
-    super.key, required this.text, required this.onTap, this.iconPath,
+    super.key, required this.text, required this.onTap, this.iconPath,this.color
   });
   final String text;
   final void Function() onTap;
   final String? iconPath;
-
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+
     return Bounceable(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.r),
-          color: const Color(AppColors.primaryColor)
+          color: color??const Color(AppColors.primaryColor)
         ),
         child: Padding(
           padding:  EdgeInsets.symmetric(vertical: 14.h),
@@ -34,7 +35,7 @@ class CustomFilledButton extends StatelessWidget {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Rubik',
-                color: const Color(AppColors.other)
+                color:color==null? const Color(AppColors.other):const Color(AppColors.primaryColor)
               ),
               )
             ],
