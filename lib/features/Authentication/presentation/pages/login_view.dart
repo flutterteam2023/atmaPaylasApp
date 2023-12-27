@@ -1,8 +1,10 @@
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/auth_textfield.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button_berke.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
@@ -129,7 +131,21 @@ class LoginView extends HookWidget {
                         .then((value) {
                       value.fold(
                         (l) => Fluttertoast.showToast(msg: l),
-                        (r) => context.pushRoute(const NavigatorRoute()),
+                        (r) async {
+                          await UserRepository().getMyUserProfile().then((val) {
+                            val.fold(
+                              (l) {
+                                Log.error(l);
+                                UserRepository.user = null;
+                              },
+                              (r) {
+                                Log.success(r.runtimeType);
+                                UserRepository.user = r;
+                                context.pushRoute(const NavigatorRoute());
+                              },
+                            );
+                          });
+                        },
                       );
                     });
                   },

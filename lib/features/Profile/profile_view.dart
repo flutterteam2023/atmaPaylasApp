@@ -1,11 +1,14 @@
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/gen/assets.gen.dart';
+import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -17,6 +20,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey[200],
         appBar: AppBar(
           backgroundColor: const Color(AppColors.primaryColor),
           centerTitle: false,
@@ -69,7 +73,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "0",
+                          "${UserRepository.user?.nonActiveTradableListingsCount}",
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -94,7 +98,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "20",
+                          "${UserRepository.user?.nonActiveFreeListingsCount}",
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -119,7 +123,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "3",
+                          "${UserRepository.user?.activeListingsCount}",
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -295,7 +299,22 @@ class ProfileView extends StatelessWidget {
               ),
               const Gap(9 * 3),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await EasyLoading.show(
+                    indicator: const CircularProgressIndicator.adaptive(),
+                    status: "Çıkış Yapılıyor...",
+                  );
+                  await AuthRepository().logout().then((value) async {
+                    await value.fold(
+                      (l) async => await Fluttertoast.showToast(msg: "Çıkış Yapılamadı"),
+                      (r) async {
+                        UserRepository.user = null;
+                        EasyLoading.dismiss();
+                        await context.pushRoute(const WelcomeRoute());
+                      },
+                    );
+                  });
+                },
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: MediaQuery.of(context).size.width,

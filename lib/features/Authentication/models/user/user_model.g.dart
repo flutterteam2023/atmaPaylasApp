@@ -16,6 +16,10 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       surname: json['surname'] as String,
       userLocatedCity: json['user_located_city'] as String,
       userLocatedDistrict: json['user_located_district'] as String,
+      activeListingsCount: json['active_listings_count'] as int,
+      nonActiveFreeListingsCount: json['non_active_free_listings_count'] as int,
+      nonActiveTradableListingsCount:
+          json['non_active_tradable_listings_count'] as int,
       image: json['image'] as String?,
     );
 
@@ -29,5 +33,9 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'surname': instance.surname,
       'user_located_city': instance.userLocatedCity,
       'user_located_district': instance.userLocatedDistrict,
+      'active_listings_count': instance.activeListingsCount,
+      'non_active_free_listings_count': instance.nonActiveFreeListingsCount,
+      'non_active_tradable_listings_count':
+          instance.nonActiveTradableListingsCount,
       'image': instance.image,
     };

@@ -9,6 +9,9 @@
     "surname": "Uğur",
     "user_located_city": "İstanbul",
     "user_located_district": "Büyükçekmece",
+    "active_listings_count": 2,
+	"non_active_free_listings_count": 1,
+	"non_active_tradable_listings_count": 0,
     "image": null
 },
 {
@@ -20,7 +23,24 @@
     "surname": "Uğur",
     "user_located_city": "İstanbul",
     "user_located_district": "Büyükçekmece",
+    "active_listings_count": 2,
+	"non_active_free_listings_count": 1,
+	"non_active_tradable_listings_count": 0,
     "image": "null"
+},
+{
+    "user_id": 2,
+	"username": "admin",
+	"email": "admin@hotmail.com",
+	"phone_number": "",
+	"name": "",
+	"surname": "",
+	"user_located_city": "Adana",
+	"user_located_district": "",
+	"active_listings_count": 2,
+	"non_active_free_listings_count": 1,
+	"non_active_tradable_listings_count": 0,
+	"image": null
 }
 
 ]

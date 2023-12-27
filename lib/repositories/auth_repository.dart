@@ -19,7 +19,7 @@ class AuthRepository extends ApiService {
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
     return resp.fold(
-      (l) => ApiResponse.left("error"),
+      (l) => ApiResponse.left(l),
       (r) async {
         //access token
         const storage = FlutterSecureStorage();

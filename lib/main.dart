@@ -4,6 +4,7 @@ import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,6 +14,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PackageInfo.fromPlatform();
+  EasyLoading.instance
+    ..userInteractions = false
+    ..dismissOnTap = false;
   /*  const storage = FlutterSecureStorage();
   await storage.write(key: "access_token", value: "value"); */
   await UserRepository().getMyUserProfile().then((value) {
@@ -56,13 +60,13 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         final inputDecorationThemeBorderRadius = BorderRadius.circular(8.r);
         return MaterialApp.router(
-          builder: FToastBuilder(),
+          builder: EasyLoading.init(builder: FToastBuilder()),
           routerConfig: route.config(),
           routerDelegate: null,
           debugShowCheckedModeBanner: false,
           title: 'Atma Paylaş',
           theme: ThemeData(
-            scaffoldBackgroundColor: Colors.grey[200],
+            scaffoldBackgroundColor: Colors.white,
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: const Color(0x99EFF0F8),

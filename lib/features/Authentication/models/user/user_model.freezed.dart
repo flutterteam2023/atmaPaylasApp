@@ -36,6 +36,12 @@ mixin _$UserModel {
   String get userLocatedCity => throw _privateConstructorUsedError;
   @JsonKey(name: "user_located_district")
   String get userLocatedDistrict => throw _privateConstructorUsedError;
+  @JsonKey(name: "active_listings_count")
+  int get activeListingsCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "non_active_free_listings_count")
+  int get nonActiveFreeListingsCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "non_active_tradable_listings_count")
+  int get nonActiveTradableListingsCount => throw _privateConstructorUsedError;
   @JsonKey(name: "image")
   String? get image => throw _privateConstructorUsedError;
 
@@ -59,6 +65,11 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: "surname") String surname,
       @JsonKey(name: "user_located_city") String userLocatedCity,
       @JsonKey(name: "user_located_district") String userLocatedDistrict,
+      @JsonKey(name: "active_listings_count") int activeListingsCount,
+      @JsonKey(name: "non_active_free_listings_count")
+      int nonActiveFreeListingsCount,
+      @JsonKey(name: "non_active_tradable_listings_count")
+      int nonActiveTradableListingsCount,
       @JsonKey(name: "image") String? image});
 }
 
@@ -83,6 +94,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? surname = null,
     Object? userLocatedCity = null,
     Object? userLocatedDistrict = null,
+    Object? activeListingsCount = null,
+    Object? nonActiveFreeListingsCount = null,
+    Object? nonActiveTradableListingsCount = null,
     Object? image = freezed,
   }) {
     return _then(_value.copyWith(
@@ -118,6 +132,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.userLocatedDistrict
           : userLocatedDistrict // ignore: cast_nullable_to_non_nullable
               as String,
+      activeListingsCount: null == activeListingsCount
+          ? _value.activeListingsCount
+          : activeListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      nonActiveFreeListingsCount: null == nonActiveFreeListingsCount
+          ? _value.nonActiveFreeListingsCount
+          : nonActiveFreeListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      nonActiveTradableListingsCount: null == nonActiveTradableListingsCount
+          ? _value.nonActiveTradableListingsCount
+          : nonActiveTradableListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -143,6 +169,11 @@ abstract class _$$UserModelImplCopyWith<$Res>
       @JsonKey(name: "surname") String surname,
       @JsonKey(name: "user_located_city") String userLocatedCity,
       @JsonKey(name: "user_located_district") String userLocatedDistrict,
+      @JsonKey(name: "active_listings_count") int activeListingsCount,
+      @JsonKey(name: "non_active_free_listings_count")
+      int nonActiveFreeListingsCount,
+      @JsonKey(name: "non_active_tradable_listings_count")
+      int nonActiveTradableListingsCount,
       @JsonKey(name: "image") String? image});
 }
 
@@ -165,6 +196,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? surname = null,
     Object? userLocatedCity = null,
     Object? userLocatedDistrict = null,
+    Object? activeListingsCount = null,
+    Object? nonActiveFreeListingsCount = null,
+    Object? nonActiveTradableListingsCount = null,
     Object? image = freezed,
   }) {
     return _then(_$UserModelImpl(
@@ -200,6 +234,18 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.userLocatedDistrict
           : userLocatedDistrict // ignore: cast_nullable_to_non_nullable
               as String,
+      activeListingsCount: null == activeListingsCount
+          ? _value.activeListingsCount
+          : activeListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      nonActiveFreeListingsCount: null == nonActiveFreeListingsCount
+          ? _value.nonActiveFreeListingsCount
+          : nonActiveFreeListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      nonActiveTradableListingsCount: null == nonActiveTradableListingsCount
+          ? _value.nonActiveTradableListingsCount
+          : nonActiveTradableListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -220,6 +266,11 @@ class _$UserModelImpl implements _UserModel {
       @JsonKey(name: "surname") required this.surname,
       @JsonKey(name: "user_located_city") required this.userLocatedCity,
       @JsonKey(name: "user_located_district") required this.userLocatedDistrict,
+      @JsonKey(name: "active_listings_count") required this.activeListingsCount,
+      @JsonKey(name: "non_active_free_listings_count")
+      required this.nonActiveFreeListingsCount,
+      @JsonKey(name: "non_active_tradable_listings_count")
+      required this.nonActiveTradableListingsCount,
       @JsonKey(name: "image") required this.image});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -250,12 +301,21 @@ class _$UserModelImpl implements _UserModel {
   @JsonKey(name: "user_located_district")
   final String userLocatedDistrict;
   @override
+  @JsonKey(name: "active_listings_count")
+  final int activeListingsCount;
+  @override
+  @JsonKey(name: "non_active_free_listings_count")
+  final int nonActiveFreeListingsCount;
+  @override
+  @JsonKey(name: "non_active_tradable_listings_count")
+  final int nonActiveTradableListingsCount;
+  @override
   @JsonKey(name: "image")
   final String? image;
 
   @override
   String toString() {
-    return 'UserModel(userId: $userId, username: $username, email: $email, phoneNumber: $phoneNumber, name: $name, surname: $surname, userLocatedCity: $userLocatedCity, userLocatedDistrict: $userLocatedDistrict, image: $image)';
+    return 'UserModel(userId: $userId, username: $username, email: $email, phoneNumber: $phoneNumber, name: $name, surname: $surname, userLocatedCity: $userLocatedCity, userLocatedDistrict: $userLocatedDistrict, activeListingsCount: $activeListingsCount, nonActiveFreeListingsCount: $nonActiveFreeListingsCount, nonActiveTradableListingsCount: $nonActiveTradableListingsCount, image: $image)';
   }
 
   @override
@@ -275,13 +335,35 @@ class _$UserModelImpl implements _UserModel {
                 other.userLocatedCity == userLocatedCity) &&
             (identical(other.userLocatedDistrict, userLocatedDistrict) ||
                 other.userLocatedDistrict == userLocatedDistrict) &&
+            (identical(other.activeListingsCount, activeListingsCount) ||
+                other.activeListingsCount == activeListingsCount) &&
+            (identical(other.nonActiveFreeListingsCount,
+                    nonActiveFreeListingsCount) ||
+                other.nonActiveFreeListingsCount ==
+                    nonActiveFreeListingsCount) &&
+            (identical(other.nonActiveTradableListingsCount,
+                    nonActiveTradableListingsCount) ||
+                other.nonActiveTradableListingsCount ==
+                    nonActiveTradableListingsCount) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, username, email,
-      phoneNumber, name, surname, userLocatedCity, userLocatedDistrict, image);
+  int get hashCode => Object.hash(
+      runtimeType,
+      userId,
+      username,
+      email,
+      phoneNumber,
+      name,
+      surname,
+      userLocatedCity,
+      userLocatedDistrict,
+      activeListingsCount,
+      nonActiveFreeListingsCount,
+      nonActiveTradableListingsCount,
+      image);
 
   @JsonKey(ignore: true)
   @override
@@ -308,6 +390,12 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: "user_located_city") required final String userLocatedCity,
       @JsonKey(name: "user_located_district")
       required final String userLocatedDistrict,
+      @JsonKey(name: "active_listings_count")
+      required final int activeListingsCount,
+      @JsonKey(name: "non_active_free_listings_count")
+      required final int nonActiveFreeListingsCount,
+      @JsonKey(name: "non_active_tradable_listings_count")
+      required final int nonActiveTradableListingsCount,
       @JsonKey(name: "image") required final String? image}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -337,6 +425,15 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: "user_located_district")
   String get userLocatedDistrict;
+  @override
+  @JsonKey(name: "active_listings_count")
+  int get activeListingsCount;
+  @override
+  @JsonKey(name: "non_active_free_listings_count")
+  int get nonActiveFreeListingsCount;
+  @override
+  @JsonKey(name: "non_active_tradable_listings_count")
+  int get nonActiveTradableListingsCount;
   @override
   @JsonKey(name: "image")
   String? get image;

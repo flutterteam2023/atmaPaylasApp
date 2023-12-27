@@ -16,6 +16,9 @@ class UserModel with _$UserModel {
     @JsonKey(name: "surname") required String surname,
     @JsonKey(name: "user_located_city") required String userLocatedCity,
     @JsonKey(name: "user_located_district") required String userLocatedDistrict,
+    @JsonKey(name: "active_listings_count") required int activeListingsCount,
+    @JsonKey(name: "non_active_free_listings_count") required int nonActiveFreeListingsCount,
+    @JsonKey(name: "non_active_tradable_listings_count") required int nonActiveTradableListingsCount,
     @JsonKey(name: "image") required String? image,
   }) = _UserModel;
 
