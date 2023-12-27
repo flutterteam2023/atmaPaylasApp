@@ -70,4 +70,31 @@ class AuthRepository extends ApiService {
       return value;
     });
   }
+
+  Future<ApiResponse<String>> logout() async {
+    const storage = FlutterSecureStorage();
+    final refreshToken = await storage.read(key: "refresh_token");
+    return await requestMethod<String>(
+      path: '/logout/',
+      method: HttpMethod.post,
+      requestModel: null,
+      responseConverter: (response) => response.data["success"],
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': refreshToken,
+      },
+    ).then((value) {
+      value.fold(
+        (l) => null,
+        (r) {
+          const storage = FlutterSecureStorage();
+          storage.delete(key: "access_token");
+          storage.delete(key: "refresh_token");
+        },
+      );
+
+      return value;
+    });
+  }
 }

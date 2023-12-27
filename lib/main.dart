@@ -8,9 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PackageInfo.fromPlatform();
   /*  const storage = FlutterSecureStorage();
   await storage.write(key: "access_token", value: "value"); */
   await UserRepository().getMyUserProfile().then((value) {
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Atma Paylaş',
           theme: ThemeData(
-            scaffoldBackgroundColor: Colors.grey[100],
+            scaffoldBackgroundColor: Colors.grey[200],
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: const Color(0x99EFF0F8),
