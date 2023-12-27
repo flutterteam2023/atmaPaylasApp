@@ -1,3 +1,4 @@
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/forgot_password_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/login_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register1_view.dart';
@@ -13,11 +14,15 @@ import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_succes
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/create_ads_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/transition_category_view.dart';
 import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
+import 'package:atma_paylas_app/features/Messages/messages_view.dart';
+import 'package:atma_paylas_app/features/MyAdds/my_adds_view.dart';
+import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
+import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
 
 import '../features/Authentication/presentation/pages/negative_notification_view.dart';
 import '../features/Authentication/presentation/pages/register2_view.dart';
@@ -40,7 +45,19 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: WelcomeRoute.page,
-          initial: false,
+          initial: true,
+          guards: [
+            AutoRouteGuard.simple(
+              (resolver, router) {
+                Log.info(UserRepository.user, path: "AppRouter");
+                if (UserRepository.user != null) {
+                  router.push(const NavigatorRoute());
+                } else {
+                  resolver.next();
+                }
+              },
+            )
+          ],
         ),
         AutoRoute(
           page: Register1Route.page,
@@ -79,6 +96,32 @@ class AppRouter extends _$AppRouter {
           initial: false,
         ),
         AutoRoute(
+          page: NavigatorRoute.page,
+          initial: false,
+          children: [
+            AutoRoute(
+              page: HomeRoute.page,
+              initial: true,
+            ),
+            AutoRoute(
+              page: MessagesRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: CreateAdsRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: MyAddsRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: ProfileRoute.page,
+              initial: false,
+            ),
+          ],
+        ),
+        AutoRoute(
           page: HomeRoute.page,
           initial: false,
         ),
@@ -90,25 +133,9 @@ class AppRouter extends _$AppRouter {
           page: CreateAdsRoute.page,
           initial: false,
         ),
-
-        AutoRoute(
-          page: TransitionCategoryRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsInfoAddRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsSuccessCreateRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsDetailRoute.page,
-          initial: true
-        ),
-
-       
-        
+        AutoRoute(page: TransitionCategoryRoute.page, initial: false),
+        AutoRoute(page: AdsInfoAddRoute.page, initial: false),
+        AutoRoute(page: AdsSuccessCreateRoute.page, initial: false),
+        AutoRoute(page: AdsDetailRoute.page, initial: false),
       ];
 }

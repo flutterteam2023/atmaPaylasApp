@@ -1,0 +1,26 @@
+
+
+[{
+    "user_id": 3,
+    "username": "iberkeugur",
+    "email": "",
+    "phone_number": "905372505893",
+    "name": "Berke",
+    "surname": "Uğur",
+    "user_located_city": "İstanbul",
+    "user_located_district": "Büyükçekmece",
+    "image": null
+},
+{
+    "user_id": 3,
+    "username": "iberkeugur",
+    "email": "",
+    "phone_number": "905372505893",
+    "name": "Berke",
+    "surname": "Uğur",
+    "user_located_city": "İstanbul",
+    "user_located_district": "Büyükçekmece",
+    "image": "null"
+}
+
+]

@@ -57,10 +57,34 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginView(),
       );
     },
+    MessagesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MessagesView(),
+      );
+    },
+    MyAddsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MyAddsView(),
+      );
+    },
+    NavigatorRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NavigatorView(),
+      );
+    },
     NegativeNotificationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const NegativeNotificationView(),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileView(),
       );
     },
     Register1Route.name: (routeData) {
@@ -235,6 +259,48 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MessagesView]
+class MessagesRoute extends PageRouteInfo<void> {
+  const MessagesRoute({List<PageRouteInfo>? children})
+      : super(
+          MessagesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MessagesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MyAddsView]
+class MyAddsRoute extends PageRouteInfo<void> {
+  const MyAddsRoute({List<PageRouteInfo>? children})
+      : super(
+          MyAddsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MyAddsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NavigatorView]
+class NavigatorRoute extends PageRouteInfo<void> {
+  const NavigatorRoute({List<PageRouteInfo>? children})
+      : super(
+          NavigatorRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NavigatorRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [NegativeNotificationView]
 class NegativeNotificationRoute extends PageRouteInfo<void> {
   const NegativeNotificationRoute({List<PageRouteInfo>? children})
@@ -244,6 +310,20 @@ class NegativeNotificationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NegativeNotificationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileView]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
