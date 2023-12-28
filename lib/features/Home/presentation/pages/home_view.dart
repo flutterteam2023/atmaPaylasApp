@@ -1,22 +1,23 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
-import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:get_it/get_it.dart';
 
 @RoutePage()
-class HomeView extends ConsumerWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -33,7 +34,7 @@ class HomeView extends ConsumerWidget {
         actions: [
           InkWell(
             onTap: () async {
-              await UserRepository().getMyUserProfile().then((value) {
+              await GetIt.instance<UserRepository>().getMyUserProfile().then((value) {
                 value.fold(
                   (l) => Log.error(l, path: "home"),
                   (r) => Log.success(r, path: "home"),
@@ -112,36 +113,47 @@ class HomeView extends ConsumerWidget {
             ),
             SizedBox(
               height: 32.h,
-              child: ListView.builder(
-                padding: EdgeInsets.only(left: 8.w, right: 16),
-                scrollDirection: Axis.horizontal,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(left: 8.w),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100.r),
-                        color: Colors.white,
-                        border: Border.all(
-                          color: const Color(AppColors.primaryColor),
-                          width: 2,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                        child: Center(
-                          child: Text(
-                            'Hepsi',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Rubik',
-                              color: const Color(AppColors.primaryColor),
+              child: FutureBuilder(
+                future: GetIt.instance<CategoryRepository>().getMainCategories(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return const CircularProgressIndicator.adaptive();
+                  }
+                  return snapshot.data!.fold(
+                    (l) => const SizedBox(),
+                    (r) => ListView.builder(
+                      padding: EdgeInsets.only(left: 8.w, right: 16),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: r.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(left: 8.w),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100.r),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: const Color(AppColors.primaryColor),
+                                width: 2,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                              child: Center(
+                                child: Text(
+                                  r[index].name,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Rubik',
+                                    color: const Color(AppColors.primaryColor),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   );
                 },
