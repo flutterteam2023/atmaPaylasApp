@@ -158,6 +158,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/share-social-outline.svg
   String get shareSocialOutline => 'assets/svg/share-social-outline.svg';
 
+  /// File path: assets/svg/share.svg
+  String get share => 'assets/svg/share.svg';
+
   /// File path: assets/svg/tick-circle.svg
   String get tickCircle => 'assets/svg/tick-circle.svg';
 
@@ -188,6 +191,7 @@ class $AssetsSvgGen {
         searchPrimary,
         send,
         shareSocialOutline,
+        share,
         tickCircle,
         trashOutline
       ];
