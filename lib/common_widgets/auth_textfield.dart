@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthTextfield extends StatelessWidget {
   const AuthTextfield({
-    super.key, required this.text, required this.textInputType, required this.hintText, this.obscureText, this.isPassword, this.maxLine, this.minLine,
+    super.key, required this.text,  this.textInputType, required this.hintText, this.obscureText, this.isPassword, this.maxLine, this.minLine,
   });
   final String text ;
-  final TextInputType textInputType;
+  final TextInputType? textInputType;
   final String hintText;
   final bool? obscureText;
   final bool? isPassword ;

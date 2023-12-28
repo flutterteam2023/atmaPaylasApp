@@ -27,6 +27,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AdsInfoAddView(),
       );
     },
+    AdsStateRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AdsStateView(),
+      );
+    },
     AdsSuccessCreateRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -39,10 +45,28 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CreateAdsView(),
       );
     },
+    FeedBackApprovalRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FeedBackApprovalView(),
+      );
+    },
     ForgotPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ForgotPasswordView(),
+      );
+    },
+    GiveFeedBackRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const GiveFeedBackView(),
+      );
+    },
+    HelpRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HelpView(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -55,6 +79,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginView(),
+      );
+    },
+    MyAdsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MyAdsView(),
       );
     },
     NegativeNotificationRoute.name: (routeData) {
@@ -105,16 +135,34 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SecturityVerificationView(),
       );
     },
+    SettingsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SettingsView(),
+      );
+    },
     ShareAdsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ShareAdsView(),
       );
     },
+    SharedProductsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SharedProductsView(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashView(),
+      );
+    },
+    SwapProductsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SwapProductsView(),
       );
     },
     TransitionCategoryRoute.name: (routeData) {
@@ -125,6 +173,18 @@ abstract class _$AppRouter extends RootStackRouter {
           args.title,
           key: args.key,
         ),
+      );
+    },
+    UserAdsDetailRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const UserAdsDetailView(),
+      );
+    },
+    UserAgreementRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const UserAgreementView(),
       );
     },
     WelcomeRoute.name: (routeData) {
@@ -165,6 +225,20 @@ class AdsInfoAddRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AdsStateView]
+class AdsStateRoute extends PageRouteInfo<void> {
+  const AdsStateRoute({List<PageRouteInfo>? children})
+      : super(
+          AdsStateRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AdsStateRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [AdsSuccessCreateView]
 class AdsSuccessCreateRoute extends PageRouteInfo<void> {
   const AdsSuccessCreateRoute({List<PageRouteInfo>? children})
@@ -193,6 +267,20 @@ class CreateAdsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FeedBackApprovalView]
+class FeedBackApprovalRoute extends PageRouteInfo<void> {
+  const FeedBackApprovalRoute({List<PageRouteInfo>? children})
+      : super(
+          FeedBackApprovalRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FeedBackApprovalRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [ForgotPasswordView]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})
@@ -202,6 +290,34 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ForgotPasswordRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [GiveFeedBackView]
+class GiveFeedBackRoute extends PageRouteInfo<void> {
+  const GiveFeedBackRoute({List<PageRouteInfo>? children})
+      : super(
+          GiveFeedBackRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'GiveFeedBackRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HelpView]
+class HelpRoute extends PageRouteInfo<void> {
+  const HelpRoute({List<PageRouteInfo>? children})
+      : super(
+          HelpRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HelpRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -230,6 +346,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MyAdsView]
+class MyAdsRoute extends PageRouteInfo<void> {
+  const MyAdsRoute({List<PageRouteInfo>? children})
+      : super(
+          MyAdsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MyAdsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -347,6 +477,20 @@ class SecturityVerificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SettingsView]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [ShareAdsView]
 class ShareAdsRoute extends PageRouteInfo<void> {
   const ShareAdsRoute({List<PageRouteInfo>? children})
@@ -361,6 +505,20 @@ class ShareAdsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SharedProductsView]
+class SharedProductsRoute extends PageRouteInfo<void> {
+  const SharedProductsRoute({List<PageRouteInfo>? children})
+      : super(
+          SharedProductsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SharedProductsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SplashView]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
@@ -370,6 +528,20 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SwapProductsView]
+class SwapProductsRoute extends PageRouteInfo<void> {
+  const SwapProductsRoute({List<PageRouteInfo>? children})
+      : super(
+          SwapProductsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SwapProductsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -411,6 +583,34 @@ class TransitionCategoryRouteArgs {
   String toString() {
     return 'TransitionCategoryRouteArgs{title: $title, key: $key}';
   }
+}
+
+/// generated route for
+/// [UserAdsDetailView]
+class UserAdsDetailRoute extends PageRouteInfo<void> {
+  const UserAdsDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          UserAdsDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UserAdsDetailRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UserAgreementView]
+class UserAgreementRoute extends PageRouteInfo<void> {
+  const UserAgreementRoute({List<PageRouteInfo>? children})
+      : super(
+          UserAgreementRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UserAgreementRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

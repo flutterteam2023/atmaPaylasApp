@@ -1,27 +1,23 @@
 import 'package:atma_paylas_app/common_widgets/share_ads_card.dart';
-import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 @RoutePage()
-class ShareAdsView extends ConsumerWidget {
-  const ShareAdsView({super.key});
+class SwapProductsView extends ConsumerWidget {
+  const SwapProductsView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          'En Çok Ziyaret Edilenler',
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-            fontFamily: 'Rubik',
-            color: Colors.black,
-          ),
+        title: Text('Takaslanacak Ürünlerim',
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          color: Colors.black,
+          fontFamily: 'Rubik'
+        ),
         ),
       ),
       body: Padding(
@@ -33,9 +29,9 @@ class ShareAdsView extends ConsumerWidget {
             itemCount: 2,
             itemBuilder: (context, index) {
               return ShareAdsCard(
-                type: 'Ücretsiz',
-                textColor: const Color(0xff05473A),
-                color: const Color(0xff6DCEBB),
+                type: 'Takaslıyor',
+                textColor:  Colors.white,
+                color: const Color(0xffFD8435),
                 onTap: () {
                   
                 },
@@ -50,4 +46,3 @@ class ShareAdsView extends ConsumerWidget {
     );
   }
 }
-

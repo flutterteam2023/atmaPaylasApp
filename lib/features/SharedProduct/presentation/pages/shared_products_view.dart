@@ -1,27 +1,23 @@
 import 'package:atma_paylas_app/common_widgets/share_ads_card.dart';
-import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 @RoutePage()
-class ShareAdsView extends ConsumerWidget {
-  const ShareAdsView({super.key});
+class SharedProductsView extends ConsumerWidget {
+  const SharedProductsView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          'En Çok Ziyaret Edilenler',
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-            fontFamily: 'Rubik',
-            color: Colors.black,
-          ),
+        title: Text('Paylaşılacak Ürünlerim',
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          color: Colors.black,
+          fontFamily: 'Rubik'
+        ),
         ),
       ),
       body: Padding(
@@ -50,4 +46,3 @@ class ShareAdsView extends ConsumerWidget {
     );
   }
 }
-

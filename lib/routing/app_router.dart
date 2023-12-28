@@ -12,15 +12,25 @@ import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_info_a
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_success_create_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/create_ads_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/transition_category_view.dart';
+import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/feedback_approval_view.dart';
+import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/give_feedback_view.dart';
+import 'package:atma_paylas_app/features/Help/presentation/pages/help_view.dart';
 import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
+import 'package:atma_paylas_app/features/MyAds/presentation/ads_state_view.dart';
+import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
+import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
+import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
+import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
+import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 
 import '../features/Authentication/presentation/pages/negative_notification_view.dart';
 import '../features/Authentication/presentation/pages/register2_view.dart';
+import '../features/MyAds/presentation/user_ads_detail_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -105,8 +115,50 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: AdsDetailRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: MyAdsRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: UserAdsDetailRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: AdsStateRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: SharedProductsRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: SwapProductsRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: UserAgreementRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: FeedBackApprovalRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: GiveFeedBackRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: HelpRoute.page,
+          initial: false
+        ),
+        AutoRoute(
+          page: SettingsRoute.page,
           initial: true
         ),
+
+
 
        
         

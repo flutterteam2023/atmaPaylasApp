@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShareAdsCard extends StatelessWidget {
   const ShareAdsCard({
-    super.key, required this.title, required this.address, required this.date, required this.userName, required this.image, this.onTap, required this.color, required this.textColor,
+    super.key, required this.title, required this.address, required this.date, required this.userName, required this.image, this.onTap, required this.color, required this.textColor, required this.type,
   });
   final String title ;
   final String address;
@@ -15,6 +15,7 @@ class ShareAdsCard extends StatelessWidget {
   final void Function()? onTap;
   final Color color ;
   final Color textColor ;
+  final String type;
   
 
   @override
@@ -51,7 +52,7 @@ class ShareAdsCard extends StatelessWidget {
                     child: Padding(
                       padding:  EdgeInsets.only(left: 8.w,right: 8.w,top: 4.h,bottom: 4.h),
                       child: Center(
-                        child: Text('Ücretsiz',
+                        child: Text(type,
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,

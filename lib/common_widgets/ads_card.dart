@@ -6,7 +6,17 @@ import 'package:flutter_svg/svg.dart';
 
 class AdsCard extends StatelessWidget {
   const AdsCard({
-    super.key, required this.adsType, required this.address, required this.date, required this.userName, this.saveButtonOnTap, this.seeAdsDetailOnTap, required this.productImage, required this.productName, required this.colorType, required this.textColor,
+    super.key,
+    required this.adsType,
+    required this.address,
+    required this.date,
+    required this.userName,
+    this.saveButtonOnTap,
+    this.seeAdsDetailOnTap,
+    required this.productImage,
+    required this.productName,
+    required this.colorType,
+    required this.textColor,required this.isSaved, required this.width,
   });
   final String adsType;
   final String address;
@@ -18,13 +28,13 @@ class AdsCard extends StatelessWidget {
   final String productImage;
   final Color colorType;
   final Color textColor;
-
-
+  final bool isSaved;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(left: 16.w),
+      padding: EdgeInsets.only(left: 16.w),
       child: Container(
         width: 265.w,
         decoration: BoxDecoration(
@@ -37,13 +47,13 @@ class AdsCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(5.r), topRight: Radius.circular(5.r)),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(5.r), topRight: Radius.circular(5.r)),
                     child: Image.asset(
                       productImage,
+                      width:width,
                       fit: BoxFit.fill,
                     )),
-                Positioned(
+            isSaved==true?    Positioned(
                   top: 17.h,
                   right: 15.w,
                   child: Bounceable(
@@ -58,7 +68,7 @@ class AdsCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ):SizedBox.shrink(),
                 Positioned(
                   left: 15.w,
                   top: 17.h,
@@ -76,7 +86,7 @@ class AdsCard extends StatelessWidget {
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Rubik',
-                            color: textColor ,
+                            color: textColor,
                           ),
                         ),
                       ),
@@ -106,7 +116,7 @@ class AdsCard extends StatelessWidget {
                     height: 4.h,
                   ),
                   Text(
-                   productName,
+                    productName,
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
@@ -129,7 +139,7 @@ class AdsCard extends StatelessWidget {
                   SizedBox(
                     height: 24.h,
                   ),
-                 Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -141,17 +151,20 @@ class AdsCard extends StatelessWidget {
                           color: const Color(0xff858585),
                         ),
                       ),
-                      Bounceable(
-                        onTap: seeAdsDetailOnTap,
-                        child: Container(
-                          height: 32.r,
-                          width: 32.r,
-                          decoration: const BoxDecoration(
-                            color: Color(AppColors.primaryColor),
-                            shape: BoxShape.circle
-                          ),
-                          child: Center(
-                            child: Icon(Icons.arrow_forward,color: Colors.white,size: 20.r,)
+                      Padding(
+                        padding:  EdgeInsets.only(bottom: 17.h,right: 17.w),
+                        child: Bounceable(
+                          onTap: seeAdsDetailOnTap,
+                          child: Container(
+                            height: 32.r,
+                            width: 32.r,
+                            decoration: const BoxDecoration(color: Color(AppColors.primaryColor), shape: BoxShape.circle),
+                            child: Center(
+                                child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 20.r,
+                            )),
                           ),
                         ),
                       )
@@ -160,7 +173,6 @@ class AdsCard extends StatelessWidget {
                 ],
               ),
             ),
-             
           ],
         ),
       ),

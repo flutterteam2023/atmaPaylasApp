@@ -3,7 +3,6 @@ import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -170,13 +169,15 @@ class HomeView extends ConsumerWidget {
               ),
             ),
             SizedBox(
-              height: 274.h,
+              height: 300.h,
               child: ListView.builder(
                 padding: EdgeInsets.only(right: 16.w),
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   return  AdsCard(
+                    width:  265.w,
+                    isSaved: true,
                     colorType: const Color(0xff6DCEBB),
                     textColor: Color(0xff05473A),
 
@@ -204,13 +205,15 @@ class HomeView extends ConsumerWidget {
               height: 16.h,
             ),
             SizedBox(
-              height: 274.h,
+              height: 300.h,
               child: ListView.builder(
                 padding: EdgeInsets.only(right: 16.w),
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   return  AdsCard(
+                    width:  265.w,
+                    isSaved: true,
                     colorType: const Color(0xff6DCEBB),
                     textColor: Color(0xff05473A),
 
@@ -239,13 +242,15 @@ class HomeView extends ConsumerWidget {
               height: 16.h,
             ),
             SizedBox(
-              height: 274.h,
+              height: 300.h,
               child: ListView.builder(
                 padding: EdgeInsets.only(right: 16.w),
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   return  AdsCard(
+                    width:  265.w,
+                    isSaved: true,
                     textColor: Color(0xff05473A),
                     colorType: const Color(0xff6DCEBB),
                     adsType: 'Ücretsiz Paylaşıyor',
@@ -273,13 +278,15 @@ class HomeView extends ConsumerWidget {
               height: 16.h,
             ),
             SizedBox(
-              height: 274.h,
+              height: 300.h,
               child: ListView.builder(
                 padding: EdgeInsets.only(right: 16.w),
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   return  AdsCard(
+                    width:  265.w,
+                    isSaved: true,
                     textColor: Colors.white,
                     colorType: const Color(0xffFD8435),
                     adsType: 'Takaslıyor',
@@ -296,6 +303,9 @@ class HomeView extends ConsumerWidget {
                 },
               ),
             ),
+            SizedBox(
+              height: 40.h,
+            ),  
             
           ],
         ),
