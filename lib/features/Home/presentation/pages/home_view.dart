@@ -1,10 +1,14 @@
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -15,7 +19,8 @@ class HomeView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
+        automaticallyImplyLeading: false,
+        title: const Text(
           'Atma Paylaş Takasla',
           style: TextStyle(
             fontSize: 16,
@@ -25,10 +30,20 @@ class HomeView extends ConsumerWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.w),
-            child: SvgPicture.asset(
-              'assets/svg/notifications-outline.svg',
+          InkWell(
+            onTap: () async {
+              await UserRepository().getMyUserProfile().then((value) {
+                value.fold(
+                  (l) => Log.error(l, path: "home"),
+                  (r) => Log.success(r, path: "home"),
+                );
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 16.w),
+              child: SvgPicture.asset(
+                'assets/svg/notifications-outline.svg',
+              ),
             ),
           )
         ],
@@ -158,9 +173,7 @@ class HomeView extends ConsumerWidget {
                   ),
                   AdsTitle(
                     title: 'Yakındaki İlanlar',
-                    onTap: () {
-                      
-                    },
+                    onTap: () {},
                   ),
                   SizedBox(
                     height: 16.h,
@@ -175,21 +188,19 @@ class HomeView extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
-                  return  AdsCard(
-                    width:  265.w,
+                  return AdsCard(
                     isSaved: true,
+                    width: 265.w,
                     colorType: const Color(0xff6DCEBB),
-                    textColor: Color(0xff05473A),
-
+                    textColor: const Color(0xff05473A),
                     adsType: 'Ücretsiz Paylaşıyor',
                     address: 'Kadıköy / İstanbul',
-                    productName:  'Casio Saat',
+                    productName: 'Casio Saat',
                     date: '21/10/2023',
                     userName: 'user123456',
                     productImage: 'assets/images/clockdemo.png',
-                    saveButtonOnTap: (){},
-                    seeAdsDetailOnTap: (){
-                    },
+                    saveButtonOnTap: () {},
+                    seeAdsDetailOnTap: () {},
                   );
                 },
               ),
@@ -199,7 +210,7 @@ class HomeView extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: AdsTitle(title: 'En Çok Ziyaret Edilenler', onTap: (){}),
+              child: AdsTitle(title: 'En Çok Ziyaret Edilenler', onTap: () {}),
             ),
             SizedBox(
               height: 16.h,
@@ -215,28 +226,25 @@ class HomeView extends ConsumerWidget {
                     width:  265.w,
                     isSaved: true,
                     colorType: const Color(0xff6DCEBB),
-                    textColor: Color(0xff05473A),
-
+                    textColor: const Color(0xff05473A),
                     adsType: 'Ücretsiz Paylaşıyor',
                     address: 'Kadıköy / İstanbul',
-                    productName:  'Lorem Bisiklet',
+                    productName: 'Lorem Bisiklet',
                     date: '21/10/2023',
                     userName: 'user123456',
                     productImage: 'assets/images/bicycle.png',
-                    saveButtonOnTap: (){},
-                    seeAdsDetailOnTap: (){
-                    },
-
+                    saveButtonOnTap: () {},
+                    seeAdsDetailOnTap: () {},
                   );
                 },
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: 24.h,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: AdsTitle(title: 'Paylaşılan Ürünler', onTap: (){}),
+              child: AdsTitle(title: 'Paylaşılan Ürünler', onTap: () {}),
             ),
             SizedBox(
               height: 16.h,
@@ -255,14 +263,12 @@ class HomeView extends ConsumerWidget {
                     colorType: const Color(0xff6DCEBB),
                     adsType: 'Ücretsiz Paylaşıyor',
                     address: 'Kadıköy / İstanbul',
-                    productName:  'Lorem Bisiklet',
+                    productName: 'Lorem Bisiklet',
                     date: '21/10/2023',
                     userName: 'user123456',
                     productImage: 'assets/images/bicycle.png',
-                    saveButtonOnTap: (){},
-                    seeAdsDetailOnTap: (){
-                    },
-
+                    saveButtonOnTap: () {},
+                    seeAdsDetailOnTap: () {},
                   );
                 },
               ),
@@ -272,7 +278,7 @@ class HomeView extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: AdsTitle(title: 'Paylaşılan Ürünler', onTap: (){}),
+              child: AdsTitle(title: 'Paylaşılan Ürünler', onTap: () {}),
             ),
             SizedBox(
               height: 16.h,
@@ -291,14 +297,12 @@ class HomeView extends ConsumerWidget {
                     colorType: const Color(0xffFD8435),
                     adsType: 'Takaslıyor',
                     address: 'Kadıköy / İstanbul',
-                    productName:  'Makyaj Malzemesi',
+                    productName: 'Makyaj Malzemesi',
                     date: '21/10/2023',
                     userName: 'user123456',
                     productImage: 'assets/images/demoo.png',
-                    saveButtonOnTap: (){},
-                    seeAdsDetailOnTap: (){
-                    },
-
+                    saveButtonOnTap: () {},
+                    seeAdsDetailOnTap: () {},
                   );
                 },
               ),
@@ -313,5 +317,3 @@ class HomeView extends ConsumerWidget {
     );
   }
 }
-
-

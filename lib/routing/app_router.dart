@@ -1,3 +1,4 @@
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/forgot_password_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/login_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register1_view.dart';
@@ -16,17 +17,21 @@ import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/fee
 import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/give_feedback_view.dart';
 import 'package:atma_paylas_app/features/Help/presentation/pages/help_view.dart';
 import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
+import 'package:atma_paylas_app/features/Messages/messages_view.dart';
+import 'package:atma_paylas_app/features/MyAdds/my_adds_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/ads_state_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
+import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
+import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
 import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
 
 import '../features/Authentication/presentation/pages/negative_notification_view.dart';
 import '../features/Authentication/presentation/pages/register2_view.dart';
@@ -50,7 +55,19 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: WelcomeRoute.page,
-          initial: false,
+          initial: true,
+          guards: [
+            AutoRouteGuard.simple(
+              (resolver, router) {
+                Log.info(UserRepository.user, path: "AppRouter");
+                if (UserRepository.user != null) {
+                  router.push(const NavigatorRoute());
+                } else {
+                  resolver.next();
+                }
+              },
+            )
+          ],
         ),
         AutoRoute(
           page: Register1Route.page,
@@ -89,6 +106,32 @@ class AppRouter extends _$AppRouter {
           initial: false,
         ),
         AutoRoute(
+          page: NavigatorRoute.page,
+          initial: false,
+          children: [
+            AutoRoute(
+              page: HomeRoute.page,
+              initial: true,
+            ),
+            AutoRoute(
+              page: MessagesRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: CreateAdsRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: MyAddsRoute.page,
+              initial: false,
+            ),
+            AutoRoute(
+              page: ProfileRoute.page,
+              initial: false,
+            ),
+          ],
+        ),
+        AutoRoute(
           page: HomeRoute.page,
           initial: false,
         ),
@@ -118,7 +161,7 @@ class AppRouter extends _$AppRouter {
           initial: false
         ),
         AutoRoute(
-          page: MyAdsRoute.page,
+          page: MyAddsRoute.page,
           initial: false
         ),
         AutoRoute(

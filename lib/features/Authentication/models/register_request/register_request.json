@@ -1,0 +1,11 @@
+{
+    "email": "<string>",
+    "username": "<string>",
+    "password": "<number>",
+    "confirmation": "<number>",
+    "name": "<string>",
+    "surname": "<string>",
+    "phone_number": "<number>",
+    "user_located_city": "<string>",
+    "user_located_district": "<string>"
+}
