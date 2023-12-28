@@ -93,12 +93,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MyAddsView(),
       );
     },
-    MyAdsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MyAdsView(),
-      );
-    },
     NavigatorRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -398,20 +392,6 @@ class MyAddsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MyAddsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [MyAdsView]
-class MyAdsRoute extends PageRouteInfo<void> {
-  const MyAdsRoute({List<PageRouteInfo>? children})
-      : super(
-          MyAdsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MyAdsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
