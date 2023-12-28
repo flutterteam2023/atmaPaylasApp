@@ -1,22 +1,22 @@
 // ignore_for_file: inference_failure_on_function_invocation, lines_longer_than_80_chars, avoid_dynamic_calls
 
-import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor(this._dio);
   final Dio _dio;
 
-  bool isDebugMode = true;
+  bool isDebugMode = false;
   final storage = const FlutterSecureStorage();
   @override
   Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final accessToken = await storage.read(key: "access_token");
+    final accessToken = await storage.read(key: 'access_token');
     if (isDebugMode) Log.success('onrequestAlanında $accessToken');
-    if (!options.path.contains("login") && !options.path.contains("refresh")) {
+    if (!options.path.contains('login') && !options.path.contains('refresh') && !options.path.contains('categories')) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
     return super.onRequest(options, handler);
@@ -28,11 +28,11 @@ class AuthInterceptor extends Interceptor {
       Log.error(err.response?.statusCode, path: 'auth interceptor on error');
       Log.info('${await storage.read(key: "refresh_token")}', path: 'auth interceptor on error');
     }
-    await storage.read(key: "access_token").then((value) => Log.info(value, path: "mian"));
-    await storage.read(key: "refresh_token").then((value) => Log.info(value, path: "mian"));
+    await storage.read(key: 'access_token').then((value) => Log.info(value, path: 'mian'));
+    await storage.read(key: 'refresh_token').then((value) => Log.info(value, path: 'mian'));
     if (err.response?.statusCode == 401) {
-      if (await storage.read(key: "refresh_token") != null) {
-        final val = await AuthRepository().refresh();
+      if (await storage.read(key: 'refresh_token') != null) {
+        final val = await GetIt.instance<AuthRepository>().refresh();
         return val.fold(
           (l) async {
             await storage.deleteAll();

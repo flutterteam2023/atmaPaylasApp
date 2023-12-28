@@ -10,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -304,7 +305,7 @@ class ProfileView extends StatelessWidget {
                     indicator: const CircularProgressIndicator.adaptive(),
                     status: "Çıkış Yapılıyor...",
                   );
-                  await AuthRepository().logout().then((value) async {
+                  await GetIt.instance<AuthRepository>().logout().then((value) async {
                     await value.fold(
                       (l) async => await Fluttertoast.showToast(msg: "Çıkış Yapılamadı"),
                       (r) async {
@@ -363,7 +364,6 @@ class ProfileView extends StatelessWidget {
               FutureBuilder(
                   future: PackageInfo.fromPlatform(),
                   builder: (context, platform) {
-                    Log.info(platform.data);
                     return Text(
                       'versiyon: ${platform.data?.version ?? '1.0.0'}+${platform.data?.buildNumber ?? '1'}',
                       textAlign: TextAlign.center,

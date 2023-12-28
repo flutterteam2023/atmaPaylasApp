@@ -24,9 +24,9 @@ class ApiService {
       ..add(AuthInterceptor(dio))
       ..add(
         PrettyDioLogger(
-          requestBody: true,
-          requestHeader: true,
-          responseHeader: true,
+          requestBody: false,
+          requestHeader: false,
+          responseHeader: false,
         ),
       );
   }
@@ -35,20 +35,19 @@ class ApiService {
   Future<Either<String, T>> requestMethod<T>({
     required String path,
     required Map<String, dynamic>? headers,
-    required T Function(dynamic) responseConverter,
+    required T Function(Response<dynamic>) responseConverter,
     required dynamic requestModel,
     required HttpMethod method,
   }) async {
     try {
-      Response<Map<String, dynamic>> response;
+      Response<dynamic> response;
 
       switch (method) {
         case HttpMethod.get:
           response = await dio.get(
             path,
-            options: Options(headers: headers),
+            options: Options(method: 'GET', headers: headers),
           );
-          break;
         case HttpMethod.put:
           final data = json.encode(requestModel);
           response = await dio.put(
@@ -56,7 +55,6 @@ class ApiService {
             options: Options(method: 'PUT', headers: headers),
             data: requestModel == null ? null : data,
           );
-          break;
         case HttpMethod.post:
           final data = json.encode(requestModel);
           response = await dio.post(
@@ -64,7 +62,6 @@ class ApiService {
             options: Options(method: 'POST', headers: headers),
             data: requestModel == null ? null : data,
           );
-          break;
         case HttpMethod.delete:
           final data = requestModel != null ? json.encode(requestModel) : null;
           response = await dio.delete(
@@ -72,33 +69,33 @@ class ApiService {
             options: Options(method: 'DELETE', headers: headers),
             data: requestModel == null ? null : data,
           );
-          break;
       }
       return Right(responseConverter(response));
     } on DioException catch (e) {
-      if (e.response?.data["error"] != null) {
-        return Left(e.response?.data["error"]);
+      Log.error(e);
+      if (e.response?.data['error'] != null) {
+        return Left(e.response?.data['error'] as String);
       }
       if (e.response?.statusCode == 504) {
-        return const Left("Gateway error");
+        return const Left('Gateway error');
       }
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          return const Left("Hata oluştu, Exception: connectionTimeout");
+          return const Left('Hata oluştu, Exception: connectionTimeout');
         case DioExceptionType.sendTimeout:
-          return const Left("Hata oluştu, Exception: sendTimeout");
+          return const Left('Hata oluştu, Exception: sendTimeout');
         case DioExceptionType.receiveTimeout:
-          return const Left("Hata oluştu, Exception: receiveTimeout");
+          return const Left('Hata oluştu, Exception: receiveTimeout');
         case DioExceptionType.badCertificate:
-          return const Left("Hata oluştu, Exception: badCertificate");
+          return const Left('Hata oluştu, Exception: badCertificate');
         case DioExceptionType.badResponse:
-          return const Left("Hata oluştu, Exception: badResponse");
+          return const Left('Hata oluştu, Exception: badResponse');
         case DioExceptionType.cancel:
-          return const Left("Hata oluştu, Exception: cancel");
+          return const Left('Hata oluştu, Exception: cancel');
         case DioExceptionType.connectionError:
-          return const Left("Hata oluştu, Exception: connectionError");
+          return const Left('Hata oluştu, Exception: connectionError');
         case DioExceptionType.unknown:
-          return const Left("Hata oluştu, Exception: unknown");
+          return const Left('Hata oluştu, Exception: unknown');
       }
     }
   }

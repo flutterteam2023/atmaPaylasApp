@@ -14,6 +14,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class LoginView extends HookWidget {
@@ -123,7 +124,7 @@ class LoginView extends HookWidget {
                 CustomFilledButtonBerke(
                   text: 'Giriş Yap',
                   onTap: () async {
-                    await AuthRepository()
+                    await GetIt.instance<AuthRepository>()
                         .login(
                       emailcontroller.text,
                       passcontroller.text,
@@ -132,7 +133,7 @@ class LoginView extends HookWidget {
                       value.fold(
                         (l) => Fluttertoast.showToast(msg: l),
                         (r) async {
-                          await UserRepository().getMyUserProfile().then((val) {
+                          await GetIt.instance<UserRepository>().getMyUserProfile().then((val) {
                             val.fold(
                               (l) {
                                 Log.error(l);
