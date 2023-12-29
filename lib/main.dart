@@ -12,6 +12,7 @@ import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,20 +25,19 @@ Future<void> main() async {
   GetIt.I.registerSingleton<CityRepository>(CityRepository());
   GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
-  /* //Sample usage of GetIt
+  //Sample usage of GetIt
 
-  await GetIt.instance<FeedRepository>().getFeedDetails('5').then((value) {
+  /* await GetIt.instance<FeedRepository>().deleteFeed('5').then((value) {
     value.fold(
       Log.error,
       (r) => Log.success(r, path: 'main'),
     );
-  }); */
-
+  });
+ */
   EasyLoading.instance
     ..userInteractions = false
     ..dismissOnTap = false;
-/*   const storage = FlutterSecureStorage();
-  await storage.write(key: "access_token", value: "value"); */
+
   await GetIt.instance<UserRepository>().getMyUserProfile().then((value) {
     value.fold(
       (l) {

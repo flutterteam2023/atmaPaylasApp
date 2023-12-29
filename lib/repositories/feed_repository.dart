@@ -72,4 +72,15 @@ class FeedRepository extends ApiService {
       responseConverter: (response) => FeedDetailModel.fromJson(response.data as Map<String, dynamic>),
     );
   }
+
+  ///this method is used for edit feed
+  Future<ApiResponse<String>> deleteFeed(String feedId) async {
+    return requestMethod<String>(
+      path: '/delete_listing/$feedId/',
+      method: HttpMethod.delete,
+      requestModel: null,
+      headers: {'Accept': 'application/json'},
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+    );
+  }
 }
