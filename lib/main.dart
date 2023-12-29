@@ -5,6 +5,7 @@ import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/feedback_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
@@ -22,10 +23,10 @@ Future<void> main() async {
   GetIt.I.registerSingleton<UserRepository>(UserRepository());
   GetIt.I.registerSingleton<CityRepository>(CityRepository());
   GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
+  GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
+  /* //Sample usage of GetIt
 
-  /*  //Sample usage of GetIt
-
-  await GetIt.instance<UserRepository>().getOtherUserProfile(userId: 2).then((value) {
+  await GetIt.instance<FeedRepository>().getFeedDetails('5').then((value) {
     value.fold(
       Log.error,
       (r) => Log.success(r, path: 'main'),

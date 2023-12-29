@@ -6,6 +6,7 @@ import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -35,14 +36,147 @@ class HomeView extends StatelessWidget {
         actions: [
           InkWell(
             onTap: () async {
-              File? image;
-              final picker = ImagePicker();
-              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+              await showModalBottomSheet<void>(
+                context: context,
+                builder: (context) {
+                  File? image1;
+                  File? image2;
+                  File? image3;
+                  ListingTypes listingType = ListingTypes.free;
+                  int categoryId = 3;
+                  String title = 'Deneme Title';
+                  String description = 'Deneme description';
 
-              if (pickedFile != null) {
-                image = File(pickedFile.path);
-                await GetIt.instance<UserRepository>().editUserProfilePhoto(image);
-              }
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image1 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.image),
+                                SizedBox(width: 8.w),
+                                const Text('Galeri 1'),
+                              ],
+                            ),
+                          ),
+                          const Text(' veya '),
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image1 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.camera),
+                                SizedBox(width: 8.w),
+                                const Text('Kamera 1'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image2 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.image),
+                                SizedBox(width: 8.w),
+                                const Text('Galeri 2'),
+                              ],
+                            ),
+                          ),
+                          const Text(' veya '),
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image2 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.camera),
+                                SizedBox(width: 8.w),
+                                const Text('Kamera 2'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image3 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.image),
+                                SizedBox(width: 8.w),
+                                const Text('Galeri 3'),
+                              ],
+                            ),
+                          ),
+                          const Text(' veya '),
+                          FilledButton(
+                            onPressed: () async {
+                              final picker = ImagePicker();
+                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                              if (pickedFile != null) {
+                                final image = File(pickedFile.path);
+                                image3 = image;
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.camera),
+                                SizedBox(width: 8.w),
+                                const Text('Kamera 3'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      FloatingActionButton(
+                        onPressed: () async {
+                          await FeedRepository()
+                              .addFeed(image1, image2, image3, listingType, categoryId, title, description);
+                        },
+                        child: const Icon(Icons.add),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
             child: Padding(
               padding: EdgeInsets.only(right: 16.w),
@@ -275,7 +409,7 @@ class HomeView extends StatelessWidget {
                   return AdsCard(
                     width: 265.w,
                     isSaved: true,
-                    textColor: Color(0xff05473A),
+                    textColor: const Color(0xff05473A),
                     colorType: const Color(0xff6DCEBB),
                     adsType: 'Ücretsiz Paylaşıyor',
                     address: 'Kadıköy / İstanbul',
