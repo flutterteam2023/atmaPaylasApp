@@ -31,13 +31,16 @@ class AuthRepository extends ApiService {
       (r) async {
         //access token
 
-        await storage.write(key: 'access_token', value: (r as Response<Map<String, String>>).data?['access']);
+        await storage.write(
+          key: 'access_token',
+          value: ((r as Response<dynamic>).data as Map<String, dynamic>)['access'] as String,
+        );
         //refresh token
         final setCookieHeaders = r.headers['set-cookie'];
         final firstSetCookieHeader = setCookieHeaders![0];
         final cookieValue = firstSetCookieHeader.split(';').first;
         await storage.write(key: 'refresh_token', value: cookieValue);
-        return ApiResponse.right(AccessModel.fromJson(r.data!));
+        return ApiResponse.right(AccessModel.fromJson(r.data as Map<String, dynamic>));
       },
     );
   }
@@ -82,7 +85,7 @@ class AuthRepository extends ApiService {
       path: '/logout/',
       method: HttpMethod.post,
       requestModel: null,
-      responseConverter: (response) => (response as Response<Map<String, dynamic>>).data?['success'] as String,
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
