@@ -1,32 +1,37 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
+import 'package:atma_paylas_app/repositories/city_repository.dart';
+import 'package:atma_paylas_app/repositories/feedback_repository.dart';
+import 'package:atma_paylas_app/repositories/image_endpoints.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GetIt.I.registerSingleton<CategoryRepository>(CategoryRepository());
   GetIt.I.registerSingleton<AuthRepository>(AuthRepository());
   GetIt.I.registerSingleton<UserRepository>(UserRepository());
+  GetIt.I.registerSingleton<CityRepository>(CityRepository());
+  GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
 
-  //Sample usage of GetIt
+  /*  //Sample usage of GetIt
 
-  await GetIt.instance<CategoryRepository>().getMainCategories().then((value) {
+  await GetIt.instance<UserRepository>().getOtherUserProfile(userId: 2).then((value) {
     value.fold(
-      (l) => Log.error(l),
-      (r) => Log.success(r, path: "main"),
+      Log.error,
+      (r) => Log.success(r, path: 'main'),
     );
-  });
+  }); */
 
   EasyLoading.instance
     ..userInteractions = false

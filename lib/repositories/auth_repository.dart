@@ -7,6 +7,12 @@ import 'package:atma_paylas_app/features/Authentication/models/register_response
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+///This repository is used for authentication
+///Repository usage example:
+///GetIt.instance<AuthRepository>().login('email', 'password') is returned as Future<ApiResponse<AccessModel>>
+///GetIt.instance<AuthRepository>().register(RegisterRequestModel) is returned as Future<ApiResponse<RegisterResponseModel>>
+///GetIt.instance<AuthRepository>().refresh() is returned as Future<ApiResponse<AccessModel>>
+///GetIt.instance<AuthRepository>().logout() is returned as Future<ApiResponse<String>>
 class AuthRepository extends ApiService {
   final storage = const FlutterSecureStorage();
   Future<ApiResponse<AccessModel>> login(String email, String password) async {

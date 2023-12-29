@@ -16,7 +16,10 @@ class AuthInterceptor extends Interceptor {
   Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final accessToken = await storage.read(key: 'access_token');
     if (isDebugMode) Log.success('onrequestAlanında $accessToken');
-    if (!options.path.contains('login') && !options.path.contains('refresh') && !options.path.contains('categories')) {
+    if (!options.path.contains('login') &&
+        !options.path.contains('get_cities') &&
+        !options.path.contains('refresh') &&
+        !options.path.contains('categories')) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
     return super.onRequest(options, handler);

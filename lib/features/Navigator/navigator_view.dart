@@ -13,6 +13,8 @@ class NavigatorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
+      homeIndex: 0,
+      lazyLoad: false,
       routes: const [
         HomeRoute(),
         MessagesRoute(),
