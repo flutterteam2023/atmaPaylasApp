@@ -11,6 +11,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 enum HttpMethod { get, post, delete, put }
 
 String BASE_URL = 'https://atmapaylas.com.tr/api';
+String IMAGE_BASE_URL = 'https://atmapaylas.com.tr';
 typedef ApiResponse<T> = Either<String, T>;
 
 class ApiService {
@@ -24,9 +25,9 @@ class ApiService {
       ..add(AuthInterceptor(dio))
       ..add(
         PrettyDioLogger(
-          requestBody: false,
-          requestHeader: false,
-          responseHeader: false,
+          requestBody: true,
+          requestHeader: true,
+          responseHeader: true,
         ),
       );
   }

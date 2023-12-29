@@ -26,11 +26,10 @@ class ProfileView extends StatelessWidget {
           backgroundColor: const Color(AppColors.primaryColor),
           centerTitle: false,
           title: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${UserRepository.user?.name} ${UserRepository.user?.surname}",
+                '${UserRepository.user?.name} ${UserRepository.user?.surname}',
                 style: GoogleFonts.rubik(
                   color: Colors.white,
                   fontSize: 16,
@@ -54,7 +53,7 @@ class ProfileView extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               backgroundImage:
-                  UserRepository.user?.image == null ? null : NetworkImage("${UserRepository.user?.image}"),
+                  UserRepository.user?.image == null ? null : NetworkImage('${UserRepository.user?.image}'),
               child: UserRepository.user?.image != null
                   ? null
                   : const Icon(Icons.person, color: Color(AppColors.primaryColor)),
@@ -74,7 +73,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "${UserRepository.user?.nonActiveTradableListingsCount}",
+                          '${UserRepository.user?.nonActiveTradableListingsCount}',
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -82,7 +81,7 @@ class ProfileView extends StatelessWidget {
                           ),
                         ),
                         const Text(
-                          "Takaslanan",
+                          'Takaslanan',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -99,7 +98,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "${UserRepository.user?.nonActiveFreeListingsCount}",
+                          '${UserRepository.user?.nonActiveFreeListingsCount}',
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -107,7 +106,7 @@ class ProfileView extends StatelessWidget {
                           ),
                         ),
                         const Text(
-                          "Ücretsiz",
+                          'Ücretsiz',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -124,7 +123,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "${UserRepository.user?.activeListingsCount}",
+                          '${UserRepository.user?.activeListingsCount}',
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 21,
@@ -132,7 +131,7 @@ class ProfileView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Aktif",
+                          'Aktif',
                           style: GoogleFonts.rubik(
                             color: Colors.white,
                             fontSize: 14,
@@ -167,7 +166,7 @@ class ProfileView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: Text(
-                          "Takaslananlar",
+                          'Takaslananlar',
                           style: GoogleFonts.rubik(
                             color: Colors.grey[850],
                             fontSize: 14,
@@ -204,7 +203,7 @@ class ProfileView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: Text(
-                          "Profili Düzenle",
+                          'Profili Düzenle',
                           style: GoogleFonts.rubik(
                             color: Colors.grey[850],
                             fontSize: 14,
@@ -241,7 +240,7 @@ class ProfileView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: Text(
-                          "Ayarlar",
+                          'Ayarlar',
                           style: GoogleFonts.rubik(
                             color: Colors.grey[850],
                             fontSize: 14,
@@ -278,7 +277,7 @@ class ProfileView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: Text(
-                          "Yardım & Destek",
+                          'Yardım & Destek',
                           style: GoogleFonts.rubik(
                             color: Colors.grey[850],
                             fontSize: 14,
@@ -303,11 +302,11 @@ class ProfileView extends StatelessWidget {
                 onTap: () async {
                   await EasyLoading.show(
                     indicator: const CircularProgressIndicator.adaptive(),
-                    status: "Çıkış Yapılıyor...",
+                    status: 'Çıkış Yapılıyor...',
                   );
                   await GetIt.instance<AuthRepository>().logout().then((value) async {
                     await value.fold(
-                      (l) async => await Fluttertoast.showToast(msg: "Çıkış Yapılamadı"),
+                      (l) async => await Fluttertoast.showToast(msg: 'Çıkış Yapılamadı'),
                       (r) async {
                         UserRepository.user = null;
                         EasyLoading.dismiss();
@@ -330,7 +329,7 @@ class ProfileView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 18),
                         child: Text(
-                          "Çıkış Yap",
+                          'Çıkış Yap',
                           style: GoogleFonts.rubik(
                             color: Colors.red[800],
                             fontSize: 14,

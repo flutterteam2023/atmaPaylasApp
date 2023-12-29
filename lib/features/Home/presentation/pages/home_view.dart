@@ -1,18 +1,18 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:atma_paylas_app/api/log.dart';
+import 'dart:io';
+
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
-import 'package:atma_paylas_app/repositories/city_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 class HomeView extends StatelessWidget {
@@ -35,12 +35,14 @@ class HomeView extends StatelessWidget {
         actions: [
           InkWell(
             onTap: () async {
-              await GetIt.instance<UserRepository>().getMyUserProfile().then((value) {
-                value.fold(
-                  (l) => Log.error(l, path: "home"),
-                  (r) => Log.success(r, path: "home"),
-                );
-              });
+              File? image;
+              final picker = ImagePicker();
+              final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+              if (pickedFile != null) {
+                image = File(pickedFile.path);
+                await GetIt.instance<UserRepository>().editUserProfilePhoto(image);
+              }
             },
             child: Padding(
               padding: EdgeInsets.only(right: 16.w),
@@ -48,7 +50,7 @@ class HomeView extends StatelessWidget {
                 'assets/svg/notifications-outline.svg',
               ),
             ),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -236,8 +238,8 @@ class HomeView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
-                  return  AdsCard(
-                    width:  265.w,
+                  return AdsCard(
+                    width: 265.w,
                     isSaved: true,
                     colorType: const Color(0xff6DCEBB),
                     textColor: const Color(0xff05473A),
@@ -270,8 +272,8 @@ class HomeView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
-                  return  AdsCard(
-                    width:  265.w,
+                  return AdsCard(
+                    width: 265.w,
                     isSaved: true,
                     textColor: Color(0xff05473A),
                     colorType: const Color(0xff6DCEBB),
@@ -304,8 +306,8 @@ class HomeView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 itemBuilder: (context, index) {
-                  return  AdsCard(
-                    width:  265.w,
+                  return AdsCard(
+                    width: 265.w,
                     isSaved: true,
                     textColor: Colors.white,
                     colorType: const Color(0xffFD8435),
@@ -323,8 +325,7 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(
               height: 40.h,
-            ),  
-            
+            ),
           ],
         ),
       ),

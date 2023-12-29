@@ -111,7 +111,7 @@ class AppRouter extends _$AppRouter {
           children: [
             AutoRoute(
               page: HomeRoute.page,
-              initial: true,
+              initial: false,
             ),
             AutoRoute(
               page: MessagesRoute.page,
@@ -143,67 +143,19 @@ class AppRouter extends _$AppRouter {
           page: CreateAdsRoute.page,
           initial: false,
         ),
-
-        AutoRoute(
-          page: TransitionCategoryRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsInfoAddRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsSuccessCreateRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsDetailRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: MyAddsRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: UserAdsDetailRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: AdsStateRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: SharedProductsRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: SwapProductsRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: UserAgreementRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: FeedBackApprovalRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: GiveFeedBackRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: HelpRoute.page,
-          initial: false
-        ),
-        AutoRoute(
-          page: SettingsRoute.page,
-          initial: true
-        ),
-
-
-
-       
-        
+        AutoRoute(page: TransitionCategoryRoute.page, initial: false),
+        AutoRoute(page: AdsInfoAddRoute.page, initial: false),
+        AutoRoute(page: AdsSuccessCreateRoute.page, initial: false),
+        AutoRoute(page: AdsDetailRoute.page, initial: false),
+        AutoRoute(page: MyAddsRoute.page, initial: false),
+        AutoRoute(page: UserAdsDetailRoute.page, initial: false),
+        AutoRoute(page: AdsStateRoute.page, initial: false),
+        AutoRoute(page: SharedProductsRoute.page, initial: false),
+        AutoRoute(page: SwapProductsRoute.page, initial: false),
+        AutoRoute(page: UserAgreementRoute.page, initial: false),
+        AutoRoute(page: FeedBackApprovalRoute.page, initial: false),
+        AutoRoute(page: GiveFeedBackRoute.page, initial: false),
+        AutoRoute(page: HelpRoute.page, initial: false),
+        AutoRoute(page: SettingsRoute.page, initial: false),
       ];
 }

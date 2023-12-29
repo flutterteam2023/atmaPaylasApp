@@ -20,29 +20,29 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  @JsonKey(name: "user_id")
+  @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   String get email => throw _privateConstructorUsedError;
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   String get phoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   String get surname => throw _privateConstructorUsedError;
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   String get userLocatedCity => throw _privateConstructorUsedError;
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   String get userLocatedDistrict => throw _privateConstructorUsedError;
-  @JsonKey(name: "active_listings_count")
+  @JsonKey(name: 'active_listings_count')
   int get activeListingsCount => throw _privateConstructorUsedError;
-  @JsonKey(name: "non_active_free_listings_count")
+  @JsonKey(name: 'non_active_free_listings_count')
   int get nonActiveFreeListingsCount => throw _privateConstructorUsedError;
-  @JsonKey(name: "non_active_tradable_listings_count")
+  @JsonKey(name: 'non_active_tradable_listings_count')
   int get nonActiveTradableListingsCount => throw _privateConstructorUsedError;
-  @JsonKey(name: "image")
+  @JsonKey(name: 'image')
   String? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,20 +57,20 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "username") String username,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "surname") String surname,
-      @JsonKey(name: "user_located_city") String userLocatedCity,
-      @JsonKey(name: "user_located_district") String userLocatedDistrict,
-      @JsonKey(name: "active_listings_count") int activeListingsCount,
-      @JsonKey(name: "non_active_free_listings_count")
+      {@JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'username') String username,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'phone_number') String phoneNumber,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'surname') String surname,
+      @JsonKey(name: 'user_located_city') String userLocatedCity,
+      @JsonKey(name: 'user_located_district') String userLocatedDistrict,
+      @JsonKey(name: 'active_listings_count') int activeListingsCount,
+      @JsonKey(name: 'non_active_free_listings_count')
       int nonActiveFreeListingsCount,
-      @JsonKey(name: "non_active_tradable_listings_count")
+      @JsonKey(name: 'non_active_tradable_listings_count')
       int nonActiveTradableListingsCount,
-      @JsonKey(name: "image") String? image});
+      @JsonKey(name: 'image') String? image});
 }
 
 /// @nodoc
@@ -161,20 +161,20 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "username") String username,
-      @JsonKey(name: "email") String email,
-      @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "surname") String surname,
-      @JsonKey(name: "user_located_city") String userLocatedCity,
-      @JsonKey(name: "user_located_district") String userLocatedDistrict,
-      @JsonKey(name: "active_listings_count") int activeListingsCount,
-      @JsonKey(name: "non_active_free_listings_count")
+      {@JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'username') String username,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'phone_number') String phoneNumber,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'surname') String surname,
+      @JsonKey(name: 'user_located_city') String userLocatedCity,
+      @JsonKey(name: 'user_located_district') String userLocatedDistrict,
+      @JsonKey(name: 'active_listings_count') int activeListingsCount,
+      @JsonKey(name: 'non_active_free_listings_count')
       int nonActiveFreeListingsCount,
-      @JsonKey(name: "non_active_tradable_listings_count")
+      @JsonKey(name: 'non_active_tradable_listings_count')
       int nonActiveTradableListingsCount,
-      @JsonKey(name: "image") String? image});
+      @JsonKey(name: 'image') String? image});
 }
 
 /// @nodoc
@@ -258,59 +258,59 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
-      {@JsonKey(name: "user_id") required this.userId,
-      @JsonKey(name: "username") required this.username,
-      @JsonKey(name: "email") required this.email,
-      @JsonKey(name: "phone_number") required this.phoneNumber,
-      @JsonKey(name: "name") required this.name,
-      @JsonKey(name: "surname") required this.surname,
-      @JsonKey(name: "user_located_city") required this.userLocatedCity,
-      @JsonKey(name: "user_located_district") required this.userLocatedDistrict,
-      @JsonKey(name: "active_listings_count") required this.activeListingsCount,
-      @JsonKey(name: "non_active_free_listings_count")
+      {@JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'username') required this.username,
+      @JsonKey(name: 'email') required this.email,
+      @JsonKey(name: 'phone_number') required this.phoneNumber,
+      @JsonKey(name: 'name') required this.name,
+      @JsonKey(name: 'surname') required this.surname,
+      @JsonKey(name: 'user_located_city') required this.userLocatedCity,
+      @JsonKey(name: 'user_located_district') required this.userLocatedDistrict,
+      @JsonKey(name: 'active_listings_count') required this.activeListingsCount,
+      @JsonKey(name: 'non_active_free_listings_count')
       required this.nonActiveFreeListingsCount,
-      @JsonKey(name: "non_active_tradable_listings_count")
+      @JsonKey(name: 'non_active_tradable_listings_count')
       required this.nonActiveTradableListingsCount,
-      @JsonKey(name: "image") required this.image});
+      @JsonKey(name: 'image') required this.image});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
   @override
-  @JsonKey(name: "user_id")
+  @JsonKey(name: 'user_id')
   final int userId;
   @override
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   final String username;
   @override
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   final String email;
   @override
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @override
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   final String name;
   @override
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   final String surname;
   @override
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   final String userLocatedCity;
   @override
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   final String userLocatedDistrict;
   @override
-  @JsonKey(name: "active_listings_count")
+  @JsonKey(name: 'active_listings_count')
   final int activeListingsCount;
   @override
-  @JsonKey(name: "non_active_free_listings_count")
+  @JsonKey(name: 'non_active_free_listings_count')
   final int nonActiveFreeListingsCount;
   @override
-  @JsonKey(name: "non_active_tradable_listings_count")
+  @JsonKey(name: 'non_active_tradable_listings_count')
   final int nonActiveTradableListingsCount;
   @override
-  @JsonKey(name: "image")
+  @JsonKey(name: 'image')
   final String? image;
 
   @override
@@ -381,61 +381,61 @@ class _$UserModelImpl implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {@JsonKey(name: "user_id") required final int userId,
-      @JsonKey(name: "username") required final String username,
-      @JsonKey(name: "email") required final String email,
-      @JsonKey(name: "phone_number") required final String phoneNumber,
-      @JsonKey(name: "name") required final String name,
-      @JsonKey(name: "surname") required final String surname,
-      @JsonKey(name: "user_located_city") required final String userLocatedCity,
-      @JsonKey(name: "user_located_district")
+      {@JsonKey(name: 'user_id') required final int userId,
+      @JsonKey(name: 'username') required final String username,
+      @JsonKey(name: 'email') required final String email,
+      @JsonKey(name: 'phone_number') required final String phoneNumber,
+      @JsonKey(name: 'name') required final String name,
+      @JsonKey(name: 'surname') required final String surname,
+      @JsonKey(name: 'user_located_city') required final String userLocatedCity,
+      @JsonKey(name: 'user_located_district')
       required final String userLocatedDistrict,
-      @JsonKey(name: "active_listings_count")
+      @JsonKey(name: 'active_listings_count')
       required final int activeListingsCount,
-      @JsonKey(name: "non_active_free_listings_count")
+      @JsonKey(name: 'non_active_free_listings_count')
       required final int nonActiveFreeListingsCount,
-      @JsonKey(name: "non_active_tradable_listings_count")
+      @JsonKey(name: 'non_active_tradable_listings_count')
       required final int nonActiveTradableListingsCount,
-      @JsonKey(name: "image") required final String? image}) = _$UserModelImpl;
+      @JsonKey(name: 'image') required final String? image}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
   @override
-  @JsonKey(name: "user_id")
+  @JsonKey(name: 'user_id')
   int get userId;
   @override
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   String get username;
   @override
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   String get email;
   @override
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   String get phoneNumber;
   @override
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   String get name;
   @override
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   String get surname;
   @override
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   String get userLocatedCity;
   @override
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   String get userLocatedDistrict;
   @override
-  @JsonKey(name: "active_listings_count")
+  @JsonKey(name: 'active_listings_count')
   int get activeListingsCount;
   @override
-  @JsonKey(name: "non_active_free_listings_count")
+  @JsonKey(name: 'non_active_free_listings_count')
   int get nonActiveFreeListingsCount;
   @override
-  @JsonKey(name: "non_active_tradable_listings_count")
+  @JsonKey(name: 'non_active_tradable_listings_count')
   int get nonActiveTradableListingsCount;
   @override
-  @JsonKey(name: "image")
+  @JsonKey(name: 'image')
   String? get image;
   @override
   @JsonKey(ignore: true)
