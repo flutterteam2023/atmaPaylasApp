@@ -1,11 +1,13 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
+import 'package:atma_paylas_app/features/Feed/models/my_feed_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
@@ -51,6 +53,8 @@ class FeedRepository extends ApiService {
 
     if (response.statusCode == 200) {
       Log.success(await response.stream.bytesToString());
+      //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için myFeeds listesini temizliyoruz
+      _myFeeds.clear();
       return Right((jsonDecode(await response.stream.bytesToString()) as Map<String, dynamic>)['success'] as String);
     } else {
       Log.error(response.reasonPhrase);
@@ -82,5 +86,83 @@ class FeedRepository extends ApiService {
       headers: {'Accept': 'application/json'},
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
     );
+  }
+
+  ///this method is used for current user all feeds
+  ///in user interface not use this method please use getMyFeeds method
+  ///is a private value
+  final List<MyFeedModel> _myFeeds = [];
+  //this method is used for current user free feeds active and inactive both
+  FutureOr<List<MyFeedModel>> get myActiveAndInactiveFreeFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds.where((element) => element.listingType == ListingTypes.free.name).toList();
+  }
+
+  //this method is used for current user free feeds. just active
+  FutureOr<List<MyFeedModel>> get myActiveFreeFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds
+        .where((element) => element.listingType == ListingTypes.free.name && element.isActive == true)
+        .toList();
+  }
+
+  //this method is used for current user free feeds. just inactive
+  FutureOr<List<MyFeedModel>> get myInactiveFreeFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds
+        .where((element) => element.listingType == ListingTypes.free.name && element.isActive == false)
+        .toList();
+  }
+
+  //this method is used for current user tradable feeds active and inactive both
+  FutureOr<List<MyFeedModel>> get myActiveAndInactiveTradableFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds.where((element) => element.listingType == ListingTypes.tradable.name).toList();
+  }
+
+  //this method is used for current user tradable feeds. just active
+  FutureOr<List<MyFeedModel>> get myActiveTradableFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds
+        .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == true)
+        .toList();
+  }
+
+  //this method is used for current user tradable feeds. just inactive
+  FutureOr<List<MyFeedModel>> get myInactiveTradableFeeds async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds
+        .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == false)
+        .toList();
+  }
+
+  ///this method is used for current user all feeds
+  ///if my feeds is not empty return my feeds
+  ///if my feeds is empty, fetch my feeds and return my feeds
+  FutureOr<ApiResponse<List<MyFeedModel>>> getMyFeeds() async {
+    if (_myFeeds.isNotEmpty) {
+      Log.info(
+        'MyFeeds already fetched length:${_myFeeds.length}',
+        path: 'Feed Repository getMyFeeds',
+      );
+      return ApiResponse.right(_myFeeds);
+    }
+    return requestMethod<List<MyFeedModel>>(
+      path: '/active_user_listing_previews/',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) =>
+          (response.data as List<dynamic>).map((e) => MyFeedModel.fromJson(e as Map<String, dynamic>)).toList(),
+      headers: {'Accept': 'application/json'},
+    ).then((value) {
+      value.fold(
+        (l) => null,
+        (r) => {
+          for (final element in r)
+            if (!_myFeeds.contains(element)) _myFeeds.add(element),
+        },
+      );
+      return value;
+    });
   }
 }

@@ -50,7 +50,47 @@ class AuthRepository extends ApiService {
       path: '/register/',
       method: HttpMethod.post,
       requestModel: request.toJson(),
-      responseConverter: (response) => RegisterResponseModel.fromJson(response as Map<String, dynamic>),
+      responseConverter: (response) => RegisterResponseModel.fromJson(response.data as Map<String, dynamic>),
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+  }
+
+  Future<ApiResponse<String>> setNewPassword({
+    required String email,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    return requestMethod<String>(
+      path: '/set_new_password/',
+      method: HttpMethod.post,
+      requestModel: {
+        'email': email,
+        'new_password': newPassword,
+        'confirm_password': confirmPassword,
+      },
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+  }
+
+  Future<ApiResponse<String>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    return requestMethod<String>(
+      path: '/change_password/',
+      method: HttpMethod.put,
+      requestModel: {
+        'current_password': currentPassword,
+        'new_password': newPassword,
+        'confirm_password': confirmPassword,
+      },
+      responseConverter: (response) {
+        final access = (response.data as Map<String, dynamic>)['access'] as String;
+        storage.write(key: 'access_token', value: access);
+        return (response.data as Map<String, dynamic>)['success'] as String;
+      },
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
   }
@@ -67,11 +107,11 @@ class AuthRepository extends ApiService {
         'Accept': 'application/json',
         'Cookie': refreshToken,
       },
-    ).then((value) {
-      value.fold(
+    ).then((value) async {
+      await value.fold(
         (l) => null,
-        (r) {
-          storage.write(key: 'access_token', value: r.access);
+        (r) async {
+          await storage.write(key: 'access_token', value: r.access);
         },
       );
 

@@ -26,18 +26,25 @@ Future<void> main() async {
   GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
   //Sample usage of GetIt
-
-  /* await GetIt.instance<FeedRepository>().deleteFeed('5').then((value) {
+/* 
+  await GetIt.instance<AuthRepository>()
+      .changePassword(
+    currentPassword: '123456Berke',
+    newPassword: '123Berke',
+    confirmPassword: '123Berke',
+  )
+      .then((value) {
     value.fold(
       Log.error,
       (r) => Log.success(r, path: 'main'),
     );
-  });
- */
+  }); */
+
   EasyLoading.instance
     ..userInteractions = false
     ..dismissOnTap = false;
-
+  /*  const storage = FlutterSecureStorage();
+  await storage.write(key: 'access_token', value: 'sadas'); */
   await GetIt.instance<UserRepository>().getMyUserProfile().then((value) {
     value.fold(
       (l) {
@@ -50,6 +57,7 @@ Future<void> main() async {
       },
     );
   });
+
   /*  const storage = FlutterSecureStorage();
   await storage.read(key: "access_token").then((value) => Log.info(value, path: "mian"));
   await storage.read(key: "refresh_token").then((value) => Log.info(value, path: "mian"));

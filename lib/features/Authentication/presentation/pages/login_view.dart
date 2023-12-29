@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/auth_textfield.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
@@ -84,10 +86,11 @@ class LoginView extends HookWidget {
                 Text(
                   "Şifre",
                   style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Rubik',
-                      color: const Color(AppColors.primaryTextColor)),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Rubik',
+                    color: const Color(AppColors.primaryTextColor),
+                  ),
                 ),
                 const Gap(9),
                 TextFormField(
@@ -150,33 +153,35 @@ class LoginView extends HookWidget {
                       );
                     });
                   },
-                )
+                ),
               ],
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 36.h),
               child: RichText(
                 text: TextSpan(
-                    text: 'Hesabın yok mu? ',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Rubik',
-                      color: const Color(AppColors.primaryTextColor),
+                  text: 'Hesabın yok mu? ',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Rubik',
+                    color: const Color(AppColors.primaryTextColor),
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Kayıt Ol',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Rubik',
+                        color: const Color(AppColors.primaryColor),
+                      ),
+                      recognizer: TapGestureRecognizer()..onTap = () {},
                     ),
-                    children: [
-                      TextSpan(
-                          text: 'Kayıt Ol',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Rubik',
-                            color: const Color(AppColors.primaryColor),
-                          ),
-                          recognizer: TapGestureRecognizer()..onTap = () {})
-                    ]),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
