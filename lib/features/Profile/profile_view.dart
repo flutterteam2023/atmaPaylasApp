@@ -240,7 +240,9 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               const Gap(9),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushRoute(SettingsRoute());
+                },
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -277,7 +279,9 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               const Gap(9),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushRoute(HelpRoute());
+                },
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: MediaQuery.of(context).size.width,

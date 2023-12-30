@@ -1,5 +1,6 @@
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +42,9 @@ class FeedBackApprovalView extends ConsumerWidget {
             ),
             ),
             SizedBox(height: 80.h,),
-            CustomFilledButton(text: 'Anasayfaya dön', onTap: (){})
+            CustomFilledButton(text: 'Anasayfaya dön', onTap: (){
+              context.pushRoute(NavigatorRoute());
+            })
           ],
         ),
       ),

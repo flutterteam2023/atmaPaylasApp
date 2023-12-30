@@ -1,4 +1,5 @@
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -28,7 +29,9 @@ class HelpView extends ConsumerWidget {
           
           children: [
             Bounceable(
-              onTap: () {},
+              onTap: () {
+                context.pushRoute(GiveFeedBackRoute());
+              },
               child: Container(
                 height: 48.h,
                 width: 343.w,
@@ -64,7 +67,8 @@ class HelpView extends ConsumerWidget {
             ),
             SizedBox(height: 16.h,),
             Bounceable(
-              onTap: () {},
+              onTap: () {
+              },
               child: Container(
                 height: 48.h,
                 width: 343.w,
@@ -100,7 +104,9 @@ class HelpView extends ConsumerWidget {
             ),
             SizedBox(height: 16.h,),
             Bounceable(
-              onTap: () {},
+              onTap: () {
+                context.pushRoute(UserAgreementRoute());
+              },
               child: Container(
                 height: 48.h,
                 width: 343.w,

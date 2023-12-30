@@ -1,15 +1,20 @@
-import 'package:atma_paylas_app/common_widgets/auth_textfield.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/feedback_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 @RoutePage()
-class GiveFeedBackView extends ConsumerWidget {
+class GiveFeedBackView extends HookConsumerWidget {
   const GiveFeedBackView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final noteController = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -47,6 +52,7 @@ class GiveFeedBackView extends ConsumerWidget {
             ),
             SizedBox(height: 16.h,),
             TextField(
+              controller: noteController,
               cursorColor: const Color(AppColors.primaryColor),
               maxLines: 5,
               style: TextStyle(
@@ -86,10 +92,13 @@ class GiveFeedBackView extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: 32.h,),
-            const AuthTextfield(text: 'E-Posta Adresi', hintText: 'user@example.com'),
+            
             SizedBox(height: 56.h,),  
-            CustomFilledButton(text: 'Geri Bildirim Gönder', onTap: (){})
+            CustomFilledButton(text: 'Geri Bildirim Gönder', onTap: (){
+              GetIt.instance<FeedbackRepository>().sendFeedBack(noteController.value.text);
+              context.pushRoute(FeedBackApprovalRoute());
+
+            })
             
             
           ],

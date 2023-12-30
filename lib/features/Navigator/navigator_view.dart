@@ -19,7 +19,7 @@ class NavigatorView extends StatelessWidget {
         HomeRoute(),
         MessagesRoute(),
         CreateAdsRoute(),
-        MyAddsRoute(),
+        MyAdsRoute(),
         ProfileRoute(),
       ],
       transitionBuilder: (context, child, animation) => FadeTransition(

@@ -125,7 +125,7 @@ class AppRouter extends _$AppRouter {
               initial: false,
             ),
             AutoRoute(
-              page: MyAddsRoute.page,
+              page: MyAdsRoute.page,
               initial: false,
             ),
             AutoRoute(
