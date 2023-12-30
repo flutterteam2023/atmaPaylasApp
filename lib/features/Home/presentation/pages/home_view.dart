@@ -477,7 +477,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 40.h,
+              height: MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight + 18 * 2,
             ),
           ],
         ),
