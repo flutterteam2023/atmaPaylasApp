@@ -332,24 +332,29 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(
               height: 300.h,
-              child: ListView.builder(
-                padding: EdgeInsets.only(right: 16.w),
-                scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return AdsCard(
-                    isSaved: true,
-                    width: 265.w,
-                    colorType: const Color(0xff6DCEBB),
-                    textColor: const Color(0xff05473A),
-                    adsType: 'Ücretsiz Paylaşıyor',
-                    address: 'Kadıköy / İstanbul',
-                    productName: 'Casio Saat',
-                    date: '21/10/2023',
-                    userName: 'user123456',
-                    productImage: 'assets/images/clockdemo.png',
-                    saveButtonOnTap: () {},
-                    seeAdsDetailOnTap: () {},
+              child: FutureBuilder(
+                future: GetIt.instance<FeedRepository>().getLocationedFeed(),
+                builder: (context, snaphot) {
+                  return ListView.builder(
+                    padding: EdgeInsets.only(right: 16.w),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snaphot.data?.length,
+                    itemBuilder: (context, index) {
+                      return AdsCard(
+                        isSaved: true,
+                        width: 265.w,
+                        colorType: const Color(0xff6DCEBB),
+                        textColor: const Color(0xff05473A),
+                        adsType: 'Ücretsiz Paylaşıyor',
+                        address: 'Kadıköy / İstanbul',
+                        productName: '${snaphot.data?[index].title}}',
+                        date: '21/10/2023',
+                        userName: 'user123456',
+                        productImage: snaphot.data?[index].image1,
+                        saveButtonOnTap: () {},
+                        seeAdsDetailOnTap: () {},
+                      );
+                    },
                   );
                 },
               ),
@@ -366,24 +371,29 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(
               height: 300.h,
-              child: ListView.builder(
-                padding: EdgeInsets.only(right: 16.w),
-                scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return AdsCard(
-                    width: 265.w,
-                    isSaved: true,
-                    colorType: const Color(0xff6DCEBB),
-                    textColor: const Color(0xff05473A),
-                    adsType: 'Ücretsiz Paylaşıyor',
-                    address: 'Kadıköy / İstanbul',
-                    productName: 'Lorem Bisiklet',
-                    date: '21/10/2023',
-                    userName: 'user123456',
-                    productImage: 'assets/images/bicycle.png',
-                    saveButtonOnTap: () {},
-                    seeAdsDetailOnTap: () {},
+              child: FutureBuilder(
+                future: GetIt.instance<FeedRepository>().getMostViewedFeed(),
+                builder: (context, snaphot) {
+                  return ListView.builder(
+                    padding: EdgeInsets.only(right: 16.w),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snaphot.data?.length,
+                    itemBuilder: (context, index) {
+                      return AdsCard(
+                        isSaved: true,
+                        width: 265.w,
+                        colorType: const Color(0xff6DCEBB),
+                        textColor: const Color(0xff05473A),
+                        adsType: 'Ücretsiz Paylaşıyor',
+                        address: 'Kadıköy / İstanbul',
+                        productName: '${snaphot.data?[index].title}}',
+                        date: '21/10/2023',
+                        userName: 'user123456',
+                        productImage: snaphot.data?[index].image1,
+                        saveButtonOnTap: () {},
+                        seeAdsDetailOnTap: () {},
+                      );
+                    },
                   );
                 },
               ),
@@ -400,24 +410,29 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(
               height: 300.h,
-              child: ListView.builder(
-                padding: EdgeInsets.only(right: 16.w),
-                scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return AdsCard(
-                    width: 265.w,
-                    isSaved: true,
-                    textColor: const Color(0xff05473A),
-                    colorType: const Color(0xff6DCEBB),
-                    adsType: 'Ücretsiz Paylaşıyor',
-                    address: 'Kadıköy / İstanbul',
-                    productName: 'Lorem Bisiklet',
-                    date: '21/10/2023',
-                    userName: 'user123456',
-                    productImage: 'assets/images/bicycle.png',
-                    saveButtonOnTap: () {},
-                    seeAdsDetailOnTap: () {},
+              child: FutureBuilder(
+                future: GetIt.instance<FeedRepository>().getSharedFeed(),
+                builder: (context, snaphot) {
+                  return ListView.builder(
+                    padding: EdgeInsets.only(right: 16.w),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snaphot.data?.length,
+                    itemBuilder: (context, index) {
+                      return AdsCard(
+                        isSaved: true,
+                        width: 265.w,
+                        colorType: const Color(0xff6DCEBB),
+                        textColor: const Color(0xff05473A),
+                        adsType: 'Ücretsiz Paylaşıyor',
+                        address: 'Kadıköy / İstanbul',
+                        productName: '${snaphot.data?[index].title}}',
+                        date: '21/10/2023',
+                        userName: 'user123456',
+                        productImage: snaphot.data?[index].image1,
+                        saveButtonOnTap: () {},
+                        seeAdsDetailOnTap: () {},
+                      );
+                    },
                   );
                 },
               ),
@@ -434,24 +449,29 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(
               height: 300.h,
-              child: ListView.builder(
-                padding: EdgeInsets.only(right: 16.w),
-                scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return AdsCard(
-                    width: 265.w,
-                    isSaved: true,
-                    textColor: Colors.white,
-                    colorType: const Color(0xffFD8435),
-                    adsType: 'Takaslıyor',
-                    address: 'Kadıköy / İstanbul',
-                    productName: 'Makyaj Malzemesi',
-                    date: '21/10/2023',
-                    userName: 'user123456',
-                    productImage: 'assets/images/demoo.png',
-                    saveButtonOnTap: () {},
-                    seeAdsDetailOnTap: () {},
+              child: FutureBuilder(
+                future: GetIt.instance<FeedRepository>().getSharedFeed(),
+                builder: (context, snaphot) {
+                  return ListView.builder(
+                    padding: EdgeInsets.only(right: 16.w),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snaphot.data?.length,
+                    itemBuilder: (context, index) {
+                      return AdsCard(
+                        isSaved: true,
+                        width: 265.w,
+                        colorType: const Color(0xff6DCEBB),
+                        textColor: const Color(0xff05473A),
+                        adsType: 'Ücretsiz Paylaşıyor',
+                        address: 'Kadıköy / İstanbul',
+                        productName: '${snaphot.data?[index].title}}',
+                        date: '21/10/2023',
+                        userName: 'user123456',
+                        productImage: snaphot.data?[index].image1,
+                        saveButtonOnTap: () {},
+                        seeAdsDetailOnTap: () {},
+                      );
+                    },
                   );
                 },
               ),

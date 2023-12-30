@@ -88,18 +88,33 @@ class FeedRepository extends ApiService {
     );
   }
 
+  Future<List<MyFeedModel>> getMostViewedFeed() async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds.toList();
+  }
+
+  Future<List<MyFeedModel>> getLocationedFeed() async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds.toList();
+  }
+
+  Future<List<MyFeedModel>> getSharedFeed() async {
+    if (_myFeeds.isEmpty) await getMyFeeds();
+    return _myFeeds.toList();
+  }
+
   ///this method is used for current user all feeds
   ///in user interface not use this method please use getMyFeeds method
   ///is a private value
   final List<MyFeedModel> _myFeeds = [];
   //this method is used for current user free feeds active and inactive both
-  FutureOr<List<MyFeedModel>> get myActiveAndInactiveFreeFeeds async {
+  Future<List<MyFeedModel>> get myActiveAndInactiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds.where((element) => element.listingType == ListingTypes.free.name).toList();
   }
 
   //this method is used for current user free feeds. just active
-  FutureOr<List<MyFeedModel>> get myActiveFreeFeeds async {
+  Future<List<MyFeedModel>> get myActiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.free.name && element.isActive == true)
@@ -107,7 +122,7 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user free feeds. just inactive
-  FutureOr<List<MyFeedModel>> get myInactiveFreeFeeds async {
+  Future<List<MyFeedModel>> get myInactiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.free.name && element.isActive == false)
@@ -115,13 +130,13 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user tradable feeds active and inactive both
-  FutureOr<List<MyFeedModel>> get myActiveAndInactiveTradableFeeds async {
+  Future<List<MyFeedModel>> get myActiveAndInactiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds.where((element) => element.listingType == ListingTypes.tradable.name).toList();
   }
 
   //this method is used for current user tradable feeds. just active
-  FutureOr<List<MyFeedModel>> get myActiveTradableFeeds async {
+  Future<List<MyFeedModel>> get myActiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == true)
@@ -129,7 +144,7 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user tradable feeds. just inactive
-  FutureOr<List<MyFeedModel>> get myInactiveTradableFeeds async {
+  Future<List<MyFeedModel>> get myInactiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == false)
@@ -139,7 +154,7 @@ class FeedRepository extends ApiService {
   ///this method is used for current user all feeds
   ///if my feeds is not empty return my feeds
   ///if my feeds is empty, fetch my feeds and return my feeds
-  FutureOr<ApiResponse<List<MyFeedModel>>> getMyFeeds() async {
+  Future<ApiResponse<List<MyFeedModel>>> getMyFeeds() async {
     if (_myFeeds.isNotEmpty) {
       Log.info(
         'MyFeeds already fetched length:${_myFeeds.length}',

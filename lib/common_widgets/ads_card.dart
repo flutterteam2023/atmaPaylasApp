@@ -16,7 +16,9 @@ class AdsCard extends StatelessWidget {
     required this.productImage,
     required this.productName,
     required this.colorType,
-    required this.textColor,required this.isSaved, required this.width,
+    required this.textColor,
+    required this.isSaved,
+    required this.width,
   });
   final String adsType;
   final String address;
@@ -25,7 +27,7 @@ class AdsCard extends StatelessWidget {
   final String userName;
   final void Function()? saveButtonOnTap;
   final void Function()? seeAdsDetailOnTap;
-  final String productImage;
+  final String? productImage;
   final Color colorType;
   final Color textColor;
   final bool isSaved;
@@ -48,27 +50,36 @@ class AdsCard extends StatelessWidget {
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(5.r), topRight: Radius.circular(5.r)),
-                    child: Image.asset(
-                      productImage,
-                      width:width,
-                      fit: BoxFit.fill,
-                    )),
-            isSaved==true?    Positioned(
-                  top: 17.h,
-                  right: 15.w,
-                  child: Bounceable(
-                    onTap: saveButtonOnTap,
-                    child: Container(
-                      height: 32.r,
-                      width: 32.r,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                      child: SvgPicture.asset(
-                        'assets/svg/bookmark-outline.svg',
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                  ),
-                ):SizedBox.shrink(),
+                    child: productImage != null
+                        ? Image.network(
+                            productImage!,
+                            width: width,
+                            height: 129,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/clockdemo.png',
+                            width: width,
+                            fit: BoxFit.fill,
+                          )),
+                isSaved == true
+                    ? Positioned(
+                        top: 17.h,
+                        right: 15.w,
+                        child: Bounceable(
+                          onTap: saveButtonOnTap,
+                          child: Container(
+                            height: 32.r,
+                            width: 32.r,
+                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                            child: SvgPicture.asset(
+                              'assets/svg/bookmark-outline.svg',
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox.shrink(),
                 Positioned(
                   left: 15.w,
                   top: 17.h,
@@ -152,13 +163,14 @@ class AdsCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding:  EdgeInsets.only(bottom: 17.h,right: 17.w),
+                        padding: EdgeInsets.only(bottom: 17.h, right: 17.w),
                         child: Bounceable(
                           onTap: seeAdsDetailOnTap,
                           child: Container(
                             height: 32.r,
                             width: 32.r,
-                            decoration: const BoxDecoration(color: Color(AppColors.primaryColor), shape: BoxShape.circle),
+                            decoration:
+                                const BoxDecoration(color: Color(AppColors.primaryColor), shape: BoxShape.circle),
                             child: Center(
                                 child: Icon(
                               Icons.arrow_forward,
