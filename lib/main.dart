@@ -49,11 +49,11 @@ Future<void> main() async {
     value.fold(
       (l) {
         Log.error(l);
-        UserRepository.user = null;
+        GetIt.instance<UserRepository>().user = null;
       },
       (r) {
         Log.success(r.runtimeType);
-        UserRepository.user = r;
+        GetIt.instance<UserRepository>().user = r;
       },
     );
   });

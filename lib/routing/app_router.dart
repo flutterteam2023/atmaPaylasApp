@@ -33,6 +33,7 @@ import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../features/Authentication/presentation/pages/negative_notification_view.dart';
 import '../features/Authentication/presentation/pages/register2_view.dart';
@@ -60,8 +61,8 @@ class AppRouter extends _$AppRouter {
           guards: [
             AutoRouteGuard.simple(
               (resolver, router) {
-                Log.info(UserRepository.user, path: "AppRouter");
-                if (UserRepository.user != null) {
+                Log.info(GetIt.instance<UserRepository>().user, path: "AppRouter");
+                if (GetIt.instance<UserRepository>().user != null) {
                   router.push(const NavigatorRoute());
                 } else {
                   resolver.next();
@@ -70,7 +71,6 @@ class AppRouter extends _$AppRouter {
             )
           ],
         ),
-
         AutoRoute(
           page: Register1Route.page,
           initial: false,
@@ -161,6 +161,5 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: HelpRoute.page, initial: false),
         AutoRoute(page: SettingsRoute.page, initial: false),
         AutoRoute(page: ProfileRoute.page, initial: false),
-        
       ];
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,6 +8,7 @@ import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Authentication/models/user/user_model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
@@ -14,8 +16,14 @@ import 'package:http/http.dart' as http;
 ///Repository usage example:
 ///GetIt.instance<UserRepository>().getMyUserProfile() is returned as Future<ApiResponse<UserModel>>
 ///GetIt.instance<UserRepository>().getOtherUserProfile(userId: 2) is returned as Future<ApiResponse<UserModel>>
-class UserRepository extends ApiService {
-  static UserModel? user;
+class UserRepository extends ApiService with ChangeNotifier {
+  UserModel? _user;
+  UserModel? get user => _user;
+  set user(UserModel? value) {
+    _user = value;
+    notifyListeners();
+  }
+
   Future<ApiResponse<UserModel>> getMyUserProfile() async {
     return requestMethod<UserModel>(
       path: '/user_profile/',
@@ -26,7 +34,10 @@ class UserRepository extends ApiService {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-    );
+    ).then((value) {
+      notifyListeners();
+      return value;
+    });
   }
 
   Future<ApiResponse<UserModel>> getOtherUserProfile({required int userId}) async {
@@ -73,6 +84,7 @@ class UserRepository extends ApiService {
       final response = await request.send();
 
       if (response.statusCode == 200) {
+        notifyListeners();
         Log.success(await response.stream.bytesToString());
       } else {
         Log.error(response.reasonPhrase);
@@ -118,6 +130,7 @@ class UserRepository extends ApiService {
       );
 
       if (response.statusCode == 200) {
+        notifyListeners();
         Log.success(json.encode(response.data));
         return Right(response.data!);
       } else {
