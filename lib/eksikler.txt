@@ -1,0 +1,23 @@
+
+
+1- Ürün kategori ara arama butonu
+2- Kategorilere göre ürünleri listeleme
+3- Reklam alanı için reklam müşteri ile konuşma. Ne reklamı konulacak?
+4- Hepsini gör butonları ve aktifleştirilmesi
+5- Sohbet kısmı
+6- İlan Detay Sayfası
+7- İlanım Detay Sayfası ve ilanın durumunu değiştirme
+8- Profildeki Takaslananlar Bölümü 
+9- Profildeki Ücretsiz Paylaşılanlar Bölümü
+10- Profili düzenle il/ilçe değiştirme
+11- Ayarlar Sayfası
+12- Gizlilik Politikası, Kullanıcı sözleşmesi bölümlerinin yapılması
+13- Kayıt olma
+14- Şifremi unuttum
+15- İlanların onaylanması için bildirimler sayfası yapılması ve onaylama işlemleri
+16- Android ayarları
+17- Farklı cihaz testleri
+18- Tablet uyumluluk testleri
+19- Mağaza görseli ve içerik yazısı hazırlatma
+20- Yayınlama
+
