@@ -73,13 +73,28 @@ class AdsCard extends StatelessWidget {
                             width: 32.r,
                             decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                             child: SvgPicture.asset(
-                              'assets/svg/bookmark-outline.svg',
+                              'assets/svg/bookmark.svg',
                               fit: BoxFit.scaleDown,
                             ),
                           ),
                         ),
                       )
-                    : SizedBox.shrink(),
+                    : Positioned(
+                        top: 17.h,
+                        right: 15.w,
+                        child: Bounceable(
+                          onTap: saveButtonOnTap,
+                          child: Container(
+                            height: 32.r,
+                            width: 32.r,
+                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                            child: SvgPicture.asset(
+                              'assets/svg/bookmark-outline.svg',
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
+                      ),
                 Positioned(
                   left: 15.w,
                   top: 17.h,

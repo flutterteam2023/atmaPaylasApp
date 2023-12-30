@@ -2,6 +2,7 @@
 
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
   GetIt.I.registerSingleton<CityRepository>(CityRepository());
   GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
+  GetIt.I.registerSingleton<ArchivedRepository>(ArchivedRepository());
   //Sample usage of GetIt
 /* 
   await GetIt.instance<AuthRepository>()
@@ -120,7 +122,7 @@ class MyApp extends StatelessWidget {
               scrolledUnderElevation: 0,
             ),
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
+              seedColor: const Color(AppColors.primaryColor),
             ),
             useMaterial3: true,
           ),

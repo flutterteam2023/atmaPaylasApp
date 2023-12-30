@@ -6,8 +6,10 @@ import 'dart:io';
 
 import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
+import 'package:atma_paylas_app/features/Feed/models/archived_feed_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
-import 'package:atma_paylas_app/features/Feed/models/my_feed_model.dart';
+import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +18,7 @@ enum ListingTypes { free, tradable }
 
 ///Repository usage example:
 ///GetIt.instance<FeedRepository>().addFeed()
-class FeedRepository extends ApiService {
+class FeedRepository extends ApiService with ChangeNotifier {
   ///this method is used for add feed
   ///if you want to add feed, you must send image1, image2, image3, listingType, categoryId, title, description
   Future<Either<String, String>> addFeed(
@@ -88,33 +90,60 @@ class FeedRepository extends ApiService {
     );
   }
 
-  Future<List<MyFeedModel>> getMostViewedFeed() async {
-    if (_myFeeds.isEmpty) await getMyFeeds();
-    return _myFeeds.toList();
+  List<FeedModel> _mostViewedFeeds = [];
+  List<FeedModel> _freeListingFeeds = [];
+  List<FeedModel> _tradableListingFeeds = [];
+  Future<ApiResponse<void>> getHomePageFeeds() async {
+    return requestMethod<void>(
+      path: '/homepage_listings//',
+      method: HttpMethod.get,
+      requestModel: null,
+      headers: {'Accept': 'application/json'},
+      responseConverter: (response) {
+        _mostViewedFeeds = (response.data['most_viewed'] as List<dynamic>)
+            .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        _freeListingFeeds = (response.data['free_listings'] as List<dynamic>)
+            .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        _tradableListingFeeds = (response.data['tradable_listings'] as List<dynamic>)
+            .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      },
+    );
   }
 
-  Future<List<MyFeedModel>> getLocationedFeed() async {
-    if (_myFeeds.isEmpty) await getMyFeeds();
-    return _myFeeds.toList();
+  Future<List<FeedModel>> get mostViewedFeeds async {
+    if (_mostViewedFeeds.isEmpty) await getHomePageFeeds();
+    return _mostViewedFeeds;
   }
 
-  Future<List<MyFeedModel>> getSharedFeed() async {
-    if (_myFeeds.isEmpty) await getMyFeeds();
-    return _myFeeds.toList();
+  Future<void> clearMostViewedFeeds() async {
+    _mostViewedFeeds.clear();
+  }
+
+  Future<List<FeedModel>> get freeListingFeeds async {
+    if (_freeListingFeeds.isEmpty) await getHomePageFeeds();
+    return _freeListingFeeds;
+  }
+
+  Future<List<FeedModel>> get tradableListingFeeds async {
+    if (_tradableListingFeeds.isEmpty) await getMyFeeds();
+    return _tradableListingFeeds.toList();
   }
 
   ///this method is used for current user all feeds
   ///in user interface not use this method please use getMyFeeds method
   ///is a private value
-  final List<MyFeedModel> _myFeeds = [];
+  final List<FeedModel> _myFeeds = [];
   //this method is used for current user free feeds active and inactive both
-  Future<List<MyFeedModel>> get myActiveAndInactiveFreeFeeds async {
+  Future<List<FeedModel>> get myActiveAndInactiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds.where((element) => element.listingType == ListingTypes.free.name).toList();
   }
 
   //this method is used for current user free feeds. just active
-  Future<List<MyFeedModel>> get myActiveFreeFeeds async {
+  Future<List<FeedModel>> get myActiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.free.name && element.isActive == true)
@@ -122,7 +151,7 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user free feeds. just inactive
-  Future<List<MyFeedModel>> get myInactiveFreeFeeds async {
+  Future<List<FeedModel>> get myInactiveFreeFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.free.name && element.isActive == false)
@@ -130,13 +159,13 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user tradable feeds active and inactive both
-  Future<List<MyFeedModel>> get myActiveAndInactiveTradableFeeds async {
+  Future<List<FeedModel>> get myActiveAndInactiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds.where((element) => element.listingType == ListingTypes.tradable.name).toList();
   }
 
   //this method is used for current user tradable feeds. just active
-  Future<List<MyFeedModel>> get myActiveTradableFeeds async {
+  Future<List<FeedModel>> get myActiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == true)
@@ -144,7 +173,7 @@ class FeedRepository extends ApiService {
   }
 
   //this method is used for current user tradable feeds. just inactive
-  Future<List<MyFeedModel>> get myInactiveTradableFeeds async {
+  Future<List<FeedModel>> get myInactiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == false)
@@ -154,7 +183,7 @@ class FeedRepository extends ApiService {
   ///this method is used for current user all feeds
   ///if my feeds is not empty return my feeds
   ///if my feeds is empty, fetch my feeds and return my feeds
-  Future<ApiResponse<List<MyFeedModel>>> getMyFeeds() async {
+  Future<ApiResponse<List<FeedModel>>> getMyFeeds() async {
     if (_myFeeds.isNotEmpty) {
       Log.info(
         'MyFeeds already fetched length:${_myFeeds.length}',
@@ -162,12 +191,12 @@ class FeedRepository extends ApiService {
       );
       return ApiResponse.right(_myFeeds);
     }
-    return requestMethod<List<MyFeedModel>>(
+    return requestMethod<List<FeedModel>>(
       path: '/active_user_listing_previews/',
       method: HttpMethod.get,
       requestModel: null,
       responseConverter: (response) =>
-          (response.data as List<dynamic>).map((e) => MyFeedModel.fromJson(e as Map<String, dynamic>)).toList(),
+          (response.data as List<dynamic>).map((e) => FeedModel.fromJson(e as Map<String, dynamic>)).toList(),
       headers: {'Accept': 'application/json'},
     ).then((value) {
       value.fold(
