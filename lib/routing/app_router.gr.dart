@@ -115,6 +115,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NegativeNotificationView(),
       );
     },
+    ProfileEditRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileEditView(),
+      );
+    },
     ProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -468,6 +474,20 @@ class NegativeNotificationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NegativeNotificationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileEditView]
+class ProfileEditRoute extends PageRouteInfo<void> {
+  const ProfileEditRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileEditRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileEditRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

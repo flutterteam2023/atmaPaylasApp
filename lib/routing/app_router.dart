@@ -22,6 +22,7 @@ import 'package:atma_paylas_app/features/MyAdds/my_adds_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/ads_state_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
 import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
+import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
@@ -69,10 +70,12 @@ class AppRouter extends _$AppRouter {
             )
           ],
         ),
+
         AutoRoute(
           page: Register1Route.page,
           initial: false,
         ),
+        AutoRoute(page: ProfileEditRoute.page, initial: false),
         AutoRoute(
           page: Register2Route.page,
           initial: false,
@@ -157,5 +160,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: GiveFeedBackRoute.page, initial: false),
         AutoRoute(page: HelpRoute.page, initial: false),
         AutoRoute(page: SettingsRoute.page, initial: false),
+        AutoRoute(page: ProfileRoute.page, initial: false),
+        
       ];
 }

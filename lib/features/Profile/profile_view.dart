@@ -15,9 +15,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 @RoutePage()
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+
+class _ProfileViewState extends State<ProfileView> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,27 +32,32 @@ class ProfileView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Color(AppColors.primaryColor),
           centerTitle: false,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${UserRepository.user?.name} ${UserRepository.user?.surname}',
-                style: GoogleFonts.rubik(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                '${UserRepository.user?.userLocatedDistrict} / ${UserRepository.user?.userLocatedCity}',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.rubik(
-                  color: const Color(0xFFC2C2C2),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              )
-            ],
+          title: FutureBuilder(
+            future: UserRepository().getMyUserProfile(),
+            builder: (context,snapshot) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${snapshot.data!.fold((l) => null, (r) => r.name)} ${snapshot.data!.fold((l) => null, (r) => r.surname)}',
+                    style: GoogleFonts.rubik(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    '${snapshot.data!.fold((l) => null, (r) => r.userLocatedDistrict)} / ${snapshot.data!.fold((l) => null, (r) => r.userLocatedCity)}',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.rubik(
+                      color: const Color(0xFFC2C2C2),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
+              );
+            },
           ),
           leadingWidth: MediaQuery.of(context).size.width / 5,
           leading: Padding(
@@ -188,7 +200,10 @@ class ProfileView extends StatelessWidget {
               ),
               const Gap(9),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.pushRoute(ProfileEditRoute());
+
+                },
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
