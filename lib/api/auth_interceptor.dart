@@ -38,12 +38,10 @@ class AuthInterceptor extends Interceptor {
         final val = await GetIt.instance<AuthRepository>().refresh();
         return val.fold(
           (l) async {
-            await storage.deleteAll();
-            handler.next(err);
+            await storage.deleteAll().then((value) => handler.next(err));
           },
           (r) async => handler.resolve(await retry(err.requestOptions)),
         );
-        return handler.resolve(await retry(err.requestOptions));
       }
     }
     return handler.next(err);
@@ -61,7 +59,7 @@ class AuthInterceptor extends Interceptor {
     return _dio.request<dynamic>(
       //      '$BASE_URL${requestOptions.path}',
 
-      '${requestOptions.path}',
+      requestOptions.path,
       data: requestOptions.data,
       queryParameters: requestOptions.queryParameters,
       options: options,
