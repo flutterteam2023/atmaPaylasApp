@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthTextfield extends StatelessWidget {
   const AuthTextfield({
-    super.key, required this.text,  this.textInputType, required this.hintText, this.obscureText, this.isPassword, this.maxLine, this.minLine,
+    super.key, required this.text,  this.textInputType, required this.hintText, this.obscureText, this.isPassword, this.maxLine, this.minLine, this.controller,
   });
   final String text ;
   final TextInputType? textInputType;
@@ -14,6 +14,7 @@ class AuthTextfield extends StatelessWidget {
   final bool? isPassword ;
   final int? maxLine;
   final int? minLine;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class AuthTextfield extends StatelessWidget {
       height: 5.h,
     ),
     TextField(
+      controller: controller,
       minLines: minLine??1,
       maxLines: maxLine??1,
       obscureText:obscureText??false ,

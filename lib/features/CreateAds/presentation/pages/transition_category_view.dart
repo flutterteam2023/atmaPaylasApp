@@ -42,7 +42,7 @@ class TransitionCategoryView extends ConsumerWidget {
           style: TextStyle(fontSize: 21.sp, fontWeight: FontWeight.w500, fontFamily: 'Rubik', color: Colors.black),
         ),
       ),
-      body: ProductCategorySelect(title: title, categoryList: [])
+      body: SizedBox()
     );
   }
   

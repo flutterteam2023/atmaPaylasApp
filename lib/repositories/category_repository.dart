@@ -13,6 +13,10 @@ typedef SubCategories = List<MainCategoryModel>;
 class CategoryRepository extends ApiService {
   List<MainCategoryModel> maincategories = [];
   Map<MainCategoryId, SubCategories> subCategories = {};
+   int? categoryid;
+   int pageviewLength = 2;
+
+   String? categoryname; 
 
   Future<ApiResponse<List<MainCategoryModel>>> getMainCategories() async {
     if (maincategories.isNotEmpty) {

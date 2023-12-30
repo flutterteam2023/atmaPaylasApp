@@ -22,9 +22,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AdsInfoAddRoute.name: (routeData) {
+      final args = routeData.argsAs<AdsInfoAddRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const AdsInfoAddView(),
+        child: AdsInfoAddView(
+          args.id,
+          key: args.key,
+        ),
       );
     },
     AdsStateRoute.name: (routeData) {
@@ -236,16 +240,40 @@ class AdsDetailRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AdsInfoAddView]
-class AdsInfoAddRoute extends PageRouteInfo<void> {
-  const AdsInfoAddRoute({List<PageRouteInfo>? children})
-      : super(
+class AdsInfoAddRoute extends PageRouteInfo<AdsInfoAddRouteArgs> {
+  AdsInfoAddRoute({
+    required String? id,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           AdsInfoAddRoute.name,
+          args: AdsInfoAddRouteArgs(
+            id: id,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AdsInfoAddRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<AdsInfoAddRouteArgs> page =
+      PageInfo<AdsInfoAddRouteArgs>(name);
+}
+
+class AdsInfoAddRouteArgs {
+  const AdsInfoAddRouteArgs({
+    required this.id,
+    this.key,
+  });
+
+  final String? id;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AdsInfoAddRouteArgs{id: $id, key: $key}';
+  }
 }
 
 /// generated route for
