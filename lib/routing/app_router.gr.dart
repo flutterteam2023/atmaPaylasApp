@@ -16,9 +16,13 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AdsDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<AdsDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const AdsDetailView(),
+        child: AdsDetailView(
+          args.id,
+          key: args.key,
+        ),
       );
     },
     AdsInfoAddRoute.name: (routeData) {
@@ -210,9 +214,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     UserAdsDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<UserAdsDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const UserAdsDetailView(),
+        child: UserAdsDetailView(
+          args.id,
+          key: args.key,
+        ),
       );
     },
     UserAgreementRoute.name: (routeData) {
@@ -232,16 +240,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [AdsDetailView]
-class AdsDetailRoute extends PageRouteInfo<void> {
-  const AdsDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class AdsDetailRoute extends PageRouteInfo<AdsDetailRouteArgs> {
+  AdsDetailRoute({
+    required int id,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           AdsDetailRoute.name,
+          args: AdsDetailRouteArgs(
+            id: id,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AdsDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<AdsDetailRouteArgs> page =
+      PageInfo<AdsDetailRouteArgs>(name);
+}
+
+class AdsDetailRouteArgs {
+  const AdsDetailRouteArgs({
+    required this.id,
+    this.key,
+  });
+
+  final int id;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AdsDetailRouteArgs{id: $id, key: $key}';
+  }
 }
 
 /// generated route for
@@ -715,16 +747,40 @@ class TransitionCategoryRouteArgs {
 
 /// generated route for
 /// [UserAdsDetailView]
-class UserAdsDetailRoute extends PageRouteInfo<void> {
-  const UserAdsDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class UserAdsDetailRoute extends PageRouteInfo<UserAdsDetailRouteArgs> {
+  UserAdsDetailRoute({
+    required int? id,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           UserAdsDetailRoute.name,
+          args: UserAdsDetailRouteArgs(
+            id: id,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'UserAdsDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<UserAdsDetailRouteArgs> page =
+      PageInfo<UserAdsDetailRouteArgs>(name);
+}
+
+class UserAdsDetailRouteArgs {
+  const UserAdsDetailRouteArgs({
+    required this.id,
+    this.key,
+  });
+
+  final int? id;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UserAdsDetailRouteArgs{id: $id, key: $key}';
+  }
 }
 
 /// generated route for

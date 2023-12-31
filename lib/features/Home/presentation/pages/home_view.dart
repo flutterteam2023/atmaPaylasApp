@@ -8,13 +8,13 @@ import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
@@ -225,7 +225,9 @@ class HomeView extends StatelessWidget {
                               await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
                               setStateMostViewedState(() {});
                             },
-                            seeAdsDetailOnTap: () {},
+                            seeAdsDetailOnTap: () {
+                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                            },
                           );
                         },
                       );
@@ -273,7 +275,9 @@ class HomeView extends StatelessWidget {
                               await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
                               setStateMostViewedState(() {});
                             },
-                            seeAdsDetailOnTap: () {},
+                            seeAdsDetailOnTap: () {
+                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                            },
                           );
                         },
                       );
@@ -321,7 +325,9 @@ class HomeView extends StatelessWidget {
                               await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
                               setStateMostViewedState(() {});
                             },
-                            seeAdsDetailOnTap: () {},
+                            seeAdsDetailOnTap: () {
+                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                            },
                           );
                         },
                       );
@@ -369,7 +375,9 @@ class HomeView extends StatelessWidget {
                               await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
                               setStateMostViewedState(() {});
                             },
-                            seeAdsDetailOnTap: () {},
+                            seeAdsDetailOnTap: () {
+                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                            },
                           );
                         },
                       );

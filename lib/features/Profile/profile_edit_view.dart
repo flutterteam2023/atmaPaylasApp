@@ -32,8 +32,6 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
     final nameController = useTextEditingController();
     final surnameController = useTextEditingController();
     final usernameController = useTextEditingController();
-    final userLocatedCity = useTextEditingController();
-    final userLocatedDistrict = useTextEditingController();
     final images = useState<File?>(null);
     final selectedCity = useState<String?>(null);
     final selectedDistrict = useState<String?>(null);

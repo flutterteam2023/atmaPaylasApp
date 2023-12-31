@@ -87,7 +87,10 @@ class FeedRepository extends ApiService with ChangeNotifier {
       requestModel: null,
       headers: {'Accept': 'application/json'},
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
-    );
+    ).then((value) {
+    notifyListeners();
+    return value;
+    });
   }
 
   List<FeedModel> _mostViewedFeeds = [];

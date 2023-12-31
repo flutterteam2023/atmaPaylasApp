@@ -4,6 +4,7 @@ import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,9 @@ class MyAdsView extends ConsumerWidget {
                                           productName: '${snapshot.data?[index].title}',
                                           colorType: const Color(0xff6DCEBB),
                                           textColor: const Color(0xff05473A),
+                                          seeAdsDetailOnTap: () {
+                                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                                          },
                                         );
                                       },
                                     );
@@ -163,6 +167,9 @@ class MyAdsView extends ConsumerWidget {
                                           colorType: const Color(0xffFD8435),
                                           textColor: Colors.white,
                                           isSaved: false,
+                                          seeAdsDetailOnTap: () {
+                                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                                          },
                                         );
                                       },
                                     );
@@ -239,6 +246,9 @@ class MyAdsView extends ConsumerWidget {
                                       textColor: Colors.white,
                                       isSaved: item.isArchived,
                                       width: 358.w,
+                                      seeAdsDetailOnTap: () {
+                                        context.pushRoute(UserAdsDetailRoute(id: item.id));
+                                      },
                                     ),
                                   );
                                 },
