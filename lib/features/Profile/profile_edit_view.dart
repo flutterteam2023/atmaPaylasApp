@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/city_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,16 @@ class ProfileEditView extends StatefulHookConsumerWidget {
 class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
   @override
   Widget build(BuildContext context) {
+    List<String> cities = []; // Şehir listesi
+    List<String> districts = []; // İlçe listesi
     final nameController = useTextEditingController();
     final surnameController = useTextEditingController();
     final usernameController = useTextEditingController();
     final userLocatedCity = useTextEditingController();
     final userLocatedDistrict = useTextEditingController();
     final images = useState<File?>(null);
+    final selectedCity = useState<String?>(null);
+    final selectedDistrict = useState<String?>(null);
     Future<void> _pickImage() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -55,8 +60,8 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                       usernameController.value.text.isEmpty ? null : usernameController.value.text,
                       nameController.value.text.isEmpty ? null : nameController.value.text,
                       surnameController.value.text.isEmpty ? null : surnameController.value.text,
-                      userLocatedCity.value.text.isEmpty ? null : userLocatedCity.value.text,
-                      userLocatedDistrict.value.text.isEmpty ? null : userLocatedDistrict.value.text,
+                     selectedCity.value,
+                      selectedDistrict.value,
                     )
                     .then((value) async => GetIt.instance<UserRepository>().editUserProfilePhoto(images.value));
               } else {
@@ -64,8 +69,8 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                   usernameController.value.text.isEmpty ? null : usernameController.value.text,
                   nameController.value.text.isEmpty ? null : nameController.value.text,
                   surnameController.value.text.isEmpty ? null : surnameController.value.text,
-                  userLocatedCity.value.text.isEmpty ? null : userLocatedCity.value.text,
-                  userLocatedDistrict.value.text.isEmpty ? null : userLocatedDistrict.value.text,
+                  selectedCity.value,
+                      selectedDistrict.value,
                 );
               }
               await UserRepository().getMyUserProfile().then((value) {
@@ -170,18 +175,116 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
               SizedBox(
                 height: 24.h,
               ),
-              ProfileTextfield(
-                controller: userLocatedCity,
-                text: 'İl',
-                hintText: GetIt.instance<UserRepository>().user?.userLocatedCity ?? '',
+              Text(
+                'İl',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(AppColors.primaryTextColor),
+                ),
               ),
+              SizedBox(height: 10),
+              FutureBuilder(
+                future: GetIt.instance<CityRepository>().getCities(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Hata'));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    snapshot.data!.fold((l) => null, (r) => cities = r);
+                    return SizedBox(
+                      height: 60,
+                      child: DropdownButton<String>(
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(AppColors.primaryTextColor),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        isExpanded: true,
+                        underline: Container(
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                        hint: Text(GetIt.instance<UserRepository>().user?.userLocatedCity ?? 'Şehir Seçiniz'),
+                        value: selectedCity.value,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCity.value = newValue!;
+                          });
+                        },
+                        items: cities.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+              
               SizedBox(
                 height: 24.h,
               ),
-              ProfileTextfield(
-                controller: userLocatedDistrict,
-                text: 'Semt',
-                hintText: GetIt.instance<UserRepository>().user?.userLocatedDistrict ?? '',
+              Text(
+                'Semt',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(AppColors.primaryTextColor),
+                ),
+              ),
+              FutureBuilder(
+                future: GetIt.instance<CityRepository>().getDistricts(selectedCity.value ?? 'İstanbul'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Hata'));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    snapshot.data!.fold((l) => null, (r) => districts = r);
+                    return SizedBox(
+                      height: 60,
+                      child: DropdownButton<String>(
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(AppColors.primaryTextColor),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        isExpanded: true,
+                        underline: Container(
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                        hint: Text(GetIt.instance<UserRepository>().user?.userLocatedDistrict ?? 'Semt Seçiniz'),
+                        value: selectedDistrict.value,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedDistrict.value = newValue!;
+                          });
+                        },
+                        items: districts.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
               SizedBox(
                 height: 48.h,
