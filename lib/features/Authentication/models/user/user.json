@@ -2,45 +2,33 @@
 
 [{
     "user_id": 3,
-    "username": "iberkeugur",
-    "email": "",
+    "username": "iberke",
+    "email": "berkeugur67@gmail.com",
     "phone_number": "905372505893",
     "name": "Berke",
-    "surname": "Uğur",
-    "user_located_city": "İstanbul",
-    "user_located_district": "Büyükçekmece",
-    "active_listings_count": 2,
-	"non_active_free_listings_count": 1,
-	"non_active_tradable_listings_count": 0,
-    "image": null
+    "surname": "Uğurlu",
+    "user_located_city": "Konya",
+    "user_located_district": "Selçukklu",
+    "active_listings_count": 1,
+    "receiver_confirmed_free_listings_count": 0,
+    "receiver_confirmed_tradable_listings_count": 0,
+    "waiting_to_confirm_listings_count": 1,
+    "image": "/media/profile_images/6c52cb9b140e491c84a0c2efed2ada2f.jpg"
 },
 {
     "user_id": 3,
-    "username": "iberkeugur",
-    "email": "",
+    "username": "iberke",
+    "email": "berkeugur67@gmail.com",
     "phone_number": "905372505893",
     "name": "Berke",
-    "surname": "Uğur",
-    "user_located_city": "İstanbul",
-    "user_located_district": "Büyükçekmece",
-    "active_listings_count": 2,
-	"non_active_free_listings_count": 1,
-	"non_active_tradable_listings_count": 0,
-    "image": "null"
-},
-{
-    "user_id": 2,
-	"username": "admin",
-	"email": "admin@hotmail.com",
-	"phone_number": "",
-	"name": "",
-	"surname": "",
-	"user_located_city": "Adana",
-	"user_located_district": "",
-	"active_listings_count": 2,
-	"non_active_free_listings_count": 1,
-	"non_active_tradable_listings_count": 0,
-	"image": null
+    "surname": "Uğurlu",
+    "user_located_city": "Konya",
+    "user_located_district": "Selçukklu",
+    "active_listings_count": 1,
+    "receiver_confirmed_free_listings_count": 0,
+    "receiver_confirmed_tradable_listings_count": 0,
+    "waiting_to_confirm_listings_count": 1,
+    "image": null
 }
 
 ]

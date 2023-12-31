@@ -17,9 +17,12 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       userLocatedCity: json['user_located_city'] as String,
       userLocatedDistrict: json['user_located_district'] as String,
       activeListingsCount: json['active_listings_count'] as int,
-      nonActiveFreeListingsCount: json['non_active_free_listings_count'] as int,
-      nonActiveTradableListingsCount:
-          json['non_active_tradable_listings_count'] as int,
+      receiverConfirmedFreeListingsCount:
+          json['receiver_confirmed_free_listings_count'] as int,
+      receiverConfirmedTradableListingsCount:
+          json['receiver_confirmed_tradable_listings_count'] as int,
+      waitingToConfirmListingsCount:
+          json['waiting_to_confirm_listings_count'] as int,
       image: json['image'] as String?,
     );
 
@@ -34,8 +37,11 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'user_located_city': instance.userLocatedCity,
       'user_located_district': instance.userLocatedDistrict,
       'active_listings_count': instance.activeListingsCount,
-      'non_active_free_listings_count': instance.nonActiveFreeListingsCount,
-      'non_active_tradable_listings_count':
-          instance.nonActiveTradableListingsCount,
+      'receiver_confirmed_free_listings_count':
+          instance.receiverConfirmedFreeListingsCount,
+      'receiver_confirmed_tradable_listings_count':
+          instance.receiverConfirmedTradableListingsCount,
+      'waiting_to_confirm_listings_count':
+          instance.waitingToConfirmListingsCount,
       'image': instance.image,
     };

@@ -83,7 +83,7 @@ class _ProfileViewState extends State<ProfileView> {
                       child: Column(
                         children: [
                           Text(
-                            '${GetIt.instance<UserRepository>().user?.nonActiveTradableListingsCount}',
+                            '${GetIt.instance<UserRepository>().user?.receiverConfirmedTradableListingsCount}',
                             style: GoogleFonts.rubik(
                               color: Colors.white,
                               fontSize: 21,
@@ -108,7 +108,7 @@ class _ProfileViewState extends State<ProfileView> {
                       child: Column(
                         children: [
                           Text(
-                            '${GetIt.instance<UserRepository>().user?.nonActiveFreeListingsCount}',
+                            '${GetIt.instance<UserRepository>().user?.receiverConfirmedFreeListingsCount}',
                             style: GoogleFonts.rubik(
                               color: Colors.white,
                               fontSize: 21,

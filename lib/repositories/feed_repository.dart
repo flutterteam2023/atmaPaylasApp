@@ -6,7 +6,6 @@ import 'dart:io';
 
 import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
-import 'package:atma_paylas_app/features/Feed/models/archived_feed_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:flutter/foundation.dart';
@@ -88,8 +87,8 @@ class FeedRepository extends ApiService with ChangeNotifier {
       headers: {'Accept': 'application/json'},
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
     ).then((value) {
-    notifyListeners();
-    return value;
+      notifyListeners();
+      return value;
     });
   }
 
@@ -198,8 +197,13 @@ class FeedRepository extends ApiService with ChangeNotifier {
       path: '/active_user_listing_previews/',
       method: HttpMethod.get,
       requestModel: null,
-      responseConverter: (response) =>
-          (response.data as List<dynamic>).map((e) => FeedModel.fromJson(e as Map<String, dynamic>)).toList(),
+      responseConverter: (response) => (response.data as List<dynamic>)
+          .map(
+            (e) => FeedModel.fromJson(e as Map<String, dynamic>).copyWith(
+              image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null,
+            ),
+          )
+          .toList(),
       headers: {'Accept': 'application/json'},
     ).then((value) {
       value.fold(
@@ -211,5 +215,18 @@ class FeedRepository extends ApiService with ChangeNotifier {
       );
       return value;
     });
+  }
+
+  ///listing type is "free" or "tradable" or "most_viewed"
+  Future<ApiResponse<List<FeedModel>>> getAllListings(String listingType) async {
+    return requestMethod<List<FeedModel>>(
+      path: '/detailed_listings/?listing_type=$listingType&page=1&page_size=100',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
+          .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    );
   }
 }

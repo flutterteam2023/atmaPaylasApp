@@ -38,10 +38,14 @@ mixin _$UserModel {
   String get userLocatedDistrict => throw _privateConstructorUsedError;
   @JsonKey(name: 'active_listings_count')
   int get activeListingsCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'non_active_free_listings_count')
-  int get nonActiveFreeListingsCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'non_active_tradable_listings_count')
-  int get nonActiveTradableListingsCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'receiver_confirmed_free_listings_count')
+  int get receiverConfirmedFreeListingsCount =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+  int get receiverConfirmedTradableListingsCount =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: 'waiting_to_confirm_listings_count')
+  int get waitingToConfirmListingsCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'image')
   String? get image => throw _privateConstructorUsedError;
 
@@ -66,10 +70,12 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'user_located_city') String userLocatedCity,
       @JsonKey(name: 'user_located_district') String userLocatedDistrict,
       @JsonKey(name: 'active_listings_count') int activeListingsCount,
-      @JsonKey(name: 'non_active_free_listings_count')
-      int nonActiveFreeListingsCount,
-      @JsonKey(name: 'non_active_tradable_listings_count')
-      int nonActiveTradableListingsCount,
+      @JsonKey(name: 'receiver_confirmed_free_listings_count')
+      int receiverConfirmedFreeListingsCount,
+      @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+      int receiverConfirmedTradableListingsCount,
+      @JsonKey(name: 'waiting_to_confirm_listings_count')
+      int waitingToConfirmListingsCount,
       @JsonKey(name: 'image') String? image});
 }
 
@@ -95,8 +101,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? userLocatedCity = null,
     Object? userLocatedDistrict = null,
     Object? activeListingsCount = null,
-    Object? nonActiveFreeListingsCount = null,
-    Object? nonActiveTradableListingsCount = null,
+    Object? receiverConfirmedFreeListingsCount = null,
+    Object? receiverConfirmedTradableListingsCount = null,
+    Object? waitingToConfirmListingsCount = null,
     Object? image = freezed,
   }) {
     return _then(_value.copyWith(
@@ -136,13 +143,19 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.activeListingsCount
           : activeListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      nonActiveFreeListingsCount: null == nonActiveFreeListingsCount
-          ? _value.nonActiveFreeListingsCount
-          : nonActiveFreeListingsCount // ignore: cast_nullable_to_non_nullable
+      receiverConfirmedFreeListingsCount: null ==
+              receiverConfirmedFreeListingsCount
+          ? _value.receiverConfirmedFreeListingsCount
+          : receiverConfirmedFreeListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      nonActiveTradableListingsCount: null == nonActiveTradableListingsCount
-          ? _value.nonActiveTradableListingsCount
-          : nonActiveTradableListingsCount // ignore: cast_nullable_to_non_nullable
+      receiverConfirmedTradableListingsCount: null ==
+              receiverConfirmedTradableListingsCount
+          ? _value.receiverConfirmedTradableListingsCount
+          : receiverConfirmedTradableListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      waitingToConfirmListingsCount: null == waitingToConfirmListingsCount
+          ? _value.waitingToConfirmListingsCount
+          : waitingToConfirmListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
       image: freezed == image
           ? _value.image
@@ -170,10 +183,12 @@ abstract class _$$UserModelImplCopyWith<$Res>
       @JsonKey(name: 'user_located_city') String userLocatedCity,
       @JsonKey(name: 'user_located_district') String userLocatedDistrict,
       @JsonKey(name: 'active_listings_count') int activeListingsCount,
-      @JsonKey(name: 'non_active_free_listings_count')
-      int nonActiveFreeListingsCount,
-      @JsonKey(name: 'non_active_tradable_listings_count')
-      int nonActiveTradableListingsCount,
+      @JsonKey(name: 'receiver_confirmed_free_listings_count')
+      int receiverConfirmedFreeListingsCount,
+      @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+      int receiverConfirmedTradableListingsCount,
+      @JsonKey(name: 'waiting_to_confirm_listings_count')
+      int waitingToConfirmListingsCount,
       @JsonKey(name: 'image') String? image});
 }
 
@@ -197,8 +212,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? userLocatedCity = null,
     Object? userLocatedDistrict = null,
     Object? activeListingsCount = null,
-    Object? nonActiveFreeListingsCount = null,
-    Object? nonActiveTradableListingsCount = null,
+    Object? receiverConfirmedFreeListingsCount = null,
+    Object? receiverConfirmedTradableListingsCount = null,
+    Object? waitingToConfirmListingsCount = null,
     Object? image = freezed,
   }) {
     return _then(_$UserModelImpl(
@@ -238,13 +254,19 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.activeListingsCount
           : activeListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      nonActiveFreeListingsCount: null == nonActiveFreeListingsCount
-          ? _value.nonActiveFreeListingsCount
-          : nonActiveFreeListingsCount // ignore: cast_nullable_to_non_nullable
+      receiverConfirmedFreeListingsCount: null ==
+              receiverConfirmedFreeListingsCount
+          ? _value.receiverConfirmedFreeListingsCount
+          : receiverConfirmedFreeListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      nonActiveTradableListingsCount: null == nonActiveTradableListingsCount
-          ? _value.nonActiveTradableListingsCount
-          : nonActiveTradableListingsCount // ignore: cast_nullable_to_non_nullable
+      receiverConfirmedTradableListingsCount: null ==
+              receiverConfirmedTradableListingsCount
+          ? _value.receiverConfirmedTradableListingsCount
+          : receiverConfirmedTradableListingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      waitingToConfirmListingsCount: null == waitingToConfirmListingsCount
+          ? _value.waitingToConfirmListingsCount
+          : waitingToConfirmListingsCount // ignore: cast_nullable_to_non_nullable
               as int,
       image: freezed == image
           ? _value.image
@@ -267,10 +289,12 @@ class _$UserModelImpl implements _UserModel {
       @JsonKey(name: 'user_located_city') required this.userLocatedCity,
       @JsonKey(name: 'user_located_district') required this.userLocatedDistrict,
       @JsonKey(name: 'active_listings_count') required this.activeListingsCount,
-      @JsonKey(name: 'non_active_free_listings_count')
-      required this.nonActiveFreeListingsCount,
-      @JsonKey(name: 'non_active_tradable_listings_count')
-      required this.nonActiveTradableListingsCount,
+      @JsonKey(name: 'receiver_confirmed_free_listings_count')
+      required this.receiverConfirmedFreeListingsCount,
+      @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+      required this.receiverConfirmedTradableListingsCount,
+      @JsonKey(name: 'waiting_to_confirm_listings_count')
+      required this.waitingToConfirmListingsCount,
       @JsonKey(name: 'image') required this.image});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -304,18 +328,21 @@ class _$UserModelImpl implements _UserModel {
   @JsonKey(name: 'active_listings_count')
   final int activeListingsCount;
   @override
-  @JsonKey(name: 'non_active_free_listings_count')
-  final int nonActiveFreeListingsCount;
+  @JsonKey(name: 'receiver_confirmed_free_listings_count')
+  final int receiverConfirmedFreeListingsCount;
   @override
-  @JsonKey(name: 'non_active_tradable_listings_count')
-  final int nonActiveTradableListingsCount;
+  @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+  final int receiverConfirmedTradableListingsCount;
+  @override
+  @JsonKey(name: 'waiting_to_confirm_listings_count')
+  final int waitingToConfirmListingsCount;
   @override
   @JsonKey(name: 'image')
   final String? image;
 
   @override
   String toString() {
-    return 'UserModel(userId: $userId, username: $username, email: $email, phoneNumber: $phoneNumber, name: $name, surname: $surname, userLocatedCity: $userLocatedCity, userLocatedDistrict: $userLocatedDistrict, activeListingsCount: $activeListingsCount, nonActiveFreeListingsCount: $nonActiveFreeListingsCount, nonActiveTradableListingsCount: $nonActiveTradableListingsCount, image: $image)';
+    return 'UserModel(userId: $userId, username: $username, email: $email, phoneNumber: $phoneNumber, name: $name, surname: $surname, userLocatedCity: $userLocatedCity, userLocatedDistrict: $userLocatedDistrict, activeListingsCount: $activeListingsCount, receiverConfirmedFreeListingsCount: $receiverConfirmedFreeListingsCount, receiverConfirmedTradableListingsCount: $receiverConfirmedTradableListingsCount, waitingToConfirmListingsCount: $waitingToConfirmListingsCount, image: $image)';
   }
 
   @override
@@ -337,14 +364,18 @@ class _$UserModelImpl implements _UserModel {
                 other.userLocatedDistrict == userLocatedDistrict) &&
             (identical(other.activeListingsCount, activeListingsCount) ||
                 other.activeListingsCount == activeListingsCount) &&
-            (identical(other.nonActiveFreeListingsCount,
-                    nonActiveFreeListingsCount) ||
-                other.nonActiveFreeListingsCount ==
-                    nonActiveFreeListingsCount) &&
-            (identical(other.nonActiveTradableListingsCount,
-                    nonActiveTradableListingsCount) ||
-                other.nonActiveTradableListingsCount ==
-                    nonActiveTradableListingsCount) &&
+            (identical(other.receiverConfirmedFreeListingsCount,
+                    receiverConfirmedFreeListingsCount) ||
+                other.receiverConfirmedFreeListingsCount ==
+                    receiverConfirmedFreeListingsCount) &&
+            (identical(other.receiverConfirmedTradableListingsCount,
+                    receiverConfirmedTradableListingsCount) ||
+                other.receiverConfirmedTradableListingsCount ==
+                    receiverConfirmedTradableListingsCount) &&
+            (identical(other.waitingToConfirmListingsCount,
+                    waitingToConfirmListingsCount) ||
+                other.waitingToConfirmListingsCount ==
+                    waitingToConfirmListingsCount) &&
             (identical(other.image, image) || other.image == image));
   }
 
@@ -361,8 +392,9 @@ class _$UserModelImpl implements _UserModel {
       userLocatedCity,
       userLocatedDistrict,
       activeListingsCount,
-      nonActiveFreeListingsCount,
-      nonActiveTradableListingsCount,
+      receiverConfirmedFreeListingsCount,
+      receiverConfirmedTradableListingsCount,
+      waitingToConfirmListingsCount,
       image);
 
   @JsonKey(ignore: true)
@@ -392,10 +424,12 @@ abstract class _UserModel implements UserModel {
       required final String userLocatedDistrict,
       @JsonKey(name: 'active_listings_count')
       required final int activeListingsCount,
-      @JsonKey(name: 'non_active_free_listings_count')
-      required final int nonActiveFreeListingsCount,
-      @JsonKey(name: 'non_active_tradable_listings_count')
-      required final int nonActiveTradableListingsCount,
+      @JsonKey(name: 'receiver_confirmed_free_listings_count')
+      required final int receiverConfirmedFreeListingsCount,
+      @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+      required final int receiverConfirmedTradableListingsCount,
+      @JsonKey(name: 'waiting_to_confirm_listings_count')
+      required final int waitingToConfirmListingsCount,
       @JsonKey(name: 'image') required final String? image}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -429,11 +463,14 @@ abstract class _UserModel implements UserModel {
   @JsonKey(name: 'active_listings_count')
   int get activeListingsCount;
   @override
-  @JsonKey(name: 'non_active_free_listings_count')
-  int get nonActiveFreeListingsCount;
+  @JsonKey(name: 'receiver_confirmed_free_listings_count')
+  int get receiverConfirmedFreeListingsCount;
   @override
-  @JsonKey(name: 'non_active_tradable_listings_count')
-  int get nonActiveTradableListingsCount;
+  @JsonKey(name: 'receiver_confirmed_tradable_listings_count')
+  int get receiverConfirmedTradableListingsCount;
+  @override
+  @JsonKey(name: 'waiting_to_confirm_listings_count')
+  int get waitingToConfirmListingsCount;
   @override
   @JsonKey(name: 'image')
   String? get image;

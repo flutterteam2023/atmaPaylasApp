@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -5,18 +7,28 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShareAdsCard extends StatelessWidget {
   const ShareAdsCard({
-    super.key, required this.title, required this.address, required this.date, required this.userName, required this.image, this.onTap, required this.color, required this.textColor, required this.type,
+    super.key,
+    required this.title,
+    required this.address,
+    required this.date,
+    required this.userName,
+    required this.image,
+    this.onTap,
+    required this.color,
+    required this.textColor,
+    required this.type,
+    required this.isShimmer,
   });
-  final String title ;
+  final bool isShimmer;
+  final String title;
   final String address;
   final String date;
   final String userName;
-  final String image;
+  final String? image;
   final void Function()? onTap;
-  final Color color ;
-  final Color textColor ;
+  final Color color;
+  final Color textColor;
   final String type;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +52,26 @@ class ShareAdsCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset(image, fit: BoxFit.fill, width: 143.w, height: 152.h),
+                if (image != null)
+                  Image.network(image!, fit: BoxFit.fill, width: 143.w, height: 152.h)
+                else
+                  Image.asset('assets/images/bicycle.png', fit: BoxFit.fill, width: 143.w, height: 152.h),
                 Positioned(
                   top: 17.h,
                   left: 17.w,
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color:color
-                    ),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r), color: color),
                     child: Padding(
-                      padding:  EdgeInsets.only(left: 8.w,right: 8.w,top: 4.h,bottom: 4.h),
+                      padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 4.h, bottom: 4.h),
                       child: Center(
-                        child: Text(type,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Rubik',
-                          color: textColor,
-                        
-                        ),
+                        child: Text(
+                          type,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Rubik',
+                            color: textColor,
+                          ),
                         ),
                       ),
                     ),
@@ -115,7 +127,7 @@ class ShareAdsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                       userName,
+                        userName,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,

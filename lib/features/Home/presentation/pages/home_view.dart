@@ -1,7 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'dart:io';
-
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
@@ -181,65 +179,76 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      AdsTitle(
-                        title: 'Yakındaki İlanlar',
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
+                      if (false)
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                      if (false)
+                        AdsTitle(
+                          title: 'Yakındaki İlanlar',
+                          onTap: () {},
+                        ),
+                      if (false)
+                        SizedBox(
+                          height: 16.h,
+                        ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 300.h,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().mostViewedFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            colorType: const Color(0xff6DCEBB),
-                            textColor: const Color(0xff05473A),
-                            adsType: 'Ücretsiz Paylaşıyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
-                              setStateMostViewedState(() {});
-                            },
-                            seeAdsDetailOnTap: () {
-                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                            },
-                          );
-                        },
-                      );
-                    },
+                if (false)
+                  SizedBox(
+                    height: 300.h,
+                    child: FutureBuilder(
+                      future: GetIt.instance<FeedRepository>().mostViewedFeeds,
+                      builder: (context, snaphot) {
+                        if (snaphot.connectionState != ConnectionState.done) {
+                          return customListViewShimmer(formatter);
+                        }
+                        return ListView.builder(
+                          padding: EdgeInsets.only(right: 16.w),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snaphot.data?.length,
+                          itemBuilder: (context, index) {
+                            return AdsCard(
+                              isSaved: snaphot.data?[index].isArchived ?? false,
+                              width: 265.w,
+                              colorType: const Color(0xff6DCEBB),
+                              textColor: const Color(0xff05473A),
+                              adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                  ? 'Ücretsiz Paylaşıyor'
+                                  : 'Takas Ediyor',
+                              address:
+                                  '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                              productName: '${snaphot.data?[index].title}}',
+                              date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                              userName: '${snaphot.data?[index].ownerInfo.username}',
+                              productImage: snaphot.data?[index].image1,
+                              saveButtonOnTap: () async {
+                                await GetIt.instance<ArchivedRepository>()
+                                    .toggleArchiveStatus(feedId: snaphot.data![index].id);
+                                await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                                setStateMostViewedState(() {});
+                              },
+                              seeAdsDetailOnTap: () {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
                 SizedBox(
                   height: 24.h,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: AdsTitle(title: 'En Çok Ziyaret Edilenler', onTap: () {}),
+                  child: AdsTitle(
+                    title: 'En Çok Ziyaret Edilenler',
+                    onTap: () {
+                      context.pushRoute(ShareAdsRoute(type: 'most_viewed'));
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 16.h,
@@ -260,9 +269,15 @@ class HomeView extends StatelessWidget {
                           return AdsCard(
                             isSaved: snaphot.data?[index].isArchived ?? false,
                             width: 265.w,
-                            colorType: const Color(0xff6DCEBB),
-                            textColor: const Color(0xff05473A),
-                            adsType: 'Ücretsiz Paylaşıyor',
+                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
                             address:
                                 '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
                             productName: '${snaphot.data?[index].title}}',
@@ -289,7 +304,11 @@ class HomeView extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: AdsTitle(title: 'Ücretsiz Paylaşılar', onTap: () {}),
+                  child: AdsTitle(
+                      title: 'Ücretsiz Paylaşılar',
+                      onTap: () {
+                        context.pushRoute(ShareAdsRoute(type: 'free'));
+                      }),
                 ),
                 SizedBox(
                   height: 16.h,
@@ -310,9 +329,15 @@ class HomeView extends StatelessWidget {
                           return AdsCard(
                             isSaved: snaphot.data?[index].isArchived ?? false,
                             width: 265.w,
-                            colorType: const Color(0xff6DCEBB),
-                            textColor: const Color(0xff05473A),
-                            adsType: 'Ücretsiz Paylaşıyor',
+                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
                             address:
                                 '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
                             productName: '${snaphot.data?[index].title}}',
@@ -339,7 +364,11 @@ class HomeView extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: AdsTitle(title: 'Takas Ürünleri', onTap: () {}),
+                  child: AdsTitle(
+                      title: 'Takas Ürünleri',
+                      onTap: () {
+                        context.pushRoute(ShareAdsRoute(type: 'tradable'));
+                      }),
                 ),
                 SizedBox(
                   height: 16.h,
@@ -360,9 +389,15 @@ class HomeView extends StatelessWidget {
                           return AdsCard(
                             isSaved: snaphot.data?[index].isArchived ?? false,
                             width: 265.w,
-                            colorType: const Color(0xff6DCEBB),
-                            textColor: const Color(0xff05473A),
-                            adsType: 'Ücretsiz Paylaşıyor',
+                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
                             address:
                                 '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
                             productName: '${snaphot.data?[index].title}}',

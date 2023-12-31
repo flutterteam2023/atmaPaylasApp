@@ -68,13 +68,18 @@ class MyAdsView extends ConsumerWidget {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    Text(
-                                      'Hepsini Gör',
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontFamily: 'Rubik',
-                                        fontWeight: FontWeight.w500,
-                                        color: const Color(AppColors.primaryColor),
+                                    InkWell(
+                                      onTap: () {
+                                        context.pushRoute(const SharedProductsRoute());
+                                      },
+                                      child: Text(
+                                        'Hepsini Gör',
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontFamily: 'Rubik',
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(AppColors.primaryColor),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -95,7 +100,7 @@ class MyAdsView extends ConsumerWidget {
                                       itemBuilder: (context, index) {
                                         return AdsCard(
                                           width: 265.w,
-                                          isSaved: false,
+                                          isSaved: snapshot.data?[index].isArchived ?? false,
                                           adsType: 'Ücretsiz Paylaşıyor',
                                           address:
                                               '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
@@ -131,13 +136,18 @@ class MyAdsView extends ConsumerWidget {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    Text(
-                                      'Hepsini Gör',
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontFamily: 'Rubik',
-                                        fontWeight: FontWeight.w500,
-                                        color: const Color(AppColors.primaryColor),
+                                    InkWell(
+                                      onTap: () {
+                                        context.pushRoute(const SwapProductsRoute());
+                                      },
+                                      child: Text(
+                                        'Hepsini Gör',
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontFamily: 'Rubik',
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(AppColors.primaryColor),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -158,15 +168,16 @@ class MyAdsView extends ConsumerWidget {
                                       itemBuilder: (context, index) {
                                         return AdsCard(
                                           width: 265.w,
-                                          adsType: 'Ücretsiz Paylaşıyor',
-                                          address: 'Kadıköy / İstanbul',
-                                          date: '21/10/2023',
-                                          userName: 'user123456',
+                                          adsType: 'Takaslıyor',
+                                          address:
+                                              '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
+                                          date: formatter.format(snapshot.data?[index].createdAt ?? DateTime(2022)),
+                                          userName: '${snapshot.data?[index].ownerInfo.username}}',
                                           productImage: snapshot.data?[index].image1,
                                           productName: '${snapshot.data?[index].title}',
                                           colorType: const Color(0xffFD8435),
                                           textColor: Colors.white,
-                                          isSaved: false,
+                                          isSaved: snapshot.data?[index].isArchived ?? false,
                                           seeAdsDetailOnTap: () {
                                             context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
                                           },

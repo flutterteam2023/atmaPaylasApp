@@ -180,9 +180,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ShareAdsRoute.name: (routeData) {
+      final args = routeData.argsAs<ShareAdsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ShareAdsView(),
+        child: ShareAdsView(
+          type: args.type,
+          key: args.key,
+        ),
       );
     },
     SharedProductsRoute.name: (routeData) {
@@ -652,16 +656,40 @@ class SettingsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ShareAdsView]
-class ShareAdsRoute extends PageRouteInfo<void> {
-  const ShareAdsRoute({List<PageRouteInfo>? children})
-      : super(
+class ShareAdsRoute extends PageRouteInfo<ShareAdsRouteArgs> {
+  ShareAdsRoute({
+    required String type,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           ShareAdsRoute.name,
+          args: ShareAdsRouteArgs(
+            type: type,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ShareAdsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ShareAdsRouteArgs> page =
+      PageInfo<ShareAdsRouteArgs>(name);
+}
+
+class ShareAdsRouteArgs {
+  const ShareAdsRouteArgs({
+    required this.type,
+    this.key,
+  });
+
+  final String type;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ShareAdsRouteArgs{type: $type, key: $key}';
+  }
 }
 
 /// generated route for

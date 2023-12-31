@@ -22,6 +22,8 @@ FeedDetailModel _$FeedDetailModelFromJson(Map<String, dynamic> json) {
 mixin _$FeedDetailModel {
   @JsonKey(name: 'id')
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_info')
+  OwnerInfo get ownerInfo => throw _privateConstructorUsedError;
   @JsonKey(name: 'category')
   int get category => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
@@ -38,6 +40,16 @@ mixin _$FeedDetailModel {
   String? get image3 => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: 'view_count')
+  int get viewCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'receiver_user')
+  dynamic get receiverUser => throw _privateConstructorUsedError;
+  @JsonKey(name: 'receiver_confirmed')
+  bool get receiverConfirmed => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_archived')
+  bool get isArchived => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,6 +65,7 @@ abstract class $FeedDetailModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int id,
+      @JsonKey(name: 'owner_info') OwnerInfo ownerInfo,
       @JsonKey(name: 'category') int category,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'description') String description,
@@ -60,7 +73,14 @@ abstract class $FeedDetailModelCopyWith<$Res> {
       @JsonKey(name: 'image1') String? image1,
       @JsonKey(name: 'image2') String? image2,
       @JsonKey(name: 'image3') String? image3,
-      @JsonKey(name: 'is_active') bool isActive});
+      @JsonKey(name: 'is_active') bool isActive,
+      @JsonKey(name: 'view_count') int viewCount,
+      @JsonKey(name: 'receiver_user') dynamic receiverUser,
+      @JsonKey(name: 'receiver_confirmed') bool receiverConfirmed,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'is_archived') bool isArchived});
+
+  $OwnerInfoCopyWith<$Res> get ownerInfo;
 }
 
 /// @nodoc
@@ -77,6 +97,7 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
   @override
   $Res call({
     Object? id = null,
+    Object? ownerInfo = null,
     Object? category = null,
     Object? title = null,
     Object? description = null,
@@ -85,12 +106,21 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
     Object? image2 = freezed,
     Object? image3 = freezed,
     Object? isActive = null,
+    Object? viewCount = null,
+    Object? receiverUser = freezed,
+    Object? receiverConfirmed = null,
+    Object? createdAt = null,
+    Object? isArchived = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      ownerInfo: null == ownerInfo
+          ? _value.ownerInfo
+          : ownerInfo // ignore: cast_nullable_to_non_nullable
+              as OwnerInfo,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -123,7 +153,35 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
+      viewCount: null == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      receiverUser: freezed == receiverUser
+          ? _value.receiverUser
+          : receiverUser // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      receiverConfirmed: null == receiverConfirmed
+          ? _value.receiverConfirmed
+          : receiverConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isArchived: null == isArchived
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OwnerInfoCopyWith<$Res> get ownerInfo {
+    return $OwnerInfoCopyWith<$Res>(_value.ownerInfo, (value) {
+      return _then(_value.copyWith(ownerInfo: value) as $Val);
+    });
   }
 }
 
@@ -137,6 +195,7 @@ abstract class _$$FeedDetailModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int id,
+      @JsonKey(name: 'owner_info') OwnerInfo ownerInfo,
       @JsonKey(name: 'category') int category,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'description') String description,
@@ -144,7 +203,15 @@ abstract class _$$FeedDetailModelImplCopyWith<$Res>
       @JsonKey(name: 'image1') String? image1,
       @JsonKey(name: 'image2') String? image2,
       @JsonKey(name: 'image3') String? image3,
-      @JsonKey(name: 'is_active') bool isActive});
+      @JsonKey(name: 'is_active') bool isActive,
+      @JsonKey(name: 'view_count') int viewCount,
+      @JsonKey(name: 'receiver_user') dynamic receiverUser,
+      @JsonKey(name: 'receiver_confirmed') bool receiverConfirmed,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'is_archived') bool isArchived});
+
+  @override
+  $OwnerInfoCopyWith<$Res> get ownerInfo;
 }
 
 /// @nodoc
@@ -159,6 +226,7 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? ownerInfo = null,
     Object? category = null,
     Object? title = null,
     Object? description = null,
@@ -167,12 +235,21 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
     Object? image2 = freezed,
     Object? image3 = freezed,
     Object? isActive = null,
+    Object? viewCount = null,
+    Object? receiverUser = freezed,
+    Object? receiverConfirmed = null,
+    Object? createdAt = null,
+    Object? isArchived = null,
   }) {
     return _then(_$FeedDetailModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      ownerInfo: null == ownerInfo
+          ? _value.ownerInfo
+          : ownerInfo // ignore: cast_nullable_to_non_nullable
+              as OwnerInfo,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -205,6 +282,26 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
+      viewCount: null == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      receiverUser: freezed == receiverUser
+          ? _value.receiverUser
+          : receiverUser // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      receiverConfirmed: null == receiverConfirmed
+          ? _value.receiverConfirmed
+          : receiverConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isArchived: null == isArchived
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -214,6 +311,7 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
 class _$FeedDetailModelImpl implements _FeedDetailModel {
   const _$FeedDetailModelImpl(
       {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'owner_info') required this.ownerInfo,
       @JsonKey(name: 'category') required this.category,
       @JsonKey(name: 'title') required this.title,
       @JsonKey(name: 'description') required this.description,
@@ -221,7 +319,12 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
       @JsonKey(name: 'image1') required this.image1,
       @JsonKey(name: 'image2') required this.image2,
       @JsonKey(name: 'image3') required this.image3,
-      @JsonKey(name: 'is_active') required this.isActive});
+      @JsonKey(name: 'is_active') required this.isActive,
+      @JsonKey(name: 'view_count') required this.viewCount,
+      @JsonKey(name: 'receiver_user') required this.receiverUser,
+      @JsonKey(name: 'receiver_confirmed') required this.receiverConfirmed,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'is_archived') required this.isArchived});
 
   factory _$FeedDetailModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FeedDetailModelImplFromJson(json);
@@ -229,6 +332,9 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
   @override
   @JsonKey(name: 'id')
   final int id;
+  @override
+  @JsonKey(name: 'owner_info')
+  final OwnerInfo ownerInfo;
   @override
   @JsonKey(name: 'category')
   final int category;
@@ -253,10 +359,25 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
   @override
   @JsonKey(name: 'is_active')
   final bool isActive;
+  @override
+  @JsonKey(name: 'view_count')
+  final int viewCount;
+  @override
+  @JsonKey(name: 'receiver_user')
+  final dynamic receiverUser;
+  @override
+  @JsonKey(name: 'receiver_confirmed')
+  final bool receiverConfirmed;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  @JsonKey(name: 'is_archived')
+  final bool isArchived;
 
   @override
   String toString() {
-    return 'FeedDetailModel(id: $id, category: $category, title: $title, description: $description, listingType: $listingType, image1: $image1, image2: $image2, image3: $image3, isActive: $isActive)';
+    return 'FeedDetailModel(id: $id, ownerInfo: $ownerInfo, category: $category, title: $title, description: $description, listingType: $listingType, image1: $image1, image2: $image2, image3: $image3, isActive: $isActive, viewCount: $viewCount, receiverUser: $receiverUser, receiverConfirmed: $receiverConfirmed, createdAt: $createdAt, isArchived: $isArchived)';
   }
 
   @override
@@ -265,6 +386,8 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
         (other.runtimeType == runtimeType &&
             other is _$FeedDetailModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.ownerInfo, ownerInfo) ||
+                other.ownerInfo == ownerInfo) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.title, title) || other.title == title) &&
@@ -276,13 +399,38 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
             (identical(other.image2, image2) || other.image2 == image2) &&
             (identical(other.image3, image3) || other.image3 == image3) &&
             (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+                other.isActive == isActive) &&
+            (identical(other.viewCount, viewCount) ||
+                other.viewCount == viewCount) &&
+            const DeepCollectionEquality()
+                .equals(other.receiverUser, receiverUser) &&
+            (identical(other.receiverConfirmed, receiverConfirmed) ||
+                other.receiverConfirmed == receiverConfirmed) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.isArchived, isArchived) ||
+                other.isArchived == isArchived));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, category, title, description,
-      listingType, image1, image2, image3, isActive);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      ownerInfo,
+      category,
+      title,
+      description,
+      listingType,
+      image1,
+      image2,
+      image3,
+      isActive,
+      viewCount,
+      const DeepCollectionEquality().hash(receiverUser),
+      receiverConfirmed,
+      createdAt,
+      isArchived);
 
   @JsonKey(ignore: true)
   @override
@@ -302,6 +450,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
 abstract class _FeedDetailModel implements FeedDetailModel {
   const factory _FeedDetailModel(
           {@JsonKey(name: 'id') required final int id,
+          @JsonKey(name: 'owner_info') required final OwnerInfo ownerInfo,
           @JsonKey(name: 'category') required final int category,
           @JsonKey(name: 'title') required final String title,
           @JsonKey(name: 'description') required final String description,
@@ -309,7 +458,13 @@ abstract class _FeedDetailModel implements FeedDetailModel {
           @JsonKey(name: 'image1') required final String? image1,
           @JsonKey(name: 'image2') required final String? image2,
           @JsonKey(name: 'image3') required final String? image3,
-          @JsonKey(name: 'is_active') required final bool isActive}) =
+          @JsonKey(name: 'is_active') required final bool isActive,
+          @JsonKey(name: 'view_count') required final int viewCount,
+          @JsonKey(name: 'receiver_user') required final dynamic receiverUser,
+          @JsonKey(name: 'receiver_confirmed')
+          required final bool receiverConfirmed,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'is_archived') required final bool isArchived}) =
       _$FeedDetailModelImpl;
 
   factory _FeedDetailModel.fromJson(Map<String, dynamic> json) =
@@ -318,6 +473,9 @@ abstract class _FeedDetailModel implements FeedDetailModel {
   @override
   @JsonKey(name: 'id')
   int get id;
+  @override
+  @JsonKey(name: 'owner_info')
+  OwnerInfo get ownerInfo;
   @override
   @JsonKey(name: 'category')
   int get category;
@@ -342,6 +500,21 @@ abstract class _FeedDetailModel implements FeedDetailModel {
   @override
   @JsonKey(name: 'is_active')
   bool get isActive;
+  @override
+  @JsonKey(name: 'view_count')
+  int get viewCount;
+  @override
+  @JsonKey(name: 'receiver_user')
+  dynamic get receiverUser;
+  @override
+  @JsonKey(name: 'receiver_confirmed')
+  bool get receiverConfirmed;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  @JsonKey(name: 'is_archived')
+  bool get isArchived;
   @override
   @JsonKey(ignore: true)
   _$$FeedDetailModelImplCopyWith<_$FeedDetailModelImpl> get copyWith =>

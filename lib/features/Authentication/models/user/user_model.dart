@@ -18,8 +18,9 @@ class UserModel with _$UserModel {
     @JsonKey(name: 'user_located_city') required String userLocatedCity,
     @JsonKey(name: 'user_located_district') required String userLocatedDistrict,
     @JsonKey(name: 'active_listings_count') required int activeListingsCount,
-    @JsonKey(name: 'non_active_free_listings_count') required int nonActiveFreeListingsCount,
-    @JsonKey(name: 'non_active_tradable_listings_count') required int nonActiveTradableListingsCount,
+    @JsonKey(name: 'receiver_confirmed_free_listings_count') required int receiverConfirmedFreeListingsCount,
+    @JsonKey(name: 'receiver_confirmed_tradable_listings_count') required int receiverConfirmedTradableListingsCount,
+    @JsonKey(name: 'waiting_to_confirm_listings_count') required int waitingToConfirmListingsCount,
     @JsonKey(name: 'image') required String? image,
   }) = _UserModel;
 

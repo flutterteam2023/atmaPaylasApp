@@ -25,9 +25,7 @@ class FeedModel with _$FeedModel {
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _FeedModel;
 
-  factory FeedModel.fromJson(Map<String, dynamic> json) => _$FeedModelFromJson(json).copyWith(
-        image1: json['image1'] != null ? '$IMAGE_BASE_URL${json['image1']}' : null,
-      );
+  factory FeedModel.fromJson(Map<String, dynamic> json) => _$FeedModelFromJson(json).copyWith();
 }
 
 @freezed
