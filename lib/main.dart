@@ -28,12 +28,14 @@ Future<void> main() async {
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
   GetIt.I.registerSingleton<ArchivedRepository>(ArchivedRepository());
   //Sample usage of GetIt
-/* 
-  await GetIt.instance<AuthRepository>()
-      .changePassword(
-    currentPassword: '123456Berke',
-    newPassword: '123Berke',
-    confirmPassword: '123Berke',
+
+  /*  await GetIt.instance<UserRepository>()
+      .editUserProfile(
+    null,
+    null,
+    null,
+    'Konya',
+    'Selçuklu',
   )
       .then((value) {
     value.fold(

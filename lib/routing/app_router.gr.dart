@@ -138,9 +138,17 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     Register2Route.name: (routeData) {
+      final args = routeData.argsAs<Register2RouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const Register2View(),
+        child: Register2View(
+          confirmPassword: args.confirmPassword,
+          password: args.password,
+          username: args.username,
+          email: args.email,
+          phoneNumber: args.phoneNumber,
+          key: args.key,
+        ),
       );
     },
     RegisterCitySelectRoute.name: (routeData) {
@@ -570,16 +578,60 @@ class Register1Route extends PageRouteInfo<void> {
 
 /// generated route for
 /// [Register2View]
-class Register2Route extends PageRouteInfo<void> {
-  const Register2Route({List<PageRouteInfo>? children})
-      : super(
+class Register2Route extends PageRouteInfo<Register2RouteArgs> {
+  Register2Route({
+    required String confirmPassword,
+    required String password,
+    required String username,
+    required String email,
+    required String phoneNumber,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           Register2Route.name,
+          args: Register2RouteArgs(
+            confirmPassword: confirmPassword,
+            password: password,
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'Register2Route';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<Register2RouteArgs> page =
+      PageInfo<Register2RouteArgs>(name);
+}
+
+class Register2RouteArgs {
+  const Register2RouteArgs({
+    required this.confirmPassword,
+    required this.password,
+    required this.username,
+    required this.email,
+    required this.phoneNumber,
+    this.key,
+  });
+
+  final String confirmPassword;
+
+  final String password;
+
+  final String username;
+
+  final String email;
+
+  final String phoneNumber;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'Register2RouteArgs{confirmPassword: $confirmPassword, password: $password, username: $username, email: $email, phoneNumber: $phoneNumber, key: $key}';
+  }
 }
 
 /// generated route for

@@ -270,7 +270,7 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                               ),
                             ],
                           )
-                        : Container(
+                        : SizedBox(
                             height: 100.h,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
