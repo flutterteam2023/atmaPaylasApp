@@ -6,6 +6,7 @@ import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -230,7 +231,12 @@ class HomeView extends StatelessWidget {
                                 setStateMostViewedState(() {});
                               },
                               seeAdsDetailOnTap: () {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                if (GetIt.instance<UserRepository>().user?.userId ==
+                                    snaphot.data?[index].ownerInfo.userId) {
+                                  context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                } else {
+                                  context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                }
                               },
                             );
                           },
@@ -291,7 +297,12 @@ class HomeView extends StatelessWidget {
                               setStateMostViewedState(() {});
                             },
                             seeAdsDetailOnTap: () {
-                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  snaphot.data?[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              }
                             },
                           );
                         },
@@ -351,7 +362,12 @@ class HomeView extends StatelessWidget {
                               setStateMostViewedState(() {});
                             },
                             seeAdsDetailOnTap: () {
-                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  snaphot.data?[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              }
                             },
                           );
                         },
@@ -411,7 +427,12 @@ class HomeView extends StatelessWidget {
                               setStateMostViewedState(() {});
                             },
                             seeAdsDetailOnTap: () {
-                              context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  snaphot.data?[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              }
                             },
                           );
                         },

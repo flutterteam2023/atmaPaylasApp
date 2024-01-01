@@ -450,6 +450,8 @@ OwnerInfo _$OwnerInfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OwnerInfo {
+  @JsonKey(name: 'user_id')
+  int get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
   String get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
@@ -460,6 +462,10 @@ mixin _$OwnerInfo {
   String get city => throw _privateConstructorUsedError;
   @JsonKey(name: 'district')
   String get district => throw _privateConstructorUsedError;
+  @JsonKey(name: 'profile_image')
+  String? get profileImage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'phone_number')
+  String get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -473,11 +479,14 @@ abstract class $OwnerInfoCopyWith<$Res> {
       _$OwnerInfoCopyWithImpl<$Res, OwnerInfo>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'username') String username,
+      {@JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'username') String username,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'surname') String surname,
       @JsonKey(name: 'city') String city,
-      @JsonKey(name: 'district') String district});
+      @JsonKey(name: 'district') String district,
+      @JsonKey(name: 'profile_image') String? profileImage,
+      @JsonKey(name: 'phone_number') String phoneNumber});
 }
 
 /// @nodoc
@@ -493,13 +502,20 @@ class _$OwnerInfoCopyWithImpl<$Res, $Val extends OwnerInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? username = null,
     Object? name = null,
     Object? surname = null,
     Object? city = null,
     Object? district = null,
+    Object? profileImage = freezed,
+    Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -519,6 +535,14 @@ class _$OwnerInfoCopyWithImpl<$Res, $Val extends OwnerInfo>
       district: null == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImage: freezed == profileImage
+          ? _value.profileImage
+          : profileImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -533,11 +557,14 @@ abstract class _$$OwnerInfoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'username') String username,
+      {@JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'username') String username,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'surname') String surname,
       @JsonKey(name: 'city') String city,
-      @JsonKey(name: 'district') String district});
+      @JsonKey(name: 'district') String district,
+      @JsonKey(name: 'profile_image') String? profileImage,
+      @JsonKey(name: 'phone_number') String phoneNumber});
 }
 
 /// @nodoc
@@ -551,13 +578,20 @@ class __$$OwnerInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? username = null,
     Object? name = null,
     Object? surname = null,
     Object? city = null,
     Object? district = null,
+    Object? profileImage = freezed,
+    Object? phoneNumber = null,
   }) {
     return _then(_$OwnerInfoImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -578,6 +612,14 @@ class __$$OwnerInfoImplCopyWithImpl<$Res>
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
               as String,
+      profileImage: freezed == profileImage
+          ? _value.profileImage
+          : profileImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -586,15 +628,21 @@ class __$$OwnerInfoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OwnerInfoImpl implements _OwnerInfo {
   const _$OwnerInfoImpl(
-      {@JsonKey(name: 'username') required this.username,
+      {@JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'username') required this.username,
       @JsonKey(name: 'name') required this.name,
       @JsonKey(name: 'surname') required this.surname,
       @JsonKey(name: 'city') required this.city,
-      @JsonKey(name: 'district') required this.district});
+      @JsonKey(name: 'district') required this.district,
+      @JsonKey(name: 'profile_image') required this.profileImage,
+      @JsonKey(name: 'phone_number') required this.phoneNumber});
 
   factory _$OwnerInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$OwnerInfoImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'user_id')
+  final int userId;
   @override
   @JsonKey(name: 'username')
   final String username;
@@ -610,10 +658,16 @@ class _$OwnerInfoImpl implements _OwnerInfo {
   @override
   @JsonKey(name: 'district')
   final String district;
+  @override
+  @JsonKey(name: 'profile_image')
+  final String? profileImage;
+  @override
+  @JsonKey(name: 'phone_number')
+  final String phoneNumber;
 
   @override
   String toString() {
-    return 'OwnerInfo(username: $username, name: $name, surname: $surname, city: $city, district: $district)';
+    return 'OwnerInfo(userId: $userId, username: $username, name: $name, surname: $surname, city: $city, district: $district, profileImage: $profileImage, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -621,19 +675,24 @@ class _$OwnerInfoImpl implements _OwnerInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OwnerInfoImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.district, district) ||
-                other.district == district));
+                other.district == district) &&
+            (identical(other.profileImage, profileImage) ||
+                other.profileImage == profileImage) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, username, name, surname, city, district);
+  int get hashCode => Object.hash(runtimeType, userId, username, name, surname,
+      city, district, profileImage, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -651,16 +710,22 @@ class _$OwnerInfoImpl implements _OwnerInfo {
 
 abstract class _OwnerInfo implements OwnerInfo {
   const factory _OwnerInfo(
-          {@JsonKey(name: 'username') required final String username,
+          {@JsonKey(name: 'user_id') required final int userId,
+          @JsonKey(name: 'username') required final String username,
           @JsonKey(name: 'name') required final String name,
           @JsonKey(name: 'surname') required final String surname,
           @JsonKey(name: 'city') required final String city,
-          @JsonKey(name: 'district') required final String district}) =
+          @JsonKey(name: 'district') required final String district,
+          @JsonKey(name: 'profile_image') required final String? profileImage,
+          @JsonKey(name: 'phone_number') required final String phoneNumber}) =
       _$OwnerInfoImpl;
 
   factory _OwnerInfo.fromJson(Map<String, dynamic> json) =
       _$OwnerInfoImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'user_id')
+  int get userId;
   @override
   @JsonKey(name: 'username')
   String get username;
@@ -676,6 +741,12 @@ abstract class _OwnerInfo implements OwnerInfo {
   @override
   @JsonKey(name: 'district')
   String get district;
+  @override
+  @JsonKey(name: 'profile_image')
+  String? get profileImage;
+  @override
+  @JsonKey(name: 'phone_number')
+  String get phoneNumber;
   @override
   @JsonKey(ignore: true)
   _$$OwnerInfoImplCopyWith<_$OwnerInfoImpl> get copyWith =>

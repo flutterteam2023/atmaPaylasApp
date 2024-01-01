@@ -12,20 +12,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class SharedProductsView extends ConsumerWidget {
-  const SharedProductsView({super.key});
+class SharingProductsView extends ConsumerWidget {
+  const SharingProductsView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().myInactiveFreeFeeds,
+      future: GetIt.instance<FeedRepository>().myActiveFreeFeeds,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: false,
               title: Text(
-                'Paylaşdığım Ürünlerim',
+                'Paylaşılacak Ürünlerim',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
@@ -67,7 +67,7 @@ class SharedProductsView extends ConsumerWidget {
           appBar: AppBar(
             centerTitle: false,
             title: Text(
-              'Paylaşdığım Ürünlerim',
+              'Paylaşılacak Ürünlerim',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w400,

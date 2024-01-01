@@ -195,6 +195,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SharedProductsView(),
       );
     },
+    SharingProductsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SharingProductsView(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -205,6 +211,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SwapProductsView(),
+      );
+    },
+    SwappedProductsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SwappedProductsView(),
       );
     },
     TransitionCategoryRoute.name: (routeData) {
@@ -707,6 +719,20 @@ class SharedProductsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SharingProductsView]
+class SharingProductsRoute extends PageRouteInfo<void> {
+  const SharingProductsRoute({List<PageRouteInfo>? children})
+      : super(
+          SharingProductsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SharingProductsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SplashView]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
@@ -730,6 +756,20 @@ class SwapProductsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SwapProductsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SwappedProductsView]
+class SwappedProductsRoute extends PageRouteInfo<void> {
+  const SwappedProductsRoute({List<PageRouteInfo>? children})
+      : super(
+          SwappedProductsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SwappedProductsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

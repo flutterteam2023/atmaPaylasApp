@@ -161,7 +161,9 @@ class _ProfileViewState extends State<ProfileView> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const SwappedProductsRoute());
+                  },
                   borderRadius: BorderRadius.circular(5),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -198,7 +200,9 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 const Gap(9),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const SharedProductsRoute());
+                  },
                   borderRadius: BorderRadius.circular(5),
                   child: Container(
                     width: MediaQuery.of(context).size.width,

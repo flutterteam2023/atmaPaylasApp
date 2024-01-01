@@ -28,8 +28,8 @@ class FeedDetailModel with _$FeedDetailModel {
   }) = _FeedDetailModel;
 
   factory FeedDetailModel.fromJson(Map<String, dynamic> json) => _$FeedDetailModelFromJson(json).copyWith(
-        image1: json['image1'] != null ? '$IMAGE_BASE_URL${json['image1']}' : null,
+      /*    image1: json['image1'] != null ? '$IMAGE_BASE_URL${json['image1']}' : null,
         image2: json['image2'] != null ? '$IMAGE_BASE_URL${json['image2']}' : null,
-        image3: json['image3'] != null ? '$IMAGE_BASE_URL${json['image3']}' : null,
+        image3: json['image3'] != null ? '$IMAGE_BASE_URL${json['image3']}' : null, */
       );
 }

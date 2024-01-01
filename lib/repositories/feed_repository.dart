@@ -200,8 +200,8 @@ class FeedRepository extends ApiService with ChangeNotifier {
       responseConverter: (response) => (response.data as List<dynamic>)
           .map(
             (e) => FeedModel.fromJson(e as Map<String, dynamic>).copyWith(
-              image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null,
-            ),
+                /* image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null, */
+                ),
           )
           .toList(),
       headers: {'Accept': 'application/json'},
@@ -227,6 +227,23 @@ class FeedRepository extends ApiService with ChangeNotifier {
           .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       headers: {'Accept': 'application/json'},
+    );
+  }
+
+  Future<ApiResponse<String>> completeListing(String listingId, ListingTypes listingType, String otherUserName) async {
+    return requestMethod<String>(
+      path: '/complete_listing/',
+      method: HttpMethod.post,
+      requestModel: {
+        'listing_id': listingId,
+        'listing_type': listingType.name,
+        'other_username': otherUserName,
+      },
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
     );
   }
 }

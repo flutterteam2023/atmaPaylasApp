@@ -26,9 +26,11 @@ import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
+import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/sharing_products_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
+import 'package:atma_paylas_app/features/SwapProducts/presentation/swapped_products_view.dart';
 import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
@@ -153,8 +155,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: MyAddsRoute.page, initial: false),
         AutoRoute(page: UserAdsDetailRoute.page, initial: false),
         AutoRoute(page: AdsStateRoute.page, initial: false),
+        AutoRoute(page: SharingProductsRoute.page, initial: false),
         AutoRoute(page: SharedProductsRoute.page, initial: false),
         AutoRoute(page: SwapProductsRoute.page, initial: false),
+        AutoRoute(page: SwappedProductsRoute.page, initial: false),
         AutoRoute(page: UserAgreementRoute.page, initial: false),
         AutoRoute(page: FeedBackApprovalRoute.page, initial: false),
         AutoRoute(page: GiveFeedBackRoute.page, initial: false),

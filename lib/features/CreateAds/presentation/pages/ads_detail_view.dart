@@ -134,7 +134,9 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      color: const Color(0xff6DCEBB),
+                                      color: r.listingType == ListingTypes.free.name
+                                          ? const Color(0xff6DCEBB)
+                                          : const Color(0xffFD8435),
                                     ),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
@@ -146,7 +148,9 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
                                           fontFamily: 'Rubik',
-                                          color: const Color(0xff05473A),
+                                          color: r.listingType == ListingTypes.free.name
+                                              ? const Color(0xff05473A)
+                                              : Colors.white,
                                         ),
                                       ),
                                     ),
@@ -311,11 +315,16 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                   Container(
                                     height: 48.r,
                                     width: 48.r,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/images/persondemo.png'),
-                                        fit: BoxFit.cover,
-                                      ),
+                                    decoration: BoxDecoration(
+                                      image: r.ownerInfo.profileImage != null
+                                          ? DecorationImage(
+                                              image: NetworkImage(r.ownerInfo.profileImage!),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : const DecorationImage(
+                                              image: AssetImage('assets/images/persondemo.png'),
+                                              fit: BoxFit.cover,
+                                            ),
                                       shape: BoxShape.circle,
                                     ),
                                   ),

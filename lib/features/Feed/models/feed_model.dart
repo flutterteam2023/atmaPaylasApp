@@ -31,11 +31,14 @@ class FeedModel with _$FeedModel {
 @freezed
 class OwnerInfo with _$OwnerInfo {
   const factory OwnerInfo({
+    @JsonKey(name: 'user_id') required int userId,
     @JsonKey(name: 'username') required String username,
     @JsonKey(name: 'name') required String name,
     @JsonKey(name: 'surname') required String surname,
     @JsonKey(name: 'city') required String city,
     @JsonKey(name: 'district') required String district,
+    @JsonKey(name: 'profile_image') required String? profileImage,
+    @JsonKey(name: 'phone_number') required String phoneNumber,
   }) = _OwnerInfo;
 
   factory OwnerInfo.fromJson(Map<String, dynamic> json) => _$OwnerInfoFromJson(json);

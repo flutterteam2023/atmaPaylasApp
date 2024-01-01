@@ -40,18 +40,24 @@ Map<String, dynamic> _$$FeedModelImplToJson(_$FeedModelImpl instance) =>
 
 _$OwnerInfoImpl _$$OwnerInfoImplFromJson(Map<String, dynamic> json) =>
     _$OwnerInfoImpl(
+      userId: json['user_id'] as int,
       username: json['username'] as String,
       name: json['name'] as String,
       surname: json['surname'] as String,
       city: json['city'] as String,
       district: json['district'] as String,
+      profileImage: json['profile_image'] as String?,
+      phoneNumber: json['phone_number'] as String,
     );
 
 Map<String, dynamic> _$$OwnerInfoImplToJson(_$OwnerInfoImpl instance) =>
     <String, dynamic>{
+      'user_id': instance.userId,
       'username': instance.username,
       'name': instance.name,
       'surname': instance.surname,
       'city': instance.city,
       'district': instance.district,
+      'profile_image': instance.profileImage,
+      'phone_number': instance.phoneNumber,
     };

@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:atma_paylas_app/common_widgets/share_ads_card.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
@@ -8,24 +6,23 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class SharedProductsView extends ConsumerWidget {
-  const SharedProductsView({super.key});
+class SwappedProductsView extends StatelessWidget {
+  const SwappedProductsView({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().myInactiveFreeFeeds,
+      future: GetIt.instance<FeedRepository>().myInactiveTradableFeeds,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: false,
               title: Text(
-                'Paylaşdığım Ürünlerim',
+                'Takasladığım Ürünlerim',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
@@ -67,7 +64,7 @@ class SharedProductsView extends ConsumerWidget {
           appBar: AppBar(
             centerTitle: false,
             title: Text(
-              'Paylaşdığım Ürünlerim',
+              'Takasladığım Ürünlerim',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w400,
