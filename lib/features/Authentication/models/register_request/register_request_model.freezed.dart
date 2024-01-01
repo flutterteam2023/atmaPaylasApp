@@ -20,23 +20,23 @@ RegisterRequestModel _$RegisterRequestModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RegisterRequestModel {
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   String get email => throw _privateConstructorUsedError;
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: "password")
+  @JsonKey(name: 'password')
   String get password => throw _privateConstructorUsedError;
-  @JsonKey(name: "confirmation")
+  @JsonKey(name: 'confirmation')
   String get confirmation => throw _privateConstructorUsedError;
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   String get surname => throw _privateConstructorUsedError;
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   String get phoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   String get userLocatedCity => throw _privateConstructorUsedError;
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   String get userLocatedDistrict => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,15 +52,15 @@ abstract class $RegisterRequestModelCopyWith<$Res> {
       _$RegisterRequestModelCopyWithImpl<$Res, RegisterRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: "email") String email,
-      @JsonKey(name: "username") String username,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "confirmation") String confirmation,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "surname") String surname,
-      @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "user_located_city") String userLocatedCity,
-      @JsonKey(name: "user_located_district") String userLocatedDistrict});
+      {@JsonKey(name: 'email') String email,
+      @JsonKey(name: 'username') String username,
+      @JsonKey(name: 'password') String password,
+      @JsonKey(name: 'confirmation') String confirmation,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'surname') String surname,
+      @JsonKey(name: 'phone_number') String phoneNumber,
+      @JsonKey(name: 'user_located_city') String userLocatedCity,
+      @JsonKey(name: 'user_located_district') String userLocatedDistrict});
 }
 
 /// @nodoc
@@ -137,15 +137,15 @@ abstract class _$$RegisterRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "email") String email,
-      @JsonKey(name: "username") String username,
-      @JsonKey(name: "password") String password,
-      @JsonKey(name: "confirmation") String confirmation,
-      @JsonKey(name: "name") String name,
-      @JsonKey(name: "surname") String surname,
-      @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "user_located_city") String userLocatedCity,
-      @JsonKey(name: "user_located_district") String userLocatedDistrict});
+      {@JsonKey(name: 'email') String email,
+      @JsonKey(name: 'username') String username,
+      @JsonKey(name: 'password') String password,
+      @JsonKey(name: 'confirmation') String confirmation,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'surname') String surname,
+      @JsonKey(name: 'phone_number') String phoneNumber,
+      @JsonKey(name: 'user_located_city') String userLocatedCity,
+      @JsonKey(name: 'user_located_district') String userLocatedDistrict});
 }
 
 /// @nodoc
@@ -214,46 +214,46 @@ class __$$RegisterRequestModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RegisterRequestModelImpl implements _RegisterRequestModel {
   const _$RegisterRequestModelImpl(
-      {@JsonKey(name: "email") required this.email,
-      @JsonKey(name: "username") required this.username,
-      @JsonKey(name: "password") required this.password,
-      @JsonKey(name: "confirmation") required this.confirmation,
-      @JsonKey(name: "name") required this.name,
-      @JsonKey(name: "surname") required this.surname,
-      @JsonKey(name: "phone_number") required this.phoneNumber,
-      @JsonKey(name: "user_located_city") required this.userLocatedCity,
-      @JsonKey(name: "user_located_district")
+      {@JsonKey(name: 'email') required this.email,
+      @JsonKey(name: 'username') required this.username,
+      @JsonKey(name: 'password') required this.password,
+      @JsonKey(name: 'confirmation') required this.confirmation,
+      @JsonKey(name: 'name') required this.name,
+      @JsonKey(name: 'surname') required this.surname,
+      @JsonKey(name: 'phone_number') required this.phoneNumber,
+      @JsonKey(name: 'user_located_city') required this.userLocatedCity,
+      @JsonKey(name: 'user_located_district')
       required this.userLocatedDistrict});
 
   factory _$RegisterRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterRequestModelImplFromJson(json);
 
   @override
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   final String email;
   @override
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   final String username;
   @override
-  @JsonKey(name: "password")
+  @JsonKey(name: 'password')
   final String password;
   @override
-  @JsonKey(name: "confirmation")
+  @JsonKey(name: 'confirmation')
   final String confirmation;
   @override
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   final String name;
   @override
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   final String surname;
   @override
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @override
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   final String userLocatedCity;
   @override
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   final String userLocatedDistrict;
 
   @override
@@ -315,46 +315,46 @@ class _$RegisterRequestModelImpl implements _RegisterRequestModel {
 
 abstract class _RegisterRequestModel implements RegisterRequestModel {
   const factory _RegisterRequestModel(
-      {@JsonKey(name: "email") required final String email,
-      @JsonKey(name: "username") required final String username,
-      @JsonKey(name: "password") required final String password,
-      @JsonKey(name: "confirmation") required final String confirmation,
-      @JsonKey(name: "name") required final String name,
-      @JsonKey(name: "surname") required final String surname,
-      @JsonKey(name: "phone_number") required final String phoneNumber,
-      @JsonKey(name: "user_located_city") required final String userLocatedCity,
-      @JsonKey(name: "user_located_district")
+      {@JsonKey(name: 'email') required final String email,
+      @JsonKey(name: 'username') required final String username,
+      @JsonKey(name: 'password') required final String password,
+      @JsonKey(name: 'confirmation') required final String confirmation,
+      @JsonKey(name: 'name') required final String name,
+      @JsonKey(name: 'surname') required final String surname,
+      @JsonKey(name: 'phone_number') required final String phoneNumber,
+      @JsonKey(name: 'user_located_city') required final String userLocatedCity,
+      @JsonKey(name: 'user_located_district')
       required final String userLocatedDistrict}) = _$RegisterRequestModelImpl;
 
   factory _RegisterRequestModel.fromJson(Map<String, dynamic> json) =
       _$RegisterRequestModelImpl.fromJson;
 
   @override
-  @JsonKey(name: "email")
+  @JsonKey(name: 'email')
   String get email;
   @override
-  @JsonKey(name: "username")
+  @JsonKey(name: 'username')
   String get username;
   @override
-  @JsonKey(name: "password")
+  @JsonKey(name: 'password')
   String get password;
   @override
-  @JsonKey(name: "confirmation")
+  @JsonKey(name: 'confirmation')
   String get confirmation;
   @override
-  @JsonKey(name: "name")
+  @JsonKey(name: 'name')
   String get name;
   @override
-  @JsonKey(name: "surname")
+  @JsonKey(name: 'surname')
   String get surname;
   @override
-  @JsonKey(name: "phone_number")
+  @JsonKey(name: 'phone_number')
   String get phoneNumber;
   @override
-  @JsonKey(name: "user_located_city")
+  @JsonKey(name: 'user_located_city')
   String get userLocatedCity;
   @override
-  @JsonKey(name: "user_located_district")
+  @JsonKey(name: 'user_located_district')
   String get userLocatedDistrict;
   @override
   @JsonKey(ignore: true)

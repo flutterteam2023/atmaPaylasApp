@@ -193,376 +193,436 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, fontFamily: 'Rubik', color: Colors.black),
         ),
       ),
-      bottomSheet: Container(
-        height: 100.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Bounceable(
-              onTap: () async {
-                await showModalBottomSheet<bool>(
-                  context: context,
-                  builder: (context) => SendToVerifyingOtherUserView(id: widget.id),
-                ).then((value) {
-                  if (value ?? false) {
-                    setState(() {});
-                  }
-                });
-              },
-              child: Container(
-                width: 171.w,
-                height: 49.h,
-                decoration: BoxDecoration(
-                  color: const Color(AppColors.primaryLightColor),
-                  borderRadius: BorderRadius.circular(5.r),
+      body: FutureBuilder(
+        future: GetIt.instance<FeedRepository>().getFeedDetails(widget.id.toString()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Hata Oluştu'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-                  child: Center(
-                    child: Text(
-                      'İlan Durumu Belirle',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Rubik',
-                        color: const Color(AppColors.primaryColor),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Bounceable(
-              onTap: () {},
-              child: Container(
-                width: 171.w,
-                height: 49.h,
-                decoration:
-                    BoxDecoration(color: const Color(AppColors.primaryColor), borderRadius: BorderRadius.circular(5.r)),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-                  child: Center(
-                    child: Text(
-                      'İlanı Düzenle',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Rubik',
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: FutureBuilder(
-          future: GetIt.instance<FeedRepository>().getFeedDetails(widget.id.toString()),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('Hata Oluştu'),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                ],
-              );
-            }
-            if (snapshot.hasData) {
-              return snapshot.data!.fold((l) => const SizedBox(), (r) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              ],
+            );
+          }
+          if (snapshot.hasData) {
+            return snapshot.data!.fold((l) => const SizedBox(), (r) {
+              return Scaffold(
+                bottomSheet: r.receiverUser != null && r.receiverConfirmed == false
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Stack(
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
-                                height: 200.h,
-                                width: 358.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  image: r.image1 != null
-                                      ? DecorationImage(image: NetworkImage(r.image1!), fit: BoxFit.cover)
-                                      : const DecorationImage(
-                                          image: AssetImage('assets/images/adsdemo.png'),
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
+                              const Gap(18),
+                              const Icon(
+                                Icons.timelapse,
+                                color: Color(AppColors.primaryColor),
+                                size: 32,
                               ),
-                              Positioned(
-                                top: 16.h,
-                                left: 16.w,
-                                child: Bounceable(
-                                  onTap: () {},
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      color: r.listingType == ListingTypes.free.name
-                                          ? const Color(0xff6DCEBB)
-                                          : const Color(0xffFD8435),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
-                                      child: Text(
-                                        r.listingType == ListingTypes.free.name
-                                            ? 'Ücretsiz Paylaşıyor'
-                                            : 'Takaslanıyor',
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Rubik',
-                                          color: r.listingType == ListingTypes.free.name
-                                              ? const Color(0xff05473A)
-                                              : Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               Text(
-                                r.title,
+                                'Paylaşılan Kullanıcı Tarafından\nOnay Bekleniyor...',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Rubik',
-                                  color: const Color(0xff000000),
-                                ),
-                              ),
-                              Text(
-                                formatter.format(r.createdAt),
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Rubik',
-                                  color: const Color(0xff858585),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 4.h,
-                          ),
-                          Text(
-                            '${r.ownerInfo.district} / ${r.ownerInfo.city}',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Rubik',
-                              color: const Color(AppColors.primaryColor),
-                            ),
-                          ),
-                          SizedBox(height: 24.h),
-                          Text(
-                            r.title,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Rubik',
-                              color: const Color(0xff000000),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          SizedBox(
-                            width: 358.w,
-                            child: Text(
-                              r.description,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Rubik',
-                                color: const Color(AppColors.primaryTextColor),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 90.h,
-                      child: ListView(
-                        padding: EdgeInsets.only(left: 8.w, right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        children: [
-                          if (r.image1 != null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                width: 113.w,
-                                height: 90.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  image: DecorationImage(
-                                    image: NetworkImage(r.image1!),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                          if (r.image2 != null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                width: 113.w,
-                                height: 90.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  image: DecorationImage(
-                                    image: NetworkImage(r.image2!),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                          if (r.image3 != null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                width: 113.w,
-                                height: 90.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  image: DecorationImage(
-                                    image: NetworkImage(r.image3!),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w, right: 16.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ürün Sahibi',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Rubik',
-                              color: const Color(0xff000000),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 48.r,
-                                    width: 48.r,
-                                    decoration: BoxDecoration(
-                                      image: r.ownerInfo.profileImage != null
-                                          ? DecorationImage(
-                                              image: NetworkImage(r.ownerInfo.profileImage!),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : const DecorationImage(
-                                              image: AssetImage('assets/images/persondemo.png'),
-                                              fit: BoxFit.cover,
-                                            ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${r.ownerInfo.name} ${r.ownerInfo.surname}',
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Rubik',
-                                          color: const Color(0xff000000),
-                                        ),
-                                      ),
-                                      Text(
-                                        r.ownerInfo.username,
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Rubik',
-                                          color: const Color(
-                                            AppColors.primaryTextColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '${r.ownerInfo.district} / ${r.ownerInfo.city}',
-                                style: TextStyle(
-                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Rubik',
                                   color: const Color(AppColors.primaryColor),
                                 ),
                               ),
+                              const Gap(18 * 2),
                             ],
                           ),
-                          SizedBox(
-                            height: 180.h,
-                          ),
                         ],
+                      )
+                    : r.receiverUser != null && r.receiverConfirmed
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Gap(18),
+                                  const Icon(
+                                    Icons.done,
+                                    color: Color(AppColors.primaryColor),
+                                    size: 32,
+                                  ),
+                                  Text(
+                                    'İlan Paylaşıldı',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Rubik',
+                                      color: const Color(AppColors.primaryColor),
+                                    ),
+                                  ),
+                                  const Gap(18 * 2),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(
+                            height: 100.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Bounceable(
+                                  onTap: () async {
+                                    await showModalBottomSheet<bool>(
+                                      context: context,
+                                      builder: (context) => SendToVerifyingOtherUserView(id: widget.id),
+                                    ).then((value) {
+                                      if (value ?? false) {
+                                        setState(() {});
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 171.w,
+                                    height: 49.h,
+                                    decoration: BoxDecoration(
+                                      color: const Color(AppColors.primaryLightColor),
+                                      borderRadius: BorderRadius.circular(5.r),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+                                      child: Center(
+                                        child: Text(
+                                          'İlan Durumu Belirle',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Rubik',
+                                            color: const Color(AppColors.primaryColor),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Bounceable(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 171.w,
+                                    height: 49.h,
+                                    decoration: BoxDecoration(
+                                      color: const Color(AppColors.primaryColor),
+                                      borderRadius: BorderRadius.circular(5.r),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+                                      child: Center(
+                                        child: Text(
+                                          'İlanı Düzenle',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Rubik',
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 200.h,
+                                  width: 358.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.r),
+                                    image: r.image1 != null
+                                        ? DecorationImage(image: NetworkImage(r.image1!), fit: BoxFit.cover)
+                                        : const DecorationImage(
+                                            image: AssetImage('assets/images/adsdemo.png'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 16.h,
+                                  left: 16.w,
+                                  child: Bounceable(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        color: r.listingType == ListingTypes.free.name
+                                            ? const Color(0xff6DCEBB)
+                                            : const Color(0xffFD8435),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+                                        child: Text(
+                                          r.listingType == ListingTypes.free.name
+                                              ? 'Ücretsiz Paylaşıyor'
+                                              : 'Takaslanıyor',
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Rubik',
+                                            color: r.listingType == ListingTypes.free.name
+                                                ? const Color(0xff05473A)
+                                                : Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  r.title,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Rubik',
+                                    color: const Color(0xff000000),
+                                  ),
+                                ),
+                                Text(
+                                  formatter.format(r.createdAt),
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Rubik',
+                                    color: const Color(0xff858585),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Text(
+                              '${r.ownerInfo.district} / ${r.ownerInfo.city}',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Rubik',
+                                color: const Color(AppColors.primaryColor),
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+                            Text(
+                              r.title,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Rubik',
+                                color: const Color(0xff000000),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            SizedBox(
+                              width: 358.w,
+                              child: Text(
+                                r.description,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Rubik',
+                                  color: const Color(AppColors.primaryTextColor),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              });
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+                      SizedBox(
+                        height: 90.h,
+                        child: ListView(
+                          padding: EdgeInsets.only(left: 8.w, right: 16.w),
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          children: [
+                            if (r.image1 != null)
+                              Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Container(
+                                  width: 113.w,
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(r.image1!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              const SizedBox.shrink(),
+                            if (r.image2 != null)
+                              Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Container(
+                                  width: 113.w,
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(r.image2!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              const SizedBox.shrink(),
+                            if (r.image3 != null)
+                              Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Container(
+                                  width: 113.w,
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(r.image3!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              const SizedBox.shrink(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 24.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w, right: 16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Ürün Sahibi',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Rubik',
+                                color: const Color(0xff000000),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 48.r,
+                                      width: 48.r,
+                                      decoration: BoxDecoration(
+                                        image: r.ownerInfo.profileImage != null
+                                            ? DecorationImage(
+                                                image: NetworkImage(r.ownerInfo.profileImage!),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : const DecorationImage(
+                                                image: AssetImage('assets/images/persondemo.png'),
+                                                fit: BoxFit.cover,
+                                              ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8.w,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${r.ownerInfo.name} ${r.ownerInfo.surname}',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Rubik',
+                                            color: const Color(0xff000000),
+                                          ),
+                                        ),
+                                        Text(
+                                          r.ownerInfo.username,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Rubik',
+                                            color: const Color(
+                                              AppColors.primaryTextColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '${r.ownerInfo.district} / ${r.ownerInfo.city}',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Rubik',
+                                    color: const Color(AppColors.primaryColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 180.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

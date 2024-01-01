@@ -35,10 +35,11 @@ class WelcomeView extends ConsumerWidget {
                     child: Text(
                       'Atma Paylaş Takasla',
                       style: TextStyle(
-                          fontSize: 21.sp,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Rubik',
-                          color: const Color(AppColors.primaryColor)),
+                        fontSize: 21.sp,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Rubik',
+                        color: const Color(AppColors.primaryColor),
+                      ),
                     ),
                   ),
                 ),
@@ -54,14 +55,15 @@ class WelcomeView extends ConsumerWidget {
                         'Kullanmadığın eşyaları takasla ya da ücretsiz olarak başkasıyla paylaş.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Rubik',
-                            color: const Color(AppColors.primaryColor)),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Rubik',
+                          color: const Color(AppColors.primaryColor),
+                        ),
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
             Padding(
@@ -69,7 +71,9 @@ class WelcomeView extends ConsumerWidget {
               child: Column(
                 children: [
                   CustomFilledButton(
-                    onTap: () {},
+                    onTap: () {
+                      context.pushRoute(const Register1Route());
+                    },
                     text: 'E-posta ile kayıt ol',
                     iconPath: 'assets/svg/Email.svg',
                   ),
@@ -84,7 +88,7 @@ class WelcomeView extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
