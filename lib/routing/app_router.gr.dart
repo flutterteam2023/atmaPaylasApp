@@ -53,6 +53,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ChangeLocationView(),
       );
     },
+    ChatRoomRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatRoomRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ChatRoomView(
+          userName: args.userName,
+          accessToken: args.accessToken,
+          key: args.key,
+        ),
+      );
+    },
     CreateAdsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -93,6 +104,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginView(),
+      );
+    },
+    MessagesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MessagesView(),
       );
     },
     MyAddsRoute.name: (routeData) {
@@ -259,6 +276,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const UserAgreementView(),
       );
     },
+    WaitingToConfirmListingsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WaitingToConfirmListingsView(),
+      );
+    },
     WelcomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -387,6 +410,49 @@ class ChangeLocationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChatRoomView]
+class ChatRoomRoute extends PageRouteInfo<ChatRoomRouteArgs> {
+  ChatRoomRoute({
+    required String userName,
+    required String accessToken,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChatRoomRoute.name,
+          args: ChatRoomRouteArgs(
+            userName: userName,
+            accessToken: accessToken,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatRoomRoute';
+
+  static const PageInfo<ChatRoomRouteArgs> page =
+      PageInfo<ChatRoomRouteArgs>(name);
+}
+
+class ChatRoomRouteArgs {
+  const ChatRoomRouteArgs({
+    required this.userName,
+    required this.accessToken,
+    this.key,
+  });
+
+  final String userName;
+
+  final String accessToken;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ChatRoomRouteArgs{userName: $userName, accessToken: $accessToken, key: $key}';
+  }
+}
+
+/// generated route for
 /// [CreateAdsView]
 class CreateAdsRoute extends PageRouteInfo<void> {
   const CreateAdsRoute({List<PageRouteInfo>? children})
@@ -480,6 +546,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MessagesView]
+class MessagesRoute extends PageRouteInfo<void> {
+  const MessagesRoute({List<PageRouteInfo>? children})
+      : super(
+          MessagesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MessagesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -933,6 +1013,20 @@ class UserAgreementRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'UserAgreementRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WaitingToConfirmListingsView]
+class WaitingToConfirmListingsRoute extends PageRouteInfo<void> {
+  const WaitingToConfirmListingsRoute({List<PageRouteInfo>? children})
+      : super(
+          WaitingToConfirmListingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WaitingToConfirmListingsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
