@@ -156,283 +156,336 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(18),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    context.pushRoute(const SwappedProductsRoute());
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Takaslananlar',
-                            style: GoogleFonts.rubik(
-                              color: Colors.grey[850],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 18),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Color(0xFF7B7B7D),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9),
-                InkWell(
-                  onTap: () {
-                    context.pushRoute(const SharedProductsRoute());
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Ücretsiz Paylaşılanlar',
-                            style: GoogleFonts.rubik(
-                              color: Colors.grey[850],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 18),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Color(0xFF7B7B7D),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9),
-                InkWell(
-                  onTap: () {
-                    context.pushRoute(const ProfileEditRoute());
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Profili Düzenle',
-                            style: GoogleFonts.rubik(
-                              color: Colors.grey[850],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 18),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Color(0xFF7B7B7D),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9),
-                InkWell(
-                  onTap: () {
-                    context.pushRoute(const SettingsRoute());
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Ayarlar',
-                            style: GoogleFonts.rubik(
-                              color: Colors.grey[850],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 18),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Color(0xFF7B7B7D),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9),
-                InkWell(
-                  onTap: () {
-                    context.pushRoute(const HelpRoute());
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Yardım & Destek',
-                            style: GoogleFonts.rubik(
-                              color: Colors.grey[850],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 18),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Color(0xFF7B7B7D),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9 * 3),
-                InkWell(
-                  onTap: () async {
-                    await EasyLoading.show(
-                      indicator: const CircularProgressIndicator.adaptive(),
-                      status: 'Çıkış Yapılıyor...',
-                    );
-                    await GetIt.instance<AuthRepository>().logout().then((value) async {
-                      await value.fold(
-                        (l) async => Fluttertoast.showToast(msg: 'Çıkış Yapılamadı'),
-                        (r) async {
-                          GetIt.instance<UserRepository>().user = null;
-                          await EasyLoading.dismiss();
-                          await context.pushRoute(const WelcomeRoute());
-                        },
-                      );
-                    });
-                  },
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Text(
-                            'Çıkış Yap',
-                            style: GoogleFonts.rubik(
-                              color: Colors.red[800],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18),
-                          child: SvgPicture.asset(
-                            Assets.svg.logOutOutline,
-                            color: Colors.red[800],
-                            width: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(9 * 3),
-                const Text(
-                  '2023 © Atma Paylaş',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF858585),
-                    fontSize: 12,
-                    fontFamily: 'Rubik',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                FutureBuilder(
-                  future: PackageInfo.fromPlatform(),
-                  builder: (context, platform) {
-                    return Text(
-                      'versiyon: ${platform.data?.version ?? '1.0.0'}+${platform.data?.buildNumber ?? '1'}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xFF858585),
-                        fontSize: 12,
-                        fontFamily: 'Rubik',
-                        fontWeight: FontWeight.w400,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const SwappedProductsRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    );
-                  },
-                ),
-              ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Takaslananlar',
+                              style: GoogleFonts.rubik(
+                                color: Colors.grey[850],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9),
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const SharedProductsRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Ücretsiz Paylaşılanlar',
+                              style: GoogleFonts.rubik(
+                                color: Colors.grey[850],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9),
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const WaitingToConfirmListingsRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Badge(
+                            smallSize: 15,
+                            largeSize: 25,
+                            label: Text(
+                              '${GetIt.instance<UserRepository>().user?.waitingToConfirmListingsCount} Bekleyen',
+                              style: GoogleFonts.rubik(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 18, right: 27, top: 9, bottom: 9),
+                              child: Text(
+                                'Onay Bekleyen İlanlarım',
+                                style: GoogleFonts.rubik(
+                                  color: Colors.grey[850],
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9),
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const ProfileEditRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Profili Düzenle',
+                              style: GoogleFonts.rubik(
+                                color: Colors.grey[850],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9),
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const SettingsRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Ayarlar',
+                              style: GoogleFonts.rubik(
+                                color: Colors.grey[850],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9),
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const HelpRoute());
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Yardım & Destek',
+                              style: GoogleFonts.rubik(
+                                color: Colors.grey[850],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 18),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Color(0xFF7B7B7D),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9 * 3),
+                  InkWell(
+                    onTap: () async {
+                      await EasyLoading.show(
+                        indicator: const CircularProgressIndicator.adaptive(),
+                        status: 'Çıkış Yapılıyor...',
+                      );
+                      await GetIt.instance<AuthRepository>().logout().then((value) async {
+                        await value.fold(
+                          (l) async => Fluttertoast.showToast(msg: 'Çıkış Yapılamadı'),
+                          (r) async {
+                            GetIt.instance<UserRepository>().user = null;
+                            await EasyLoading.dismiss();
+                            await context.pushRoute(const WelcomeRoute());
+                          },
+                        );
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Çıkış Yap',
+                              style: GoogleFonts.rubik(
+                                color: Colors.red[800],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 18),
+                            child: SvgPicture.asset(
+                              Assets.svg.logOutOutline,
+                              color: Colors.red[800],
+                              width: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(9 * 3),
+                  const Text(
+                    '2023 © Atma Paylaş',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF858585),
+                      fontSize: 12,
+                      fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  FutureBuilder(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, platform) {
+                      return Text(
+                        'versiyon: ${platform.data?.version ?? '1.0.0'}+${platform.data?.buildNumber ?? '1'}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xFF858585),
+                          fontSize: 12,
+                          fontFamily: 'Rubik',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );
