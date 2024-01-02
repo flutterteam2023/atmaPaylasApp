@@ -212,6 +212,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedCity.value = newValue!;
+                            selectedDistrict.value = null;
                           });
                         },
                         items: cities.map<DropdownMenuItem<String>>((String value) {

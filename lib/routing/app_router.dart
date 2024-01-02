@@ -24,6 +24,8 @@ import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
 import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
+import 'package:atma_paylas_app/features/Settings/presentation/pages/change_location_view.dart';
+import 'package:atma_paylas_app/features/Settings/presentation/pages/password_change_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/sharing_products_view.dart';
@@ -91,11 +93,19 @@ class AppRouter extends _$AppRouter {
           initial: false,
         ),
         AutoRoute(
+          page: PasswordChangeRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
           page: RegisterNotificationRoute.page,
           initial: false,
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: ChangeLocationRoute.page,
           initial: false,
         ),
         AutoRoute(
