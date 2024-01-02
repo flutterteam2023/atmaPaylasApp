@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:atma_paylas_app/api/active_request_interceptor.dart';
+import 'package:atma_paylas_app/api/active_requests.dart';
 import 'package:atma_paylas_app/api/auth_interceptor.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +17,6 @@ String IMAGE_BASE_URL = 'https://atmapaylas.com.tr';
 typedef ApiResponse<T> = Either<String, T>;
 
 class ApiService {
-  // Normal constructor
   ApiService() : dio = Dio() {
     dio.options
       ..baseUrl = BASE_URL
@@ -23,6 +24,7 @@ class ApiService {
       ..receiveTimeout = const Duration(seconds: 14);
     dio.interceptors
       ..add(AuthInterceptor(dio))
+      //..add(ActiveRequestInterceptor(ActiveRequests()))
       ..add(
         PrettyDioLogger(
           requestBody: true,
@@ -31,8 +33,9 @@ class ApiService {
         ),
       );
   }
-  late Dio dio;
 
+  late Dio dio;
+  final activeRequests = ActiveRequests();
   Future<Either<String, T>> requestMethod<T>({
     required String path,
     required Map<String, dynamic>? headers,
