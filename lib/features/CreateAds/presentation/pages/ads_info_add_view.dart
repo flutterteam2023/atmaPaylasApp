@@ -333,7 +333,9 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('En az 3 fotoğraf eklenebilir')));
                           
                         }else{
-                         GetIt.instance<FeedRepository>().addFeed(images.value[0], images.value[1], images.value[2],listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text);
+                         GetIt.instance<FeedRepository>().addFeed(images.value[0], images.value[1], images.value[2],listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text).then((value) {
+                          value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.replaceRoute(AdsSuccessCreateRoute()));
+                         });
 
                         }
 

@@ -11,16 +11,26 @@ import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulHookWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final isAll = useState(true);
+    final categoryId = useState("");
     final formatter = DateFormat('dd/MM/yyyy');
     return Scaffold(
       appBar: AppBar(
@@ -112,50 +122,101 @@ class HomeView extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 32.h,
-                  child: FutureBuilder(
-                    future: GetIt.instance<CategoryRepository>().getMainCategories(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null) {
-                        return const CircularProgressIndicator.adaptive();
-                      }
-                      return snapshot.data!.fold(
-                        (l) => const SizedBox(),
-                        (r) => ListView.builder(
-                          padding: EdgeInsets.only(left: 8.w, right: 16),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: r.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100.r),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    color: const Color(AppColors.primaryColor),
-                                    width: 2,
-                                  ),
+                  child: SizedBox(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.w),
+                          child: Bounceable(
+                            onTap: () {
+                              setState(() {
+                                categoryId.value = ':category_id';
+                                isAll.value = true;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100.r),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: const Color(AppColors.primaryColor),
+                                  width: 2,
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                                  child: Center(
-                                    child: Text(
-                                      r[index].name,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Rubik',
-                                        color: const Color(AppColors.primaryColor),
-                                      ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                                child: Center(
+                                  child: Text(
+                                    'Tümü',
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Rubik',
+                                      color: const Color(AppColors.primaryColor),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      );
-                    },
+                        Expanded(
+                          child: FutureBuilder(
+                            future: GetIt.instance<CategoryRepository>().getMainCategories(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == null) {
+                                return const CircularProgressIndicator.adaptive();
+                              }
+                              return snapshot.data!.fold(
+                                (l) => const SizedBox(),
+                                (r) => ListView.builder(
+                                  padding: EdgeInsets.only(left: 8.w, right: 16),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: r.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(left: 8.w),
+                                      child: Bounceable(
+                                        onTap: () {
+                                          setState(() {
+                                            categoryId.value = r[index].id.toString();
+                                            isAll.value = false;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(100.r),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: const Color(AppColors.primaryColor),
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                                            child: Center(
+                                              child: Text(
+                                                r[index].name,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Rubik',
+                                                  color: const Color(AppColors.primaryColor),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -261,54 +322,104 @@ class HomeView extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 300.h,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().mostViewedFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff05473A)
-                                : Colors.white,
-                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff6DCEBB)
-                                : const Color(0xffFD8435),
-                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? 'Ücretsiz Paylaşıyor'
-                                : 'Takas Ediyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
-                              setStateMostViewedState(() {});
-                            },
-                            seeAdsDetailOnTap: () {
-                              if (GetIt.instance<UserRepository>().user?.userId ==
-                                  snaphot.data?[index].ownerInfo.userId) {
-                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                              } else {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                              }
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  child: isAll.value == true
+                      ? FutureBuilder(
+                          future: GetIt.instance<FeedRepository>().mostViewedFeeds,
+                          builder: (context, snaphot) {
+                            if (snaphot.connectionState != ConnectionState.done) {
+                              return customListViewShimmer(formatter);
+                            }
+                            return ListView.builder(
+                              padding: EdgeInsets.only(right: 16.w),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snaphot.data?.length,
+                              itemBuilder: (context, index) {
+                                return AdsCard(
+                                  isSaved: snaphot.data?[index].isArchived ?? false,
+                                  width: 265.w,
+                                  textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? const Color(0xff05473A)
+                                      : Colors.white,
+                                  colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? const Color(0xff6DCEBB)
+                                      : const Color(0xffFD8435),
+                                  adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? 'Ücretsiz Paylaşıyor'
+                                      : 'Takas Ediyor',
+                                  address:
+                                      '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                                  productName: '${snaphot.data?[index].title}}',
+                                  date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                                  userName: '${snaphot.data?[index].ownerInfo.username}',
+                                  productImage: snaphot.data?[index].image1,
+                                  saveButtonOnTap: () async {
+                                    await GetIt.instance<ArchivedRepository>()
+                                        .toggleArchiveStatus(feedId: snaphot.data![index].id);
+                                    await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                                    setStateMostViewedState(() {});
+                                  },
+                                  seeAdsDetailOnTap: () {
+                                    if (GetIt.instance<UserRepository>().user?.userId ==
+                                        snaphot.data?[index].ownerInfo.userId) {
+                                      context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                    } else {
+                                      context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                    }
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : FutureBuilder(
+                          future: GetIt.instance<FeedRepository>()
+                              .getAllListings("listingType", "endpoint", categoryId.value),
+                          builder: (context, snaphot) {
+                            if (snaphot.connectionState != ConnectionState.done) {
+                              return customListViewShimmer(formatter);
+                            }
+                            return snaphot.data!.fold((l) => Center(child: Text('Bu kategoriye ait ürün bulunmamaktadır')), (r) {
+                              return ListView.builder(
+                                padding: EdgeInsets.only(right: 16.w),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: r.length,
+                                itemBuilder: (context, index) {
+                                  return AdsCard(
+                                    isSaved: r[index].isArchived ?? false,
+                                    width: 265.w,
+                                    textColor: r[index].listingType == ListingTypes.free.name
+                                        ? const Color(0xff05473A)
+                                        : Colors.white,
+                                    colorType: r[index].listingType == ListingTypes.free.name
+                                        ? const Color(0xff6DCEBB)
+                                        : const Color(0xffFD8435),
+                                    adsType: r[index].listingType == ListingTypes.free.name
+                                        ? 'Ücretsiz Paylaşıyor'
+                                        : 'Takas Ediyor',
+                                    address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
+                                    productName: '${r[index].title}}',
+                                    date: formatter.format(r[index].createdAt ?? DateTime.now()),
+                                    userName: '${r[index].ownerInfo.username}',
+                                    productImage: r[index].image1,
+                                    saveButtonOnTap: () async {
+                                      await GetIt.instance<ArchivedRepository>()
+                                          .toggleArchiveStatus(feedId: r[index].id);
+                                      await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                                      setStateMostViewedState(() {});
+                                    },
+                                    seeAdsDetailOnTap: () {
+                                      if (GetIt.instance<UserRepository>().user?.userId == r[index].ownerInfo.userId) {
+                                        context.pushRoute(UserAdsDetailRoute(id: r[index].id));
+                                      } else {
+                                        context.pushRoute(AdsDetailRoute(id: r[index].id));
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            });
+                          },
+                        ),
                 ),
                 SizedBox(
                   height: 24.h,
@@ -326,54 +437,104 @@ class HomeView extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 300.h,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().freeListingFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff05473A)
-                                : Colors.white,
-                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff6DCEBB)
-                                : const Color(0xffFD8435),
-                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? 'Ücretsiz Paylaşıyor'
-                                : 'Takas Ediyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
-                              setStateMostViewedState(() {});
-                            },
-                            seeAdsDetailOnTap: () {
-                              if (GetIt.instance<UserRepository>().user?.userId ==
-                                  snaphot.data?[index].ownerInfo.userId) {
-                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                              } else {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                              }
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  child: isAll.value == true
+                      ? FutureBuilder(
+                          future: GetIt.instance<FeedRepository>().freeListingFeeds,
+                          builder: (context, snaphot) {
+                            if (snaphot.connectionState != ConnectionState.done) {
+                              return customListViewShimmer(formatter);
+                            }
+                            return ListView.builder(
+                              padding: EdgeInsets.only(right: 16.w),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snaphot.data?.length,
+                              itemBuilder: (context, index) {
+                                return AdsCard(
+                                  isSaved: snaphot.data?[index].isArchived ?? false,
+                                  width: 265.w,
+                                  textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? const Color(0xff05473A)
+                                      : Colors.white,
+                                  colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? const Color(0xff6DCEBB)
+                                      : const Color(0xffFD8435),
+                                  adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                      ? 'Ücretsiz Paylaşıyor'
+                                      : 'Takas Ediyor',
+                                  address:
+                                      '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                                  productName: '${snaphot.data?[index].title}}',
+                                  date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                                  userName: '${snaphot.data?[index].ownerInfo.username}',
+                                  productImage: snaphot.data?[index].image1,
+                                  saveButtonOnTap: () async {
+                                    await GetIt.instance<ArchivedRepository>()
+                                        .toggleArchiveStatus(feedId: snaphot.data![index].id);
+                                    await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                                    setStateMostViewedState(() {});
+                                  },
+                                  seeAdsDetailOnTap: () {
+                                    if (GetIt.instance<UserRepository>().user?.userId ==
+                                        snaphot.data?[index].ownerInfo.userId) {
+                                      context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                    } else {
+                                      context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                    }
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : FutureBuilder(
+                          future: GetIt.instance<FeedRepository>()
+                              .getAllListings("listingType", "endpoint", categoryId.value),
+                          builder: (context, snaphot) {
+                            if (snaphot.connectionState != ConnectionState.done) {
+                              return customListViewShimmer(formatter);
+                            }
+                            return snaphot.data!.fold((l) => Center(child: Text('Bu kategoriye ait ürün bulunmamaktadır')), (r) {
+                              return ListView.builder(
+                                padding: EdgeInsets.only(right: 16.w),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: r.length,
+                                itemBuilder: (context, index) {
+                                  return AdsCard(
+                                    isSaved: r[index].isArchived ?? false,
+                                    width: 265.w,
+                                    textColor: r[index].listingType == ListingTypes.free.name
+                                        ? const Color(0xff05473A)
+                                        : Colors.white,
+                                    colorType: r[index].listingType == ListingTypes.free.name
+                                        ? const Color(0xff6DCEBB)
+                                        : const Color(0xffFD8435),
+                                    adsType: r[index].listingType == ListingTypes.free.name
+                                        ? 'Ücretsiz Paylaşıyor'
+                                        : 'Takas Ediyor',
+                                    address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
+                                    productName: '${r[index].title}}',
+                                    date: formatter.format(r[index].createdAt ?? DateTime.now()),
+                                    userName: '${r[index].ownerInfo.username}',
+                                    productImage: r[index].image1,
+                                    saveButtonOnTap: () async {
+                                      await GetIt.instance<ArchivedRepository>()
+                                          .toggleArchiveStatus(feedId: r[index].id);
+                                      await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                                      setStateMostViewedState(() {});
+                                    },
+                                    seeAdsDetailOnTap: () {
+                                      if (GetIt.instance<UserRepository>().user?.userId == r[index].ownerInfo.userId) {
+                                        context.pushRoute(UserAdsDetailRoute(id: r[index].id));
+                                      } else {
+                                        context.pushRoute(AdsDetailRoute(id: r[index].id));
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            });
+                          },
+                        ),
                 ),
                 SizedBox(
                   height: 24.h,
@@ -391,7 +552,7 @@ class HomeView extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 300.h,
-                  child: FutureBuilder(
+                  child:isAll.value==true? FutureBuilder(
                     future: GetIt.instance<FeedRepository>().tradableListingFeeds,
                     builder: (context, snaphot) {
                       if (snaphot.connectionState != ConnectionState.done) {
@@ -437,6 +598,55 @@ class HomeView extends StatelessWidget {
                           );
                         },
                       );
+                    },
+                  ):FutureBuilder(
+                    future: GetIt.instance<FeedRepository>().getAllListings("listingType", "endpoint", categoryId.value),
+                    builder: (context, snaphot) {
+                      if (snaphot.connectionState != ConnectionState.done) {
+                        return customListViewShimmer(formatter);
+                      }
+                      return snaphot.data!.fold((l) => Center(child: Text('Bu kategoriye ait ürün bulunmamaktadır')), (r) {
+                        return ListView.builder(
+                        padding: EdgeInsets.only(right: 16.w),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: r.length,
+                        itemBuilder: (context, index) {
+                          return AdsCard(
+                            isSaved: r[index].isArchived ?? false,
+                            width: 265.w,
+                            textColor: r[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: r[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: r[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
+                            address:
+                                '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
+                            productName: '${r[index].title}}',
+                            date: formatter.format(r[index].createdAt ?? DateTime.now()),
+                            userName: '${r[index].ownerInfo.username}',
+                            productImage: r[index].image1,
+                            saveButtonOnTap: () async {
+                              await GetIt.instance<ArchivedRepository>()
+                                  .toggleArchiveStatus(feedId:r[index].id);
+                              await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                              setStateMostViewedState(() {});
+                            },
+                            seeAdsDetailOnTap: () {
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  r[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id:r[index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id:r[index].id));
+                              }
+                            },
+                          );
+                        },
+                      );
+                      });
                     },
                   ),
                 ),

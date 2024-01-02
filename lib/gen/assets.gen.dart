@@ -73,6 +73,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/line.png
   AssetGenImage get line => const AssetGenImage('assets/images/line.png');
 
+  /// File path: assets/images/linee.png
+  AssetGenImage get linee => const AssetGenImage('assets/images/linee.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
@@ -85,8 +88,17 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/splashLogo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [bicycle, bmw, clockdemo, demoo, line, logo, persondemo, splashLogo];
+  List<AssetGenImage> get values => [
+        bicycle,
+        bmw,
+        clockdemo,
+        demoo,
+        line,
+        linee,
+        logo,
+        persondemo,
+        splashLogo
+      ];
 }
 
 class $AssetsSvgGen {

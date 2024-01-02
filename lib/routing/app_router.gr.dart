@@ -47,6 +47,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AdsSuccessCreateView(),
       );
     },
+    ChangeLocationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChangeLocationView(),
+      );
+    },
     CreateAdsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -111,6 +117,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const NegativeNotificationView(),
+      );
+    },
+    PasswordChangeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PasswordChangeView(),
       );
     },
     ProfileEditRoute.name: (routeData) {
@@ -361,6 +373,20 @@ class AdsSuccessCreateRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChangeLocationView]
+class ChangeLocationRoute extends PageRouteInfo<void> {
+  const ChangeLocationRoute({List<PageRouteInfo>? children})
+      : super(
+          ChangeLocationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangeLocationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CreateAdsView]
 class CreateAdsRoute extends PageRouteInfo<void> {
   const CreateAdsRoute({List<PageRouteInfo>? children})
@@ -510,6 +536,20 @@ class NegativeNotificationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NegativeNotificationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PasswordChangeView]
+class PasswordChangeRoute extends PageRouteInfo<void> {
+  const PasswordChangeRoute({List<PageRouteInfo>? children})
+      : super(
+          PasswordChangeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PasswordChangeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -3,6 +3,7 @@
 import 'package:atma_paylas_app/common_widgets/share_ads_card.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class ShareAdsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().getAllListings(type),
+      future: GetIt.instance<FeedRepository>().getAllListings(type,null,null),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
@@ -59,7 +60,9 @@ class ShareAdsView extends ConsumerWidget {
                       type: 'Ücretsiz',
                       textColor: const Color(0xff05473A),
                       color: const Color(0xff6DCEBB),
-                      onTap: () {},
+                      onTap: () {
+
+                      },
                       image: null,
                       title: 'Casio Saat',
                       address: 'İstanbul / Kadıköy',
@@ -130,7 +133,9 @@ class ShareAdsView extends ConsumerWidget {
                               color: r[index].listingType == ListingTypes.free.name
                                   ? const Color(0xff6DCEBB)
                                   : const Color(0xffFD8435),
-                              onTap: () {},
+                              onTap: () {
+                                context.pushRoute(AdsDetailRoute(id: r[index].id));
+                              },
                               image: r[index].image1,
                               title: r[index].title,
                               address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',

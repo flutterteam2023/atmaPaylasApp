@@ -136,7 +136,7 @@ class ShareAdsCard extends StatelessWidget {
                         ),
                       ),
                       Bounceable(
-                        onTap: () {},
+                        onTap: onTap,
                         child: Container(
                           height: 32.r,
                           width: 32.r,

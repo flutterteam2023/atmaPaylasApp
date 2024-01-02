@@ -95,8 +95,10 @@ class GiveFeedBackView extends HookConsumerWidget {
             
             SizedBox(height: 56.h,),  
             CustomFilledButton(text: 'Geri Bildirim Gönder', onTap: (){
-              GetIt.instance<FeedbackRepository>().sendFeedBack(noteController.value.text);
-              context.pushRoute(FeedBackApprovalRoute());
+              GetIt.instance<FeedbackRepository>().sendFeedBack(noteController.value.text).then((value) {
+                value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.replaceRoute(FeedBackApprovalRoute()));
+              });
+              
 
             })
             
