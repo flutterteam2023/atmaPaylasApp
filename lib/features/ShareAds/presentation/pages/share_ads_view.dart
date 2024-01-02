@@ -25,7 +25,7 @@ class ShareAdsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().getAllListings(type),
+      future: GetIt.instance<FeedRepository>().getAllListings(type,null,null),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(

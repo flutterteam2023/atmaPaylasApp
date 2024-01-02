@@ -218,8 +218,9 @@ class FeedRepository extends ApiService with ChangeNotifier {
   }
 
   ///listing type is "free" or "tradable" or "most_viewed"
-  Future<ApiResponse<List<FeedModel>>> getAllListings(String listingType) async {
-    return requestMethod<List<FeedModel>>(
+  Future<ApiResponse<List<FeedModel>>> getAllListings(String listingType,String? endpoint,String? categoryid) async {
+    if (endpoint == null) {
+      return requestMethod<List<FeedModel>>(
       path: '/detailed_listings/?listing_type=$listingType&page=1&page_size=100',
       method: HttpMethod.get,
       requestModel: null,
@@ -228,6 +229,19 @@ class FeedRepository extends ApiService with ChangeNotifier {
           .toList(),
       headers: {'Accept': 'application/json'},
     );
+      
+    }else{
+      return requestMethod<List<FeedModel>>(
+      path: '/listings_by_category/$categoryid?page=1&page_size=100',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
+          .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    );
+    }
+    
   }
 
   Future<ApiResponse<String>> completeListing(String listingId, ListingTypes listingType, String otherUserName) async {

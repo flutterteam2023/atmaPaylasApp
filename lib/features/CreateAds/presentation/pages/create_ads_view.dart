@@ -2,6 +2,7 @@ import 'package:atma_paylas_app/common_widgets/custom_border_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_info_add_view.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -29,7 +30,9 @@ class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
         centerTitle: false,
         actions: [
           Bounceable(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const NavigatorRoute());
+            },
             child: Padding(
               padding: EdgeInsets.only(right: 16.w),
               child: Text(
