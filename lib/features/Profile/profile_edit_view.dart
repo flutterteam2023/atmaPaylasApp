@@ -27,15 +27,15 @@ class ProfileEditView extends StatefulHookConsumerWidget {
 class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
   @override
   Widget build(BuildContext context) {
-    List<String> cities = []; // Şehir listesi
-    List<String> districts = []; // İlçe listesi
+    var cities = <String>[]; // Şehir listesi
+    var districts = <String>[]; // İlçe listesi
     final nameController = useTextEditingController();
     final surnameController = useTextEditingController();
     final usernameController = useTextEditingController();
     final images = useState<File?>(null);
     final selectedCity = useState<String?>(null);
     final selectedDistrict = useState<String?>(null);
-    Future<void> _pickImage() async {
+    Future<void> pickImage() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
       if (pickedFile != null) {
@@ -58,7 +58,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                       usernameController.value.text.isEmpty ? null : usernameController.value.text,
                       nameController.value.text.isEmpty ? null : nameController.value.text,
                       surnameController.value.text.isEmpty ? null : surnameController.value.text,
-                     selectedCity.value,
+                      selectedCity.value,
                       selectedDistrict.value,
                     )
                     .then((value) async => GetIt.instance<UserRepository>().editUserProfilePhoto(images.value));
@@ -68,7 +68,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                   nameController.value.text.isEmpty ? null : nameController.value.text,
                   surnameController.value.text.isEmpty ? null : surnameController.value.text,
                   selectedCity.value,
-                      selectedDistrict.value,
+                  selectedDistrict.value,
                 );
               }
               await UserRepository().getMyUserProfile().then((value) {
@@ -111,10 +111,10 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                       height: 80.r,
                       width: 80.r,
                       child: Bounceable(
-                        onTap: _pickImage,
+                        onTap: pickImage,
                         child: images.value == null
                             ? CircleAvatar(
-                                backgroundColor: Colors.white,
+                                backgroundColor: Color(AppColors.primaryLightColor),
                                 backgroundImage: GetIt.instance<UserRepository>().user?.image != null
                                     ? NetworkImage(GetIt.instance<UserRepository>().user?.image ?? 'impossible')
                                     : null,
@@ -123,7 +123,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                                     : const Icon(Icons.person, color: Color(AppColors.primaryColor)),
                               )
                             : CircleAvatar(
-                                backgroundColor: Colors.white,
+                                backgroundColor: Color(AppColors.primaryLightColor),
                                 backgroundImage: FileImage(images.value!),
                                 child: GetIt.instance<UserRepository>().user?.image != null
                                     ? null
@@ -195,7 +195,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                     snapshot.data!.fold((l) => null, (r) => cities = r);
                     return SizedBox(
                       height: 60,
-                      child: DropdownButton<String>(
+                      child: DropdownButtonFormField<String>(
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -203,10 +203,6 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                         isExpanded: true,
-                        underline: Container(
-                          height: 1,
-                          color: Colors.grey,
-                        ),
                         hint: Text(GetIt.instance<UserRepository>().user?.userLocatedCity ?? 'Şehir Seçiniz'),
                         value: selectedCity.value,
                         onChanged: (String? newValue) {
@@ -228,7 +224,6 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                   }
                 },
               ),
-              
               SizedBox(
                 height: 24.h,
               ),
@@ -253,7 +248,7 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                     snapshot.data!.fold((l) => null, (r) => districts = r);
                     return SizedBox(
                       height: 60,
-                      child: DropdownButton<String>(
+                      child: DropdownButtonFormField<String>(
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -261,10 +256,6 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                         isExpanded: true,
-                        underline: Container(
-                          height: 1,
-                          color: Colors.grey,
-                        ),
                         hint: Text(GetIt.instance<UserRepository>().user?.userLocatedDistrict ?? 'Semt Seçiniz'),
                         value: selectedDistrict.value,
                         onChanged: (String? newValue) {
@@ -327,19 +318,6 @@ class ProfileTextfield extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
-            filled: true,
-            fillColor: Colors.white,
-            hintStyle: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-              color: const Color(AppColors.primaryTextColor),
-            ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(AppColors.primaryTextColor)),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(AppColors.primaryTextColor)),
-            ),
           ),
         ),
       ],
