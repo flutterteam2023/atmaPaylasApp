@@ -1,4 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls
 
 import 'dart:async';
 import 'dart:convert';
@@ -131,9 +131,17 @@ class FeedRepository extends ApiService with ChangeNotifier {
     return _freeListingFeeds;
   }
 
+  Future<void> clearFreeListingFeeds() async {
+    _freeListingFeeds.clear();
+  }
+
   Future<List<FeedModel>> get tradableListingFeeds async {
     if (_tradableListingFeeds.isEmpty) await getMyFeeds();
     return _tradableListingFeeds.toList();
+  }
+
+  Future<void> clearTradableListingFeeds() async {
+    _tradableListingFeeds.clear();
   }
 
   ///this method is used for current user all feeds

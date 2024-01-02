@@ -25,6 +25,11 @@ class ArchivedRepository extends ApiService with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearArchivedList() {
+    _archivedList.clear();
+    notifyListeners();
+  }
+
   set archivedList(List<ArchiveFeedModel> value) {
     _archivedList = value;
     notifyListeners();

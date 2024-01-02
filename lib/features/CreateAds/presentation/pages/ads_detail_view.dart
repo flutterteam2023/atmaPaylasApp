@@ -4,6 +4,7 @@ import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -77,18 +78,19 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                 ),
                 centerTitle: false,
                 actions: [
-                  Bounceable(
-                    onTap: () async {
-                      await GetIt.instance<ArchivedRepository>()
-                          .toggleArchiveStatus(feedId: widget.id)
-                          .then((value) => setState(() {}));
-                    },
-                    child: SvgPicture.asset(
-                      r.isArchived ? 'assets/svg/bookmark.svg' : 'assets/svg/bookmark-outline.svg',
-                      height: 24.r,
-                      width: 24.r,
+                  if (r.ownerInfo.username != GetIt.instance<UserRepository>().user?.username)
+                    Bounceable(
+                      onTap: () async {
+                        await GetIt.instance<ArchivedRepository>()
+                            .toggleArchiveStatus(feedId: widget.id)
+                            .then((value) => setState(() {}));
+                      },
+                      child: SvgPicture.asset(
+                        r.isArchived ? 'assets/svg/bookmark.svg' : 'assets/svg/bookmark-outline.svg',
+                        height: 24.r,
+                        width: 24.r,
+                      ),
                     ),
-                  ),
                   SizedBox(
                     width: 16.w,
                   ),

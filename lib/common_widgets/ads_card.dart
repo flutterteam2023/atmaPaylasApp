@@ -1,8 +1,10 @@
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 
 class AdsCard extends StatelessWidget {
   const AdsCard({
@@ -62,39 +64,40 @@ class AdsCard extends StatelessWidget {
                             width: width,
                             fit: BoxFit.fill,
                           )),
-                isSaved == true
-                    ? Positioned(
-                        top: 17.h,
-                        right: 15.w,
-                        child: Bounceable(
-                          onTap: saveButtonOnTap,
-                          child: Container(
-                            height: 32.r,
-                            width: 32.r,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                            child: SvgPicture.asset(
-                              'assets/svg/bookmark.svg',
-                              fit: BoxFit.scaleDown,
+                if (userName != GetIt.instance<UserRepository>().user?.username)
+                  isSaved == true
+                      ? Positioned(
+                          top: 17.h,
+                          right: 15.w,
+                          child: Bounceable(
+                            onTap: saveButtonOnTap,
+                            child: Container(
+                              height: 32.r,
+                              width: 32.r,
+                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                              child: SvgPicture.asset(
+                                'assets/svg/bookmark.svg',
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Positioned(
+                          top: 17.h,
+                          right: 15.w,
+                          child: Bounceable(
+                            onTap: saveButtonOnTap,
+                            child: Container(
+                              height: 32.r,
+                              width: 32.r,
+                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                              child: SvgPicture.asset(
+                                'assets/svg/bookmark-outline.svg',
+                                fit: BoxFit.scaleDown,
+                              ),
                             ),
                           ),
                         ),
-                      )
-                    : Positioned(
-                        top: 17.h,
-                        right: 15.w,
-                        child: Bounceable(
-                          onTap: saveButtonOnTap,
-                          child: Container(
-                            height: 32.r,
-                            width: 32.r,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                            child: SvgPicture.asset(
-                              'assets/svg/bookmark-outline.svg',
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                        ),
-                      ),
                 Positioned(
                   left: 15.w,
                   top: 17.h,
