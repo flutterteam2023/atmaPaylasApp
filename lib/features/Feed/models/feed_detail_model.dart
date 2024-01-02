@@ -21,7 +21,7 @@ class FeedDetailModel with _$FeedDetailModel {
     @JsonKey(name: 'image3') required String? image3,
     @JsonKey(name: 'is_active') required bool isActive,
     @JsonKey(name: 'view_count') required int viewCount,
-    @JsonKey(name: 'receiver_user') required dynamic receiverUser,
+    @JsonKey(name: 'receiver_user') required int? receiverUser,
     @JsonKey(name: 'receiver_confirmed') required bool receiverConfirmed,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'is_archived') required bool isArchived,

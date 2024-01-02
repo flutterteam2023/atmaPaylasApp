@@ -43,7 +43,7 @@ mixin _$FeedDetailModel {
   @JsonKey(name: 'view_count')
   int get viewCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'receiver_user')
-  dynamic get receiverUser => throw _privateConstructorUsedError;
+  int? get receiverUser => throw _privateConstructorUsedError;
   @JsonKey(name: 'receiver_confirmed')
   bool get receiverConfirmed => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -75,7 +75,7 @@ abstract class $FeedDetailModelCopyWith<$Res> {
       @JsonKey(name: 'image3') String? image3,
       @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'view_count') int viewCount,
-      @JsonKey(name: 'receiver_user') dynamic receiverUser,
+      @JsonKey(name: 'receiver_user') int? receiverUser,
       @JsonKey(name: 'receiver_confirmed') bool receiverConfirmed,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'is_archived') bool isArchived});
@@ -160,7 +160,7 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
       receiverUser: freezed == receiverUser
           ? _value.receiverUser
           : receiverUser // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
       receiverConfirmed: null == receiverConfirmed
           ? _value.receiverConfirmed
           : receiverConfirmed // ignore: cast_nullable_to_non_nullable
@@ -205,7 +205,7 @@ abstract class _$$FeedDetailModelImplCopyWith<$Res>
       @JsonKey(name: 'image3') String? image3,
       @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'view_count') int viewCount,
-      @JsonKey(name: 'receiver_user') dynamic receiverUser,
+      @JsonKey(name: 'receiver_user') int? receiverUser,
       @JsonKey(name: 'receiver_confirmed') bool receiverConfirmed,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'is_archived') bool isArchived});
@@ -289,7 +289,7 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
       receiverUser: freezed == receiverUser
           ? _value.receiverUser
           : receiverUser // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
       receiverConfirmed: null == receiverConfirmed
           ? _value.receiverConfirmed
           : receiverConfirmed // ignore: cast_nullable_to_non_nullable
@@ -364,7 +364,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
   final int viewCount;
   @override
   @JsonKey(name: 'receiver_user')
-  final dynamic receiverUser;
+  final int? receiverUser;
   @override
   @JsonKey(name: 'receiver_confirmed')
   final bool receiverConfirmed;
@@ -402,8 +402,8 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
                 other.isActive == isActive) &&
             (identical(other.viewCount, viewCount) ||
                 other.viewCount == viewCount) &&
-            const DeepCollectionEquality()
-                .equals(other.receiverUser, receiverUser) &&
+            (identical(other.receiverUser, receiverUser) ||
+                other.receiverUser == receiverUser) &&
             (identical(other.receiverConfirmed, receiverConfirmed) ||
                 other.receiverConfirmed == receiverConfirmed) &&
             (identical(other.createdAt, createdAt) ||
@@ -427,7 +427,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
       image3,
       isActive,
       viewCount,
-      const DeepCollectionEquality().hash(receiverUser),
+      receiverUser,
       receiverConfirmed,
       createdAt,
       isArchived);
@@ -460,7 +460,7 @@ abstract class _FeedDetailModel implements FeedDetailModel {
           @JsonKey(name: 'image3') required final String? image3,
           @JsonKey(name: 'is_active') required final bool isActive,
           @JsonKey(name: 'view_count') required final int viewCount,
-          @JsonKey(name: 'receiver_user') required final dynamic receiverUser,
+          @JsonKey(name: 'receiver_user') required final int? receiverUser,
           @JsonKey(name: 'receiver_confirmed')
           required final bool receiverConfirmed,
           @JsonKey(name: 'created_at') required final DateTime createdAt,
@@ -505,7 +505,7 @@ abstract class _FeedDetailModel implements FeedDetailModel {
   int get viewCount;
   @override
   @JsonKey(name: 'receiver_user')
-  dynamic get receiverUser;
+  int? get receiverUser;
   @override
   @JsonKey(name: 'receiver_confirmed')
   bool get receiverConfirmed;

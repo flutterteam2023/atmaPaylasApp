@@ -20,7 +20,7 @@ _$FeedDetailModelImpl _$$FeedDetailModelImplFromJson(
       image3: json['image3'] as String?,
       isActive: json['is_active'] as bool,
       viewCount: json['view_count'] as int,
-      receiverUser: json['receiver_user'],
+      receiverUser: json['receiver_user'] as int?,
       receiverConfirmed: json['receiver_confirmed'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String),
       isArchived: json['is_archived'] as bool,
