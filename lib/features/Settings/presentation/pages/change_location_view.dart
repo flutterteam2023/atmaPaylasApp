@@ -173,7 +173,11 @@ class _ChangeLocationViewState extends ConsumerState<ChangeLocationView> {
               SizedBox(
                 height: 48.h,
               ),
-              CustomFilledButton(text: 'Uygula ve Devam Et', onTap: (){})
+              CustomFilledButton(text: 'Uygula ve Devam Et', onTap: (){
+                GetIt.instance<UserRepository>().editUserProfile(null, null, null, selectedCity.value, selectedDistrict.value).then((value) {
+                  value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.router.pop());
+                });
+              })
           ],
         ),
       ),
