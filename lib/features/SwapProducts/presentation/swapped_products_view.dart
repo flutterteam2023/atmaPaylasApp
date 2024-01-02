@@ -1,6 +1,10 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/common_widgets/share_ads_card.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +19,7 @@ class SwappedProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().myInactiveTradableFeeds,
+      future: GetIt.instance<FeedRepository>().tradableInactiveFeeds,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
@@ -111,7 +115,13 @@ class SwappedProductsView extends StatelessWidget {
                         color: snapshot.data![index].listingType == ListingTypes.free.name
                             ? const Color(0xff6DCEBB)
                             : const Color(0xffFD8435),
-                        onTap: () {},
+                        onTap: () {
+                          if (GetIt.instance<UserRepository>().user?.userId == snapshot.data?[index].ownerInfo.userId) {
+                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                          } else {
+                            context.pushRoute(AdsDetailRoute(id: snapshot.data![index].id));
+                          }
+                        },
                         image: snapshot.data![index].image1,
                         title: snapshot.data![index].title,
                         address:
