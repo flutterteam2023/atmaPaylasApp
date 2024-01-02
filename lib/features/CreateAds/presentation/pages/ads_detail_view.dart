@@ -4,11 +4,13 @@ import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -372,7 +374,18 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                           ),
                           CustomFilledButton(
                             text: 'Mesaj Gönder',
-                            onTap: () {},
+                            onTap: () async {
+                              await const FlutterSecureStorage().read(key: 'access_token').then((value) {
+                                if (value != null) {
+                                  context.pushRoute(
+                                    ChatRoomRoute(
+                                      userName: r.ownerInfo.username,
+                                      accessToken: value,
+                                    ),
+                                  );
+                                }
+                              });
+                            },
                             iconPath: 'mail-outline.svg',
                           ),
                           SizedBox(

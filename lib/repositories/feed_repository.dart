@@ -8,9 +8,11 @@ import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 enum ListingTypes { free, tradable }
@@ -152,14 +154,6 @@ class FeedRepository extends ApiService with ChangeNotifier {
         .toList();
   }
 
-  //this method is used for current user free feeds. just inactive
-  Future<List<FeedModel>> get myInactiveFreeFeeds async {
-    if (_myFeeds.isEmpty) await getMyFeeds();
-    return _myFeeds
-        .where((element) => element.listingType == ListingTypes.free.name && element.isActive == false)
-        .toList();
-  }
-
   //this method is used for current user tradable feeds active and inactive both
   Future<List<FeedModel>> get myActiveAndInactiveTradableFeeds async {
     if (_myFeeds.isEmpty) await getMyFeeds();
@@ -171,14 +165,6 @@ class FeedRepository extends ApiService with ChangeNotifier {
     if (_myFeeds.isEmpty) await getMyFeeds();
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == true)
-        .toList();
-  }
-
-  //this method is used for current user tradable feeds. just inactive
-  Future<List<FeedModel>> get myInactiveTradableFeeds async {
-    if (_myFeeds.isEmpty) await getMyFeeds();
-    return _myFeeds
-        .where((element) => element.listingType == ListingTypes.tradable.name && element.isActive == false)
         .toList();
   }
 
@@ -218,30 +204,28 @@ class FeedRepository extends ApiService with ChangeNotifier {
   }
 
   ///listing type is "free" or "tradable" or "most_viewed"
-  Future<ApiResponse<List<FeedModel>>> getAllListings(String listingType,String? endpoint,String? categoryid) async {
+  Future<ApiResponse<List<FeedModel>>> getAllListings(String listingType, String? endpoint, String? categoryid) async {
     if (endpoint == null) {
       return requestMethod<List<FeedModel>>(
-      path: '/detailed_listings/?listing_type=$listingType&page=1&page_size=100',
-      method: HttpMethod.get,
-      requestModel: null,
-      responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
-          .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      headers: {'Accept': 'application/json'},
-    );
-      
-    }else{
+        path: '/detailed_listings/?listing_type=$listingType&page=1&page_size=100',
+        method: HttpMethod.get,
+        requestModel: null,
+        responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
+            .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        headers: {'Accept': 'application/json'},
+      );
+    } else {
       return requestMethod<List<FeedModel>>(
-      path: '/listings_by_category/$categoryid?page=1&page_size=100',
-      method: HttpMethod.get,
-      requestModel: null,
-      responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
-          .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      headers: {'Accept': 'application/json'},
-    );
+        path: '/listings_by_category/$categoryid?page=1&page_size=100',
+        method: HttpMethod.get,
+        requestModel: null,
+        responseConverter: (response) => ((response.data as Map<String, dynamic>)['results'] as List<dynamic>)
+            .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        headers: {'Accept': 'application/json'},
+      );
     }
-    
   }
 
   Future<ApiResponse<String>> completeListing(String listingId, ListingTypes listingType, String otherUserName) async {
@@ -259,5 +243,106 @@ class FeedRepository extends ApiService with ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
+  }
+
+  ///tamamlanmış ilanlar
+  ///ücretsiz veya takaslanarak paylaşılmış ilanlar
+  ///Paylaşılan kullanıcı tarafından onay bekleyen ilanlar
+
+  final Set<FeedDetailModel> _inactiveFeeds = {};
+  Future<List<FeedDetailModel>> get allInactiveFeeds async {
+    if (_inactiveFeeds.isEmpty) await _getInactiveFeeds();
+    return _inactiveFeeds.toList();
+  }
+
+  //ilan aktif değil ve paylaşılan kullanıcı tarafından ücretsiz paylaşıldığı onaylanmış.
+  Future<List<FeedDetailModel>> get freeInactiveFeeds async {
+    if (_inactiveFeeds.isEmpty) await _getInactiveFeeds();
+    return _inactiveFeeds
+        .where((element) => element.listingType == ListingTypes.free.name && element.receiverConfirmed)
+        .toList();
+  }
+
+  ///ilan aktif değil ve paylaşılan kullanıcı tarafından takaslandığı onaylanmış
+  Future<List<FeedDetailModel>> get tradableInactiveFeeds async {
+    if (_inactiveFeeds.isEmpty) await _getInactiveFeeds();
+    return _inactiveFeeds
+        .where((element) => element.listingType == ListingTypes.tradable.name && element.receiverConfirmed)
+        .toList();
+  }
+
+  /// ilan aktif değil ve paylaşılan kullanıcı tarafından onay bekliyor
+  Future<List<FeedDetailModel>> get waitingInactiveFeeds async {
+    if (_inactiveFeeds.isEmpty) await _getInactiveFeeds();
+    return _inactiveFeeds
+        .where((element) => element.receiverConfirmed == false && element.receiverConfirmed == false)
+        .toList();
+  }
+
+  void _addInactiveFeed(FeedDetailModel feedModel) {
+    _inactiveFeeds.add(feedModel);
+  }
+
+  Future<ApiResponse<List<FeedDetailModel>>> _getInactiveFeeds() async {
+    return requestMethod<List<FeedDetailModel>>(
+      path: '/inactive_listings/',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => (response.data as List<dynamic>)
+          .map(
+            (e) => FeedDetailModel.fromJson(e as Map<String, dynamic>).copyWith(
+                /* image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null, */
+                ),
+          )
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    ).then((value) {
+      value.fold(
+        Log.error,
+        (r) => {
+          for (final element in r) _addInactiveFeed(element),
+        },
+      );
+      return value;
+    });
+  }
+
+  final Set<FeedDetailModel> _waitingToConfigmFeeds = {};
+
+  ///başka bir kullanıcı tarafından uygulamayı kullanan user ın username i girilerek kullanıcının onayına sunulan ilanlar
+  Future<List<FeedDetailModel>> get waitingToConfirmFeeds async {
+    if (_waitingToConfigmFeeds.isEmpty) await _getWaitingToConfirmFeeds();
+    return _waitingToConfigmFeeds.toList();
+  }
+
+  void _addWaitingToConfifmFeed(FeedDetailModel feedModel) {
+    if (feedModel.ownerInfo.username != GetIt.instance<UserRepository>().user?.username) {
+      _waitingToConfigmFeeds.add(feedModel);
+      notifyListeners();
+    }
+  }
+
+  Future<ApiResponse<List<FeedDetailModel>>> _getWaitingToConfirmFeeds() async {
+    return requestMethod<List<FeedDetailModel>>(
+      path: '/listings/to_confirm/',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => (response.data as List<dynamic>)
+          .map(
+            (e) => FeedDetailModel.fromJson(e as Map<String, dynamic>).copyWith(
+                /* image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null, */
+                ),
+          )
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    ).then((value) {
+      value.fold(
+        Log.error,
+        (r) => {
+          for (final element in r) _addWaitingToConfifmFeed(element),
+        },
+      );
+      return value;
+    });
   }
 }

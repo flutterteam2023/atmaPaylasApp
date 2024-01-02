@@ -29,7 +29,7 @@ Future<void> main() async {
   GetIt.I.registerSingleton<ArchivedRepository>(ArchivedRepository());
   //Sample usage of GetIt
 
-  /*  await GetIt.instance<UserRepository>()
+/*   await GetIt.instance<UserRepository>()
       .editUserProfile(
     null,
     null,
