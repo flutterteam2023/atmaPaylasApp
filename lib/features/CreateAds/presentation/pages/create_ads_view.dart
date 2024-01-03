@@ -20,6 +20,12 @@ class CreateAdsView extends StatefulHookConsumerWidget {
 }
 class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
   @override
+  void initState() {
+              GetIt.instance<CategoryRepository>().pageviewLength = 2;
+    
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final pageController = usePageController();
     final maincategoryid = useState<int?>(null);

@@ -334,7 +334,13 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                           
                         }else{
                          GetIt.instance<FeedRepository>().addFeed(images.value[0], images.value[1], images.value[2],listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text).then((value) {
-                          value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.replaceRoute(AdsSuccessCreateRoute()));
+                          value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) {
+                            images.value.clear();
+                            titleController.clear();
+                            descriptionController.clear();
+                            
+                            context.replaceRoute(AdsSuccessCreateRoute());
+                          });
                          });
 
                         }
