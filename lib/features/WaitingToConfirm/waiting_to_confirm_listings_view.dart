@@ -8,14 +8,20 @@ import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class WaitingToConfirmListingsView extends StatelessWidget {
+class WaitingToConfirmListingsView extends StatefulWidget {
   const WaitingToConfirmListingsView({super.key});
 
+  @override
+  State<WaitingToConfirmListingsView> createState() => _WaitingToConfirmListingsViewState();
+}
+
+class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsView> {
   @override
   Widget build(BuildContext context) {
     final formatter = DateFormat('dd/MM/yyyy');
@@ -263,7 +269,22 @@ class WaitingToConfirmListingsView extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: InkWell(
-                                              onTap: () {},
+                                              onTap: () async {
+                                                await GetIt.instance<FeedRepository>()
+                                                    .rejectToWaitingFeed(
+                                                  snapshot.data!.last[index].id,
+                                                )
+                                                    .then((value) {
+                                                  value.fold(
+                                                    EasyLoading.showError,
+                                                    (r) {
+                                                      GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
+                                                      EasyLoading.showToast('İlan başarıyla reddedildi.');
+                                                      setState(() {});
+                                                    },
+                                                  );
+                                                });
+                                              },
                                               child: Container(
                                                 padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
                                                 decoration: const BoxDecoration(
@@ -285,22 +306,40 @@ class WaitingToConfirmListingsView extends StatelessWidget {
                                             ),
                                           ),
                                           Expanded(
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
-                                              decoration: const BoxDecoration(
-                                                color: Color(
-                                                  AppColors.primaryColor,
+                                            child: InkWell(
+                                              onTap: () async {
+                                                await GetIt.instance<FeedRepository>()
+                                                    .confirmToWaitingFeed(
+                                                  snapshot.data!.last[index].id,
+                                                )
+                                                    .then((value) {
+                                                  value.fold(
+                                                    EasyLoading.showError,
+                                                    (r) {
+                                                      GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
+                                                      EasyLoading.showToast('İlan başarıyla onaylandı.');
+                                                      setState(() {});
+                                                    },
+                                                  );
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
+                                                decoration: const BoxDecoration(
+                                                  color: Color(
+                                                    AppColors.primaryColor,
+                                                  ),
+                                                  borderRadius: BorderRadius.only(
+                                                    bottomRight: Radius.circular(5),
+                                                  ),
                                                 ),
-                                                borderRadius: BorderRadius.only(
-                                                  bottomRight: Radius.circular(5),
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  'Onayla',
-                                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                        color: Colors.white,
-                                                      ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Onayla',
+                                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                          color: Colors.white,
+                                                        ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
