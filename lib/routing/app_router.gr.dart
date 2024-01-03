@@ -48,9 +48,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     CategoryListingRoute.name: (routeData) {
+      final args = routeData.argsAs<CategoryListingRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CategoryListingView(),
+        child: CategoryListingView(
+          categoryId: args.categoryId,
+          key: args.key,
+          categoryName: args.categoryName,
+        ),
       );
     },
     ChangeLocationRoute.name: (routeData) {
@@ -404,16 +409,45 @@ class AdsSuccessCreateRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CategoryListingView]
-class CategoryListingRoute extends PageRouteInfo<void> {
-  const CategoryListingRoute({List<PageRouteInfo>? children})
-      : super(
+class CategoryListingRoute extends PageRouteInfo<CategoryListingRouteArgs> {
+  CategoryListingRoute({
+    required String categoryId,
+    Key? key,
+    String? categoryName,
+    List<PageRouteInfo>? children,
+  }) : super(
           CategoryListingRoute.name,
+          args: CategoryListingRouteArgs(
+            categoryId: categoryId,
+            key: key,
+            categoryName: categoryName,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'CategoryListingRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CategoryListingRouteArgs> page =
+      PageInfo<CategoryListingRouteArgs>(name);
+}
+
+class CategoryListingRouteArgs {
+  const CategoryListingRouteArgs({
+    required this.categoryId,
+    this.key,
+    this.categoryName,
+  });
+
+  final String categoryId;
+
+  final Key? key;
+
+  final String? categoryName;
+
+  @override
+  String toString() {
+    return 'CategoryListingRouteArgs{categoryId: $categoryId, key: $key, categoryName: $categoryName}';
+  }
 }
 
 /// generated route for

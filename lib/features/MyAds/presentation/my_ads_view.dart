@@ -307,7 +307,9 @@ class MyAdsView extends ConsumerWidget {
                                       return Padding(
                                         padding: EdgeInsets.only(right: 16.w, top: 16.h),
                                         child: AdsCard(
-                                          adsType: 'Takaslıyor',
+                                          adsType: item.listingType == ListingTypes.free.name
+                                              ? 'Ücretsiz Paylaşıyor'
+                                              : 'Takaslıyor',
                                           saveButtonOnTap: () async {
                                             if (item.isArchived) {
                                               GetIt.instance<ArchivedRepository>().removeArchivedList(item);
@@ -324,8 +326,12 @@ class MyAdsView extends ConsumerWidget {
                                           userName: item.ownerInfo.username,
                                           productImage: item.image1,
                                           productName: item.title,
-                                          colorType: const Color(0xffFD8435),
-                                          textColor: Colors.white,
+                                          textColor: item.listingType == ListingTypes.free.name
+                                              ? const Color(0xff05473A)
+                                              : Colors.white,
+                                          colorType: item.listingType == ListingTypes.free.name
+                                              ? const Color(0xff6DCEBB)
+                                              : const Color(0xffFD8435),
                                           isSaved: item.isArchived,
                                           width: 358.w,
                                           seeAdsDetailOnTap: () {
