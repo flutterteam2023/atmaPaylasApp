@@ -27,10 +27,12 @@ class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
     
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         actions: [
           Bounceable(
             onTap: () {
+              GetIt.instance<CategoryRepository>().pageviewLength = 2;
               context.pushRoute(const NavigatorRoute());
             },
             child: Padding(
@@ -53,6 +55,7 @@ class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
         ),
       ),
       body:PageView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         itemCount:GetIt.instance<CategoryRepository>().pageviewLength ,
         onPageChanged: (value) {

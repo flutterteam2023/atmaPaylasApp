@@ -331,7 +331,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 320.h,
+                  height: 350.h,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().mostViewedFeeds,
                     builder: (context, snaphot) {
@@ -398,7 +398,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 300.h,
+                  height: 350.h,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().freeListingFeeds,
                     builder: (context, snaphot) {
@@ -465,7 +465,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 300.h,
+                  height: 359.h,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().tradableListingFeeds,
                     builder: (context, snaphot) {
