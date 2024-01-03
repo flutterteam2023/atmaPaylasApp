@@ -60,6 +60,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: ChatRoomView(
           userName: args.userName,
           accessToken: args.accessToken,
+          feedId: args.feedId,
           key: args.key,
         ),
       );
@@ -415,6 +416,7 @@ class ChatRoomRoute extends PageRouteInfo<ChatRoomRouteArgs> {
   ChatRoomRoute({
     required String userName,
     required String accessToken,
+    required String? feedId,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -422,6 +424,7 @@ class ChatRoomRoute extends PageRouteInfo<ChatRoomRouteArgs> {
           args: ChatRoomRouteArgs(
             userName: userName,
             accessToken: accessToken,
+            feedId: feedId,
             key: key,
           ),
           initialChildren: children,
@@ -437,6 +440,7 @@ class ChatRoomRouteArgs {
   const ChatRoomRouteArgs({
     required this.userName,
     required this.accessToken,
+    required this.feedId,
     this.key,
   });
 
@@ -444,11 +448,13 @@ class ChatRoomRouteArgs {
 
   final String accessToken;
 
+  final String? feedId;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'ChatRoomRouteArgs{userName: $userName, accessToken: $accessToken, key: $key}';
+    return 'ChatRoomRouteArgs{userName: $userName, accessToken: $accessToken, feedId: $feedId, key: $key}';
   }
 }
 

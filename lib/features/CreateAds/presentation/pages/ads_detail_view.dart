@@ -383,6 +383,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                     ChatRoomRoute(
                                       userName: r.ownerInfo.username,
                                       accessToken: value,
+                                      feedId: r.id.toString(),
                                     ),
                                   );
                                 }

@@ -15,6 +15,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 ///GetIt.instance<AuthRepository>().logout() is returned as Future<ApiResponse<String>>
 class AuthRepository extends ApiService {
   final storage = const FlutterSecureStorage();
+  String? lastAccessToken;
   Future<ApiResponse<AccessModel>> login(String email, String password) async {
     final resp = await requestMethod<dynamic>(
       path: '/login/',

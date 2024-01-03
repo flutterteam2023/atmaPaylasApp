@@ -15,6 +15,7 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final accessToken = await storage.read(key: 'access_token');
+    GetIt.instance<AuthRepository>().lastAccessToken = accessToken;
     if (isDebugMode) Log.success('onrequestAlanında $accessToken');
     if (!options.path.contains('login') &&
         !options.path.contains('register') &&
