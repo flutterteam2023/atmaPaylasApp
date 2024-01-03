@@ -25,7 +25,7 @@ class ShareAdsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
-      future: GetIt.instance<FeedRepository>().getAllListings(type,null,null),
+      future: GetIt.instance<FeedRepository>().getAllListings(type),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
@@ -60,9 +60,7 @@ class ShareAdsView extends ConsumerWidget {
                       type: 'Ücretsiz',
                       textColor: const Color(0xff05473A),
                       color: const Color(0xff6DCEBB),
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       image: null,
                       title: 'Casio Saat',
                       address: 'İstanbul / Kadıköy',

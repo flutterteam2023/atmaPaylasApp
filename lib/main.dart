@@ -10,6 +10,8 @@ import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/feedback_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
+import 'package:atma_paylas_app/routing/routing_observer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -92,8 +94,12 @@ class MyApp extends StatelessWidget {
         final inputDecorationThemeBorderRadius = BorderRadius.circular(8.r);
         return MaterialApp.router(
           builder: EasyLoading.init(builder: FToastBuilder()),
-          routerConfig: route.config(),
-          routerDelegate: null,
+          routerConfig: route.config(
+            navigatorObservers: () => [
+              AutoRouteObserver(),
+              MyObserver(),
+            ],
+          ),
           debugShowCheckedModeBanner: false,
           title: 'Atma Paylaş',
           theme: ThemeData(

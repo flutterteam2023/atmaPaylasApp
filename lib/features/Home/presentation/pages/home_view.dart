@@ -125,9 +125,16 @@ class _HomeViewState extends State<HomeView> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 8.w),
+                          padding: EdgeInsets.only(left: 18.w),
                           child: Bounceable(
-                            onTap: () {},
+                            onTap: () {
+                              context.pushRoute(
+                                CategoryListingRoute(
+                                  categoryId: 'all',
+                                  categoryName: 'Tümü',
+                                ),
+                              );
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100.r),
@@ -164,14 +171,21 @@ class _HomeViewState extends State<HomeView> {
                               return snapshot.data!.fold(
                                 (l) => const SizedBox(),
                                 (r) => ListView.builder(
-                                  padding: EdgeInsets.only(left: 8.w, right: 16),
+                                  padding: EdgeInsets.only(left: 0, right: 16),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: r.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: EdgeInsets.only(left: 8.w),
                                       child: Bounceable(
-                                        onTap: () {},
+                                        onTap: () {
+                                          context.pushRoute(
+                                            CategoryListingRoute(
+                                              categoryId: r[index].id.toString(),
+                                              categoryName: r[index].name,
+                                            ),
+                                          );
+                                        },
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(100.r),
