@@ -143,7 +143,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
   }
 
   Future<List<FeedModel>> get tradableListingFeeds async {
-    if (_tradableListingFeeds.isEmpty) await getMyFeeds();
+    if (_tradableListingFeeds.isEmpty) await getHomePageFeeds();
     return _tradableListingFeeds.toList();
   }
 
