@@ -8,6 +8,7 @@ import 'package:atma_paylas_app/features/Authentication/presentation/pages/regis
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verif_detail_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/welcome_view.dart';
+import 'package:atma_paylas_app/features/Category/views/categort_listing_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_detail_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_info_add_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_success_create_view.dart';
@@ -154,6 +155,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: ShareAdsRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: CategoryListingRoute.page,
           initial: false,
         ),
         AutoRoute(

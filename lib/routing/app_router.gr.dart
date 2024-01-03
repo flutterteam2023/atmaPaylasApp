@@ -47,6 +47,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AdsSuccessCreateView(),
       );
     },
+    CategoryListingRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CategoryListingView(),
+      );
+    },
     ChangeLocationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -392,6 +398,20 @@ class AdsSuccessCreateRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdsSuccessCreateRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CategoryListingView]
+class CategoryListingRoute extends PageRouteInfo<void> {
+  const CategoryListingRoute({List<PageRouteInfo>? children})
+      : super(
+          CategoryListingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoryListingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

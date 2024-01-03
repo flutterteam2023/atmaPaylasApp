@@ -1,4 +1,11 @@
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'dart:convert';
+
+import 'package:atma_paylas_app/api/log.dart';
+import 'package:atma_paylas_app/features/Messages/models/chat_room_model.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -33,15 +40,135 @@ class _MessagesViewState extends State<MessagesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text('Mesajlar'),
       ),
       body: StreamBuilder(
         stream: channel.stream,
         builder: (context, snapshot) {
-          print(snapshot.data);
-          return Text(
-            snapshot.data.toString(),
+          final roooms = <ChatRoomModel>[];
+          if (snapshot.connectionState == ConnectionState.active) {
+            final data = jsonDecode(snapshot.data.toString());
+            for (final element in data['previews'] as List<dynamic>) {
+              roooms.add(ChatRoomModel.fromJson(element as Map<String, dynamic>));
+              Log.success(roooms);
+            }
+          }
+          return ListView.builder(
+            itemCount: roooms.length,
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () async {
+                  await const FlutterSecureStorage().read(key: 'access_token').then((value) {
+                    if (value != null) {
+                      context.pushRoute(
+                        ChatRoomRoute(
+                          userName: roooms[index].otherUser.username,
+                          accessToken: value,
+                          feedId: null,
+                        ),
+                      );
+                    }
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(9),
+                  margin: const EdgeInsets.only(bottom: 18),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (roooms[index].listing != null)
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(9),
+                                child: Image.network(
+                                  roooms[index].listing!.image1Url,
+                                  height: 64,
+                                  width: 64,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            if (roooms[index].otherUser.profileImage != null)
+                              CircleAvatar(
+                                radius: 12,
+                                backgroundImage: NetworkImage(roooms[index].otherUser.profileImage!),
+                              ),
+                            if (roooms[index].otherUser.profileImage == null)
+                              Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const CircleAvatar(
+                                  radius: 12,
+                                  backgroundImage: AssetImage('assets/images/persondemo.png'),
+                                ),
+                              ),
+                          ],
+                        ),
+                      if (roooms[index].listing == null && roooms[index].otherUser.profileImage != null)
+                        CircleAvatar(
+                          radius: 32,
+                          backgroundImage: NetworkImage(roooms[index].otherUser.profileImage!),
+                        ),
+                      if (roooms[index].listing == null && roooms[index].otherUser.profileImage == null)
+                        const CircleAvatar(
+                          radius: 32,
+                          backgroundImage: AssetImage('assets/images/persondemo.png'),
+                        ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 9),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${roooms[index].otherUser.name} ${roooms[index].otherUser.surname}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              if (roooms[index].latestMessage != null)
+                                Text(
+                                  roooms[index].latestMessage!.content,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(9),
+                        child: Text(
+                          '${roooms[index].latestMessage!.timestamp.hour < 10 ? "0${roooms[index].latestMessage!.timestamp.hour}" : roooms[index].latestMessage!.timestamp.hour}:${roooms[index].latestMessage!.timestamp.minute < 10 ? "0${roooms[index].latestMessage!.timestamp.minute}" : roooms[index].latestMessage!.timestamp.minute}',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

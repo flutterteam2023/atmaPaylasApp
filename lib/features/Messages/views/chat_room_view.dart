@@ -13,6 +13,7 @@ import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -56,6 +57,46 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.userName),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Gap(9),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Gap(9),
+                    const ListTile(
+                      title: Text('Engelle'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
+                    const Divider(),
+                    const ListTile(
+                      title: Text('Profili Gör'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
+                    Gap(MediaQuery.of(context).viewPadding.bottom),
+                  ],
+                ),
+              );
+            },
+            icon: const Icon(Icons.more_vert),
+          ),
+        ],
       ),
       bottomNavigationBar: SendMessageField(otherUser: widget.userName, socket: channel),
       body: StreamBuilder(
