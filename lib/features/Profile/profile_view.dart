@@ -484,6 +484,7 @@ class _ProfileViewState extends State<ProfileView> {
                       );
                     },
                   ),
+                  Gap(MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight + 18 * 3),
                 ],
               ),
             ),
