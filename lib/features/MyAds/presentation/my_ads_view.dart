@@ -22,259 +22,332 @@ class MyAdsView extends ConsumerWidget {
       appBar: AppBar(
         toolbarHeight: 0,
       ),
-      body: Column(
-        children: [
-          DefaultTabController(
-            length: 2, // length of tabs
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const TabBar(
-                  physics: NeverScrollableScrollPhysics(),
-                  indicatorColor: Color(AppColors.primaryColor),
-                  labelColor: Color(AppColors.primaryColor),
-                  unselectedLabelColor: Color(AppColors.primaryTextColor),
-                  tabs: [
-                    Tab(text: 'Aktif İlanlarım'),
-                    Tab(text: 'Arşivlediklerim'),
-                  ],
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height - 150.h, //height of TabBarView
-                  decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
-                  child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: 24.h,
-                            bottom: MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight + 18 * 2,
+      body: ListenableBuilder(
+        listenable: GetIt.instance<FeedRepository>(),
+        builder: (context, widget) {
+          return Column(
+            children: [
+              DefaultTabController(
+                length: 2, // length of tabs
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const TabBar(
+                      physics: NeverScrollableScrollPhysics(),
+                      indicatorColor: Color(AppColors.primaryColor),
+                      labelColor: Color(AppColors.primaryColor),
+                      unselectedLabelColor: Color(AppColors.primaryTextColor),
+                      tabs: [
+                        Tab(text: 'Aktif İlanlarım'),
+                        Tab(text: 'Arşivlediklerim'),
+                      ],
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height - 150.h, //height of TabBarView
+                      decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+                      child: TabBarView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 24.h,
+                                bottom: MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight + 18 * 2,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FutureBuilder(
+                                    future: GetIt.instance<FeedRepository>().myActiveFreeFeeds,
+                                    builder: (context, snapshot) {
+                                      return Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Paylaşılacak Ürünlerim',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    fontFamily: 'Rubik',
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                if (snapshot.data?.isNotEmpty ?? false)
+                                                  InkWell(
+                                                    onTap: () {
+                                                      context.pushRoute(const SharedProductsRoute());
+                                                    },
+                                                    child: Text(
+                                                      'Hepsini Gör',
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontFamily: 'Rubik',
+                                                        fontWeight: FontWeight.w500,
+                                                        color: const Color(AppColors.primaryColor),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 16.h,
+                                          ),
+                                          if (snapshot.data?.isEmpty ?? true)
+                                            SizedBox(
+                                              height: 300.h,
+                                              child: Center(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.swap_horiz_outlined,
+                                                      size: 64.w,
+                                                      color: const Color(
+                                                        AppColors.primaryColor,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(18),
+                                                      child: Text(
+                                                        'Hiç paylaşılacak ilanınız bulunmamaktadır.',
+                                                        textAlign: TextAlign.center,
+                                                        style: Theme.of(context).textTheme.titleMedium,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          if (snapshot.data?.isNotEmpty ?? false)
+                                            SizedBox(
+                                              height: 300.h,
+                                              child: ListView.builder(
+                                                itemCount: snapshot.data?.length,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.horizontal,
+                                                itemBuilder: (context, index) {
+                                                  return AdsCard(
+                                                    width: 265.w,
+                                                    isSaved: snapshot.data?[index].isArchived ?? false,
+                                                    adsType: 'Ücretsiz Paylaşıyor',
+                                                    address:
+                                                        '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
+                                                    date: formatter
+                                                        .format(snapshot.data?[index].createdAt ?? DateTime(2022)),
+                                                    userName: '${snapshot.data?[index].ownerInfo.username}',
+                                                    productImage: snapshot.data?[index].image1,
+                                                    productName: '${snapshot.data?[index].title}',
+                                                    colorType: const Color(0xff6DCEBB),
+                                                    textColor: const Color(0xff05473A),
+                                                    seeAdsDetailOnTap: () {
+                                                      context
+                                                          .pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 24.h,
+                                  ),
+                                  FutureBuilder(
+                                    future: GetIt.instance<FeedRepository>().myActiveTradableFeeds,
+                                    builder: (context, snapshot) {
+                                      return Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Takaslanacak Ürünlerim',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    fontFamily: 'Rubik',
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                if (snapshot.data?.isNotEmpty ?? false)
+                                                  InkWell(
+                                                    onTap: () {
+                                                      context.pushRoute(const SwapProductsRoute());
+                                                    },
+                                                    child: Text(
+                                                      'Hepsini Gör',
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontFamily: 'Rubik',
+                                                        fontWeight: FontWeight.w500,
+                                                        color: const Color(AppColors.primaryColor),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 16.h,
+                                          ),
+                                          if (snapshot.data?.isEmpty ?? true)
+                                            SizedBox(
+                                              height: 300.h,
+                                              child: Center(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.swap_horiz_outlined,
+                                                      size: 64.w,
+                                                      color: const Color(
+                                                        AppColors.primaryColor,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(18),
+                                                      child: Text(
+                                                        'Hiç takaslanacak ilanınız bulunmamaktadır.',
+                                                        textAlign: TextAlign.center,
+                                                        style: Theme.of(context).textTheme.titleMedium,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          if (snapshot.data?.isNotEmpty ?? false)
+                                            SizedBox(
+                                              height: 300.h,
+                                              child: ListView.builder(
+                                                itemCount: snapshot.data?.length,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.horizontal,
+                                                itemBuilder: (context, index) {
+                                                  return AdsCard(
+                                                    width: 265.w,
+                                                    adsType: 'Takaslıyor',
+                                                    address:
+                                                        '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
+                                                    date: formatter
+                                                        .format(snapshot.data?[index].createdAt ?? DateTime(2022)),
+                                                    userName: '${snapshot.data?[index].ownerInfo.username}}',
+                                                    productImage: snapshot.data?[index].image1,
+                                                    productName: '${snapshot.data?[index].title}',
+                                                    colorType: const Color(0xffFD8435),
+                                                    textColor: Colors.white,
+                                                    isSaved: snapshot.data?[index].isArchived ?? false,
+                                                    seeAdsDetailOnTap: () {
+                                                      context
+                                                          .pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Paylaşılacak Ürünlerim',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontFamily: 'Rubik',
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        context.pushRoute(const SharedProductsRoute());
-                                      },
-                                      child: Text(
-                                        'Hepsini Gör',
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Rubik',
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(AppColors.primaryColor),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 16.h,
-                              ),
-                              SizedBox(
-                                height: 300.h,
-                                child: FutureBuilder(
-                                  future: GetIt.instance<FeedRepository>().myActiveFreeFeeds,
-                                  builder: (context, snapshot) {
-                                    return ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return AdsCard(
-                                          width: 265.w,
-                                          isSaved: snapshot.data?[index].isArchived ?? false,
-                                          adsType: 'Ücretsiz Paylaşıyor',
-                                          address:
-                                              '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
-                                          date: formatter.format(snapshot.data?[index].createdAt ?? DateTime(2022)),
-                                          userName: '${snapshot.data?[index].ownerInfo.username}',
-                                          productImage: snapshot.data?[index].image1,
-                                          productName: '${snapshot.data?[index].title}',
-                                          colorType: const Color(0xff6DCEBB),
-                                          textColor: const Color(0xff05473A),
-                                          seeAdsDetailOnTap: () {
-                                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
-                                          },
-                                        );
-                                      },
+                          ListenableBuilder(
+                            listenable: GetIt.instance<ArchivedRepository>(),
+                            builder: (context, widget) {
+                              return FutureBuilder(
+                                future: GetIt.instance<ArchivedRepository>().getArchivedFeeds(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState != ConnectionState.done) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
                                     );
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Takaslanacak Ürünlerim',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontFamily: 'Rubik',
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
+                                  }
+                                  if (GetIt.instance<ArchivedRepository>().archivedList.isEmpty) {
+                                    return Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.archive_outlined,
+                                            size: 64.w,
+                                            color: const Color(
+                                              AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(18),
+                                            child: Text(
+                                              'Hiç arşivlenmiş ilanınız bulunmamaktadır.',
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        context.pushRoute(const SwapProductsRoute());
-                                      },
-                                      child: Text(
-                                        'Hepsini Gör',
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Rubik',
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(AppColors.primaryColor),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 16.h,
-                              ),
-                              SizedBox(
-                                height: 300.h,
-                                child: FutureBuilder(
-                                  future: GetIt.instance<FeedRepository>().myActiveTradableFeeds,
-                                  builder: (context, snapshot) {
-                                    return ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return AdsCard(
-                                          width: 265.w,
+                                    );
+                                  }
+
+                                  return ListView.builder(
+                                    itemCount: GetIt.instance<ArchivedRepository>().archivedList.length,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.zero,
+                                    itemBuilder: (context, index) {
+                                      final item = GetIt.instance<ArchivedRepository>().archivedList[index];
+                                      return Padding(
+                                        padding: EdgeInsets.only(right: 16.w, top: 16.h),
+                                        child: AdsCard(
                                           adsType: 'Takaslıyor',
-                                          address:
-                                              '${snapshot.data?[index].ownerInfo.district} / ${snapshot.data?[index].ownerInfo.city}',
-                                          date: formatter.format(snapshot.data?[index].createdAt ?? DateTime(2022)),
-                                          userName: '${snapshot.data?[index].ownerInfo.username}}',
-                                          productImage: snapshot.data?[index].image1,
-                                          productName: '${snapshot.data?[index].title}',
+                                          saveButtonOnTap: () async {
+                                            if (item.isArchived) {
+                                              GetIt.instance<ArchivedRepository>().removeArchivedList(item);
+                                              await GetIt.instance<ArchivedRepository>()
+                                                  .toggleArchiveStatus(feedId: item.id);
+                                            } else {
+                                              GetIt.instance<ArchivedRepository>().addArchivedList(item);
+                                              await GetIt.instance<ArchivedRepository>()
+                                                  .toggleArchiveStatus(feedId: item.id);
+                                            }
+                                          },
+                                          address: '${item.ownerInfo.district} / ${item.ownerInfo.city}',
+                                          date: formatter.format(item.createdAt),
+                                          userName: item.ownerInfo.username,
+                                          productImage: item.image1,
+                                          productName: item.title,
                                           colorType: const Color(0xffFD8435),
                                           textColor: Colors.white,
-                                          isSaved: snapshot.data?[index].isArchived ?? false,
+                                          isSaved: item.isArchived,
+                                          width: 358.w,
                                           seeAdsDetailOnTap: () {
-                                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?[index].id));
+                                            context.pushRoute(UserAdsDetailRoute(id: item.id));
                                           },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListenableBuilder(
-                        listenable: GetIt.instance<ArchivedRepository>(),
-                        builder: (context, widget) {
-                          return FutureBuilder(
-                            future: GetIt.instance<ArchivedRepository>().getArchivedFeeds(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState != ConnectionState.done) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              if (GetIt.instance<ArchivedRepository>().archivedList.isEmpty) {
-                                return Center(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.archive_outlined,
-                                        size: 64.w,
-                                        color: const Color(
-                                          AppColors.primaryColor,
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(18),
-                                        child: Text(
-                                          'Hiç arşivlenmiş ilanınız bulunmamaktadır.',
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.titleMedium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-
-                              return ListView.builder(
-                                itemCount: GetIt.instance<ArchivedRepository>().archivedList.length,
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                itemBuilder: (context, index) {
-                                  final item = GetIt.instance<ArchivedRepository>().archivedList[index];
-                                  return Padding(
-                                    padding: EdgeInsets.only(right: 16.w, top: 16.h),
-                                    child: AdsCard(
-                                      adsType: 'Takaslıyor',
-                                      saveButtonOnTap: () async {
-                                        if (item.isArchived) {
-                                          GetIt.instance<ArchivedRepository>().removeArchivedList(item);
-                                          await GetIt.instance<ArchivedRepository>()
-                                              .toggleArchiveStatus(feedId: item.id);
-                                        } else {
-                                          GetIt.instance<ArchivedRepository>().addArchivedList(item);
-                                          await GetIt.instance<ArchivedRepository>()
-                                              .toggleArchiveStatus(feedId: item.id);
-                                        }
-                                      },
-                                      address: '${item.ownerInfo.district} / ${item.ownerInfo.city}',
-                                      date: formatter.format(item.createdAt),
-                                      userName: item.ownerInfo.username,
-                                      productImage: item.image1,
-                                      productName: item.title,
-                                      colorType: const Color(0xffFD8435),
-                                      textColor: Colors.white,
-                                      isSaved: item.isArchived,
-                                      width: 358.w,
-                                      seeAdsDetailOnTap: () {
-                                        context.pushRoute(UserAdsDetailRoute(id: item.id));
-                                      },
-                                    ),
+                                      );
+                                    },
                                   );
                                 },
                               );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }
