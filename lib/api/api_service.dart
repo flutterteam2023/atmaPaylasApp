@@ -27,9 +27,9 @@ class ApiService {
       //..add(ActiveRequestInterceptor(ActiveRequests()))
       ..add(
         PrettyDioLogger(
-          requestBody: true,
-          requestHeader: true,
-          responseHeader: true,
+          requestBody: false,
+          requestHeader: false,
+          responseHeader: false,
         ),
       );
   }

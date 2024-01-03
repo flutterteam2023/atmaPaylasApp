@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
+import 'package:atma_paylas_app/features/Category/models/main_category_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:tuple/tuple.dart';
 
 enum ListingTypes { free, tradable }
 
@@ -141,7 +143,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
   }
 
   Future<List<FeedModel>> get tradableListingFeeds async {
-    if (_tradableListingFeeds.isEmpty) await getMyFeeds();
+    if (_tradableListingFeeds.isEmpty) await getHomePageFeeds();
     return _tradableListingFeeds.toList();
   }
 
@@ -388,6 +390,28 @@ class FeedRepository extends ApiService with ChangeNotifier {
       method: HttpMethod.post,
       requestModel: null,
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+  }
+
+  Future<ApiResponse<Tuple2<List<FeedModel>, List<MainCategoryModel>>>> searchListings(String query) async {
+    return requestMethod<Tuple2<List<FeedModel>, List<MainCategoryModel>>>(
+      path: '/search_listings/?query=$query',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) {
+        return Tuple2(
+          (response.data['listings'] as List<dynamic>)
+              .map((e) => FeedModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          (response.data['categories'] as List<dynamic>)
+              .map((e) => MainCategoryModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
+      },
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

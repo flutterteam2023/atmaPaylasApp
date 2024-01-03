@@ -1,8 +1,11 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/features/Category/models/main_category_model.dart';
+import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
@@ -29,7 +32,7 @@ class HomeView extends StatefulHookWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    final isAll = useState(true);
+    final searchingController = useTextEditingController();
     final formatter = DateFormat('dd/MM/yyyy');
     return Scaffold(
       appBar: AppBar(
@@ -62,61 +65,65 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                    top: 16.h,
-                    right: 16.w,
-                    left: 16.w,
-                  ),
-                  child: Column(
-                    children: [
-                      TextField(
-                        cursorColor: const Color(AppColors.primaryColor),
-                        decoration: InputDecoration(
-                          hintText: 'Ürün, kategori ara',
-                          hintStyle: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Rubik',
-                            color: const Color(0xff858585),
-                          ),
-                          prefixIcon: SvgPicture.asset(
-                            'assets/svg/search-primary.svg',
-                            fit: BoxFit.scaleDown,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(
-                              width: 2,
-                              color: Color(0xffE0E0E0),
+                  padding: const EdgeInsets.all(16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.r),
+                      color: const Color(0xffF5F5F5),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 16.w, right: 16.w),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: searchingController,
+                              decoration: InputDecoration(
+                                hintText: 'Ara',
+                                fillColor: Colors.transparent,
+                                filled: true,
+                                hintStyle: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Rubik',
+                                  color: const Color(0xffBDBDBD),
+                                ),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                focusedErrorBorder: InputBorder.none,
+                              ),
                             ),
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(
-                              color: Color(0xffE0E0E0),
-                              width: 2,
+                          InkWell(
+                            onTap: () {
+                              context.pushRoute(SearchingRoute(query: searchingController.text));
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/search-primary.svg',
+                                  height: 32,
+                                  width: 32,
+                                ),
+                                const Text(
+                                  'Ara',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(
+                                      AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(
-                              color: Color(0xffE0E0E0),
-                              width: 2,
-                            ),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
-                              width: 2,
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -171,7 +178,7 @@ class _HomeViewState extends State<HomeView> {
                               return snapshot.data!.fold(
                                 (l) => const SizedBox(),
                                 (r) => ListView.builder(
-                                  padding: EdgeInsets.only(left: 0, right: 16),
+                                  padding: const EdgeInsets.only(left: 0, right: 16),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: r.length,
                                   itemBuilder: (context, index) {
@@ -391,56 +398,57 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                    height: 320.h,
-                    child: FutureBuilder(
-                      future: GetIt.instance<FeedRepository>().freeListingFeeds,
-                      builder: (context, snaphot) {
-                        if (snaphot.connectionState != ConnectionState.done) {
-                          return customListViewShimmer(formatter);
-                        }
-                        return ListView.builder(
-                          padding: EdgeInsets.only(right: 16.w),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snaphot.data?.length,
-                          itemBuilder: (context, index) {
-                            return AdsCard(
-                              isSaved: snaphot.data?[index].isArchived ?? false,
-                              width: 265.w,
-                              textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? const Color(0xff05473A)
-                                  : Colors.white,
-                              colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? const Color(0xff6DCEBB)
-                                  : const Color(0xffFD8435),
-                              adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? 'Ücretsiz Paylaşıyor'
-                                  : 'Takas Ediyor',
-                              address:
-                                  '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                              productName: '${snaphot.data?[index].title}}',
-                              date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                              userName: '${snaphot.data?[index].ownerInfo.username}',
-                              productImage: snaphot.data?[index].image1,
-                              saveButtonOnTap: () async {
-                                await GetIt.instance<ArchivedRepository>()
-                                    .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                                await GetIt.instance<FeedRepository>().clearFreeListingFeeds();
-                                GetIt.instance<ArchivedRepository>().clearArchivedList();
-                                setStateMostViewedState(() {});
-                              },
-                              seeAdsDetailOnTap: () {
-                                if (GetIt.instance<UserRepository>().user?.userId ==
-                                    snaphot.data?[index].ownerInfo.userId) {
-                                  context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                                } else {
-                                  context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                                }
-                              },
-                            );
-                          },
-                        );
-                      },
-                    )),
+                  height: 300.h,
+                  child: FutureBuilder(
+                    future: GetIt.instance<FeedRepository>().freeListingFeeds,
+                    builder: (context, snaphot) {
+                      if (snaphot.connectionState != ConnectionState.done) {
+                        return customListViewShimmer(formatter);
+                      }
+                      return ListView.builder(
+                        padding: EdgeInsets.only(right: 16.w),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snaphot.data?.length,
+                        itemBuilder: (context, index) {
+                          return AdsCard(
+                            isSaved: snaphot.data?[index].isArchived ?? false,
+                            width: 265.w,
+                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
+                            address:
+                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                            productName: '${snaphot.data?[index].title}}',
+                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                            userName: '${snaphot.data?[index].ownerInfo.username}',
+                            productImage: snaphot.data?[index].image1,
+                            saveButtonOnTap: () async {
+                              await GetIt.instance<ArchivedRepository>()
+                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
+                              await GetIt.instance<FeedRepository>().clearFreeListingFeeds();
+                              GetIt.instance<ArchivedRepository>().clearArchivedList();
+                              setStateMostViewedState(() {});
+                            },
+                            seeAdsDetailOnTap: () {
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  snaphot.data?[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              }
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: 24.h,
                 ),
@@ -457,57 +465,58 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                    height: 320.h,
-                    child: FutureBuilder(
-                      future: GetIt.instance<FeedRepository>().tradableListingFeeds,
-                      builder: (context, snaphot) {
-                        if (snaphot.connectionState != ConnectionState.done) {
-                          return customListViewShimmer(formatter);
-                        }
-                        return ListView.builder(
-                          padding: EdgeInsets.only(right: 16.w),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snaphot.data?.length,
-                          itemBuilder: (context, index) {
-                            return AdsCard(
-                              isSaved: snaphot.data?[index].isArchived ?? false,
-                              width: 265.w,
-                              textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? const Color(0xff05473A)
-                                  : Colors.white,
-                              colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? const Color(0xff6DCEBB)
-                                  : const Color(0xffFD8435),
-                              adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                  ? 'Ücretsiz Paylaşıyor'
-                                  : 'Takas Ediyor',
-                              address:
-                                  '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                              productName: '${snaphot.data?[index].title}}',
-                              date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                              userName: '${snaphot.data?[index].ownerInfo.username}',
-                              productImage: snaphot.data?[index].image1,
-                              saveButtonOnTap: () async {
-                                await GetIt.instance<ArchivedRepository>()
-                                    .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                                await GetIt.instance<FeedRepository>().clearTradableListingFeeds();
-                                GetIt.instance<ArchivedRepository>().clearArchivedList();
+                  height: 300.h,
+                  child: FutureBuilder(
+                    future: GetIt.instance<FeedRepository>().tradableListingFeeds,
+                    builder: (context, snaphot) {
+                      if (snaphot.connectionState != ConnectionState.done) {
+                        return customListViewShimmer(formatter);
+                      }
+                      return ListView.builder(
+                        padding: EdgeInsets.only(right: 16.w),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snaphot.data?.length,
+                        itemBuilder: (context, index) {
+                          return AdsCard(
+                            isSaved: snaphot.data?[index].isArchived ?? false,
+                            width: 265.w,
+                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff05473A)
+                                : Colors.white,
+                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? const Color(0xff6DCEBB)
+                                : const Color(0xffFD8435),
+                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                ? 'Ücretsiz Paylaşıyor'
+                                : 'Takas Ediyor',
+                            address:
+                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                            productName: '${snaphot.data?[index].title}}',
+                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                            userName: '${snaphot.data?[index].ownerInfo.username}',
+                            productImage: snaphot.data?[index].image1,
+                            saveButtonOnTap: () async {
+                              await GetIt.instance<ArchivedRepository>()
+                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
+                              await GetIt.instance<FeedRepository>().clearTradableListingFeeds();
+                              GetIt.instance<ArchivedRepository>().clearArchivedList();
 
-                                setStateMostViewedState(() {});
-                              },
-                              seeAdsDetailOnTap: () {
-                                if (GetIt.instance<UserRepository>().user?.userId ==
-                                    snaphot.data?[index].ownerInfo.userId) {
-                                  context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                                } else {
-                                  context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                                }
-                              },
-                            );
-                          },
-                        );
-                      },
-                    )),
+                              setStateMostViewedState(() {});
+                            },
+                            seeAdsDetailOnTap: () {
+                              if (GetIt.instance<UserRepository>().user?.userId ==
+                                  snaphot.data?[index].ownerInfo.userId) {
+                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                              } else {
+                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                              }
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight + 18 * 2,
                 ),
