@@ -205,15 +205,29 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SecturityVerifDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<SecturityVerifDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SecturityVerifDetailView(),
+        child: SecturityVerifDetailView(
+          args.email,
+          key: args.key,
+        ),
       );
     },
     SecturityVerificationRoute.name: (routeData) {
+      final args = routeData.argsAs<SecturityVerificationRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SecturityVerificationView(),
+        child: SecturityVerificationView(
+          args.email,
+          key: args.key,
+        ),
+      );
+    },
+    SetNewPasswordNotificationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SetNewPasswordNotificationView(),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -838,28 +852,92 @@ class RegisterNotificationRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SecturityVerifDetailView]
-class SecturityVerifDetailRoute extends PageRouteInfo<void> {
-  const SecturityVerifDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class SecturityVerifDetailRoute
+    extends PageRouteInfo<SecturityVerifDetailRouteArgs> {
+  SecturityVerifDetailRoute({
+    required String email,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SecturityVerifDetailRoute.name,
+          args: SecturityVerifDetailRouteArgs(
+            email: email,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SecturityVerifDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SecturityVerifDetailRouteArgs> page =
+      PageInfo<SecturityVerifDetailRouteArgs>(name);
+}
+
+class SecturityVerifDetailRouteArgs {
+  const SecturityVerifDetailRouteArgs({
+    required this.email,
+    this.key,
+  });
+
+  final String email;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SecturityVerifDetailRouteArgs{email: $email, key: $key}';
+  }
 }
 
 /// generated route for
 /// [SecturityVerificationView]
-class SecturityVerificationRoute extends PageRouteInfo<void> {
-  const SecturityVerificationRoute({List<PageRouteInfo>? children})
-      : super(
+class SecturityVerificationRoute
+    extends PageRouteInfo<SecturityVerificationRouteArgs> {
+  SecturityVerificationRoute({
+    required String email,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SecturityVerificationRoute.name,
+          args: SecturityVerificationRouteArgs(
+            email: email,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SecturityVerificationRoute';
+
+  static const PageInfo<SecturityVerificationRouteArgs> page =
+      PageInfo<SecturityVerificationRouteArgs>(name);
+}
+
+class SecturityVerificationRouteArgs {
+  const SecturityVerificationRouteArgs({
+    required this.email,
+    this.key,
+  });
+
+  final String email;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SecturityVerificationRouteArgs{email: $email, key: $key}';
+  }
+}
+
+/// generated route for
+/// [SetNewPasswordNotificationView]
+class SetNewPasswordNotificationRoute extends PageRouteInfo<void> {
+  const SetNewPasswordNotificationRoute({List<PageRouteInfo>? children})
+      : super(
+          SetNewPasswordNotificationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SetNewPasswordNotificationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

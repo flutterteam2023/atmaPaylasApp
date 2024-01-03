@@ -73,6 +73,41 @@ class AuthRepository extends ApiService {
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
   }
+   Future<ApiResponse<String>> passwordReset({
+    required String email,
+    
+  }) async {
+    
+    return requestMethod<String>(
+      path: '/password_reset_request/',
+      method: HttpMethod.post,
+      requestModel: {
+        'email': email,
+      
+      },
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['message'] as String,
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+  }
+  Future<ApiResponse<String>> verifyCode({
+    required String email,
+    required String code,
+
+    
+  }) async {
+    
+    return requestMethod<String>(
+      path: '/verify_code/',
+      method: HttpMethod.post,
+      requestModel: {
+        'email': email,
+        'code': code,
+      
+      },
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+  }
 
   Future<ApiResponse<String>> changePassword({
     required String currentPassword,

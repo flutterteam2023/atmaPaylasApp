@@ -51,7 +51,7 @@ class Register2View extends HookConsumerWidget {
       child: Scaffold(
         bottomNavigationBar: Container(
           height: 60,
-          margin: EdgeInsets.only(right: 18, left: 18, bottom: MediaQuery.of(context).viewPadding.bottom),
+          margin: EdgeInsets.only(right: 18, left: 18, bottom: MediaQuery.of(context).viewPadding.bottom+10.h),
           child: CustomFilledButtonBerke(
             text: 'Hesabımı Oluştur',
             onTap: () async {
@@ -113,7 +113,9 @@ class Register2View extends HookConsumerWidget {
             Padding(
               padding: EdgeInsets.only(right: 16.w),
               child: Bounceable(
-                onTap: () {},
+                onTap: () {
+                  context.replaceRoute(const LoginRoute());
+                },
                 child: Text(
                   'Vazgeç',
                   style: TextStyle(
