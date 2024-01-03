@@ -18,6 +18,7 @@ import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/fee
 import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/give_feedback_view.dart';
 import 'package:atma_paylas_app/features/Help/presentation/pages/help_view.dart';
 import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
+import 'package:atma_paylas_app/features/Home/presentation/pages/searching_view.dart';
 import 'package:atma_paylas_app/features/Messages/views/chat_room_view.dart';
 import 'package:atma_paylas_app/features/Messages/views/messages_view.dart';
 import 'package:atma_paylas_app/features/MyAdds/my_adds_view.dart';
@@ -151,6 +152,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: HomeRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: SearchingRoute.page,
           initial: false,
         ),
         AutoRoute(

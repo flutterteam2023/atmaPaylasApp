@@ -1,9 +1,6 @@
 // ignore_for_file: invalid_annotation_target, lines_longer_than_80_chars
 
-import 'package:atma_paylas_app/api/api_service.dart';
-import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'feed_model.freezed.dart';
 part 'feed_model.g.dart';

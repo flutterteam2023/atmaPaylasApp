@@ -20,72 +20,72 @@ class SendMessageField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useTextEditingController();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Divider(),
-        Container(
-          padding: const EdgeInsets.only(
-            bottom: kBottomNavigationBarHeight,
-            top: 18,
-            right: 18,
-            left: 18,
-          ),
-          child: Row(
-            children: [
-              if (false)
-                IconButton(
-                  onPressed: () {
-                    print(otherUser);
-                  },
-                  icon: SvgPicture.asset('assets/svg/gallery.svg'),
-                ),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(9),
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Message',
-                      filled: true,
-                      fillColor: Color(AppColors.primaryLightColor),
-                      border: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      focusedErrorBorder: InputBorder.none,
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(),
+          Container(
+            padding: const EdgeInsets.only(
+              right: 18,
+              left: 18,
+            ),
+            child: Row(
+              children: [
+                if (false)
+                  IconButton(
+                    onPressed: () {
+                      print(otherUser);
+                    },
+                    icon: SvgPicture.asset('assets/svg/gallery.svg'),
+                  ),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(9),
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: const InputDecoration(
+                        hintText: 'Message',
+                        filled: true,
+                        fillColor: Color(AppColors.primaryLightColor),
+                        border: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        focusedErrorBorder: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ListenableBuilder(
-                listenable: controller,
-                builder: (context, widget) {
-                  if (controller.text.isEmpty) {
-                    return const SizedBox.shrink();
-                  } else {
-                    return IconButton(
-                      onPressed: () {
-                        try {
-                          socket.sink.add(jsonEncode({'type': 'text', 'message': controller.text}));
-                          controller.clear();
-                        } catch (e) {
-                          Log.error(e, path: 'socket error sending ');
-                        }
-                      },
-                      icon: SvgPicture.asset(
-                        'assets/svg/send.svg',
-                        color: const Color(AppColors.primaryColor),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ],
+                ListenableBuilder(
+                  listenable: controller,
+                  builder: (context, widget) {
+                    if (controller.text.isEmpty) {
+                      return const SizedBox.shrink();
+                    } else {
+                      return IconButton(
+                        onPressed: () {
+                          try {
+                            socket.sink.add(jsonEncode({'type': 'text', 'message': controller.text}));
+                            controller.clear();
+                          } catch (e) {
+                            Log.error(e, path: 'socket error sending ');
+                          }
+                        },
+                        icon: SvgPicture.asset(
+                          'assets/svg/send.svg',
+                          color: const Color(AppColors.primaryColor),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

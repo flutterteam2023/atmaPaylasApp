@@ -55,6 +55,7 @@ dependencies:
   riverpod_lint: ^2.0.1
   shared_preferences: ^2.2.1
   shimmer: ^3.0.0
+  tuple: ^2.0.2
   url_launcher: ^6.1.14
   validatorless: ^1.2.3
   web_socket_channel: ^2.4.0

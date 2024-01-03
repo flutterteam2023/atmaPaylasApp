@@ -204,6 +204,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const RegisterNotificationView(),
       );
     },
+    SearchingRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchingRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SearchingView(
+          query: args.query,
+          key: args.key,
+        ),
+      );
+    },
     SecturityVerifDetailRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -834,6 +844,44 @@ class RegisterNotificationRoute extends PageRouteInfo<void> {
   static const String name = 'RegisterNotificationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchingView]
+class SearchingRoute extends PageRouteInfo<SearchingRouteArgs> {
+  SearchingRoute({
+    required String query,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SearchingRoute.name,
+          args: SearchingRouteArgs(
+            query: query,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchingRoute';
+
+  static const PageInfo<SearchingRouteArgs> page =
+      PageInfo<SearchingRouteArgs>(name);
+}
+
+class SearchingRouteArgs {
+  const SearchingRouteArgs({
+    required this.query,
+    this.key,
+  });
+
+  final String query;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SearchingRouteArgs{query: $query, key: $key}';
+  }
 }
 
 /// generated route for
