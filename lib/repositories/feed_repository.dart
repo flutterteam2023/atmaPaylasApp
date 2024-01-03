@@ -90,6 +90,11 @@ class FeedRepository extends ApiService with ChangeNotifier {
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
     ).then((value) {
       notifyListeners();
+      clearFreeListingFeeds();
+      clearMostViewedFeeds();
+      clearTradableListingFeeds();
+      clearMyFeeds();
+
       return value;
     });
   }
@@ -160,6 +165,11 @@ class FeedRepository extends ApiService with ChangeNotifier {
     return _myFeeds
         .where((element) => element.listingType == ListingTypes.free.name && element.isActive == true)
         .toList();
+  }
+
+  void clearMyFeeds() {
+    _myFeeds.clear();
+    notifyListeners();
   }
 
   //this method is used for current user tradable feeds active and inactive both
@@ -317,6 +327,11 @@ class FeedRepository extends ApiService with ChangeNotifier {
 
   final Set<FeedDetailModel> _waitingToConfigmFeeds = {};
 
+  void clearWaitingToConfirmFeeds() {
+    _waitingToConfigmFeeds.clear();
+    notifyListeners();
+  }
+
   ///başka bir kullanıcı tarafından uygulamayı kullanan user ın username i girilerek kullanıcının onayına sunulan ilanlar
   Future<List<FeedDetailModel>> get waitingToConfirmFeeds async {
     if (_waitingToConfigmFeeds.isEmpty) await _getWaitingToConfirmFeeds();
@@ -352,5 +367,31 @@ class FeedRepository extends ApiService with ChangeNotifier {
       );
       return value;
     });
+  }
+
+  Future<ApiResponse<String>> confirmToWaitingFeed(int feedid) async {
+    return requestMethod<String>(
+      path: '/listings/confirm/$feedid',
+      method: HttpMethod.post,
+      requestModel: null,
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+  }
+
+  Future<ApiResponse<String>> rejectToWaitingFeed(int feedid) async {
+    return requestMethod<String>(
+      path: '/listings/cancel/$feedid',
+      method: HttpMethod.post,
+      requestModel: null,
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
   }
 }
