@@ -20,6 +20,12 @@ class CreateAdsView extends StatefulHookConsumerWidget {
 }
 class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
   @override
+  void initState() {
+              GetIt.instance<CategoryRepository>().pageviewLength = 2;
+    
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final pageController = usePageController();
     final maincategoryid = useState<int?>(null);
@@ -27,10 +33,12 @@ class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
     
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         actions: [
           Bounceable(
             onTap: () {
+              GetIt.instance<CategoryRepository>().pageviewLength = 2;
               context.pushRoute(const NavigatorRoute());
             },
             child: Padding(
@@ -53,6 +61,7 @@ class _CreateAdsViewState extends ConsumerState<CreateAdsView> {
         ),
       ),
       body:PageView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         itemCount:GetIt.instance<CategoryRepository>().pageviewLength ,
         onPageChanged: (value) {

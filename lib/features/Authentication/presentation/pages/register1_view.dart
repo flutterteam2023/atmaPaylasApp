@@ -37,7 +37,7 @@ class _Register1ViewState extends ConsumerState<Register1View> {
       child: Scaffold(
         bottomNavigationBar: Container(
           height: 60,
-          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: MediaQuery.of(context).viewPadding.bottom),
+          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: MediaQuery.of(context).viewPadding.bottom+10.h),
           child: CustomFilledButtonBerke(
             text: 'Onayla ve Devam et',
             onTap: () {
@@ -65,7 +65,9 @@ class _Register1ViewState extends ConsumerState<Register1View> {
             Padding(
               padding: EdgeInsets.only(right: 16.w),
               child: Bounceable(
-                onTap: () {},
+                onTap: () {
+                  context.popRoute();
+                },
                 child: Text(
                   'Vazgeç',
                   style: TextStyle(

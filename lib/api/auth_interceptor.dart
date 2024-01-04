@@ -18,6 +18,14 @@ class AuthInterceptor extends Interceptor {
     GetIt.instance<AuthRepository>().lastAccessToken = accessToken;
     if (isDebugMode) Log.success('onrequestAlanında $accessToken');
     if (!options.path.contains('login') &&
+    
+        !options.path.contains('password_reset_request') &&
+        !options.path.contains('verify_code') &&
+        !options.path.contains('set_new_password') &&
+
+
+
+    
         !options.path.contains('register') &&
         !options.path.contains('get_cities') &&
         !options.path.contains('refresh') &&

@@ -127,7 +127,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                 width: 358.w,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5.r),
-                                  image: DecorationImage(image: NetworkImage(r.image1!), fit: BoxFit.cover),
+                                  image: DecorationImage(image: NetworkImage(r.image1??"https://cdn-icons-png.flaticon.com/512/1160/1160358.png"), fit: BoxFit.cover),
                                 ),
                               ),
                               Positioned(
@@ -247,7 +247,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                                 image: DecorationImage(
-                                  image: NetworkImage(r.image1! ?? ''),
+                                  image: NetworkImage(r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png'),
                                   fit: BoxFit.cover,
                                 ),
                               ),

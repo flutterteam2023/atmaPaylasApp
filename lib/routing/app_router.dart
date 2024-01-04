@@ -1,12 +1,15 @@
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/forgot_password_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/login_view.dart';
+import 'package:atma_paylas_app/features/Authentication/presentation/pages/negative_notification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register1_view.dart';
+import 'package:atma_paylas_app/features/Authentication/presentation/pages/register2_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register_%20district_select_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register_city_select_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/register_notification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verif_detail_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/secturity_verification_view.dart';
+import 'package:atma_paylas_app/features/Authentication/presentation/pages/set_new_password_notification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/welcome_view.dart';
 import 'package:atma_paylas_app/features/Category/views/categort_listing_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_detail_view.dart';
@@ -24,16 +27,17 @@ import 'package:atma_paylas_app/features/Messages/views/messages_view.dart';
 import 'package:atma_paylas_app/features/MyAdds/my_adds_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/ads_state_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
+import 'package:atma_paylas_app/features/MyAds/presentation/user_ads_detail_view.dart';
 import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/change_location_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/password_change_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
+import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/sharing_products_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
-import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swapped_products_view.dart';
 import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.dart';
@@ -42,10 +46,6 @@ import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import '../features/Authentication/presentation/pages/negative_notification_view.dart';
-import '../features/Authentication/presentation/pages/register2_view.dart';
-import '../features/MyAds/presentation/user_ads_detail_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -94,6 +94,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: RegisterDistrictSelectRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: SetNewPasswordNotificationRoute.page,
           initial: false,
         ),
         AutoRoute(

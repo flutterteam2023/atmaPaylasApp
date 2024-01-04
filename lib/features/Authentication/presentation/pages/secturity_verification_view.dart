@@ -1,14 +1,21 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 @RoutePage()
 class SecturityVerificationView extends ConsumerStatefulWidget {
-  const SecturityVerificationView({super.key});
+  final String email;
+  const SecturityVerificationView(this.email, {super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SecturityVerificationViewState();
 }
@@ -64,7 +71,7 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
               height: 8.25.h,
             ),
             Text(
-              'user@example.com E-posta adresinize gelen 6 haneli kodu girerek devam edebilirsiniz',
+              '${widget.email} E-posta adresinize gelen 6 haneli kodu girerek devam edebilirsiniz',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontFamily: 'Rubik',
@@ -131,6 +138,9 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
           Center(
             child: Bounceable(
               onTap: () {
+                GetIt.instance<AuthRepository>().passwordReset(email: widget.email).then((value) {
+                  value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Kod Tekrar Gönderildi'))));
+                });
                 
               },
               child: Text('Kodu Tekrar Gönder',
@@ -150,6 +160,9 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
             ),
             CustomFilledButton(
               onTap: () {
+                GetIt.instance<AuthRepository>().verifyCode(email: widget.email, code: _code!).then((value) {
+                  value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.pushRoute( SecturityVerifDetailRoute(email: widget.email)));
+                });
               },
               text: 'Onayla ve Devam Et',
               
