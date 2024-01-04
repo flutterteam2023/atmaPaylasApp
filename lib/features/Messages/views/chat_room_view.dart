@@ -8,11 +8,13 @@ import 'package:atma_paylas_app/features/Messages/models/user_message_model.dart
 import 'package:atma_paylas_app/features/Messages/widgets/chat_bubbles_widget.dart';
 import 'package:atma_paylas_app/features/Messages/widgets/send_message_widget.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/block_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:web_socket_channel/io.dart';
@@ -24,11 +26,13 @@ class ChatRoomView extends StatefulWidget {
     required this.userName,
     required this.accessToken,
     required this.feedId,
+    required this.userId,
     super.key,
   });
   final String userName;
   final String accessToken;
   final String? feedId;
+  final int userId;
   @override
   State<ChatRoomView> createState() => _ChatRoomViewState();
 }
@@ -80,9 +84,17 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                       ],
                     ),
                     const Gap(9),
-                    const ListTile(
-                      title: Text('Engelle'),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                    ListTile(
+                      onTap: () async {
+                        await GetIt.instance<BlockRepository>().addBlockUser(widget.userId).then((value) {
+                          value.fold(
+                            EasyLoading.showToast,
+                            EasyLoading.showToast,
+                          );
+                        });
+                      },
+                      title: const Text('Engelle'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     const Divider(),
                     const ListTile(
