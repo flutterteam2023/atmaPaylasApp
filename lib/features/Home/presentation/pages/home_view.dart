@@ -45,15 +45,16 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         actions: [
-          InkWell(
-            onTap: () async {},
-            child: Padding(
-              padding: EdgeInsets.only(right: 16.w),
-              child: SvgPicture.asset(
-                'assets/svg/notifications-outline.svg',
+          if (false)
+            InkWell(
+              onTap: () async {},
+              child: Padding(
+                padding: EdgeInsets.only(right: 16.w),
+                child: SvgPicture.asset(
+                  'assets/svg/notifications-outline.svg',
+                ),
               ),
             ),
-          ),
         ],
       ),
       body: StatefulBuilder(
@@ -292,12 +293,7 @@ class _HomeViewState extends State<HomeView> {
                               date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                               userName: '${snaphot.data?[index].ownerInfo.username}',
                               productImage: snaphot.data?[index].image1,
-                              saveButtonOnTap: () async {
-                                await GetIt.instance<ArchivedRepository>()
-                                    .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                                await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
-                                setStateMostViewedState(() {});
-                              },
+                              id: 1,
                               seeAdsDetailOnTap: () {
                                 if (GetIt.instance<UserRepository>().user?.userId ==
                                     snaphot.data?[index].ownerInfo.userId) {
@@ -341,6 +337,7 @@ class _HomeViewState extends State<HomeView> {
                         itemCount: snaphot.data?.length,
                         itemBuilder: (context, index) {
                           return AdsCard(
+                            id: snaphot.data?[index].id ?? 0,
                             isSaved: snaphot.data?[index].isArchived ?? false,
                             width: 265.w,
                             textColor: snaphot.data?[index].listingType == ListingTypes.free.name
@@ -358,13 +355,6 @@ class _HomeViewState extends State<HomeView> {
                             date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                             userName: '${snaphot.data?[index].ownerInfo.username}',
                             productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
-                              GetIt.instance<ArchivedRepository>().clearArchivedList();
-                              setStateMostViewedState(() {});
-                            },
                             seeAdsDetailOnTap: () {
                               if (GetIt.instance<UserRepository>().user?.userId ==
                                   snaphot.data?[index].ownerInfo.userId) {
@@ -425,13 +415,7 @@ class _HomeViewState extends State<HomeView> {
                             date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                             userName: '${snaphot.data?[index].ownerInfo.username}',
                             productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearFreeListingFeeds();
-                              GetIt.instance<ArchivedRepository>().clearArchivedList();
-                              setStateMostViewedState(() {});
-                            },
+                            id: snaphot.data?[index].id ?? 0,
                             seeAdsDetailOnTap: () {
                               if (GetIt.instance<UserRepository>().user?.userId ==
                                   snaphot.data?[index].ownerInfo.userId) {
@@ -492,14 +476,7 @@ class _HomeViewState extends State<HomeView> {
                             date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                             userName: '${snaphot.data?[index].ownerInfo.username}',
                             productImage: snaphot.data?[index].image1,
-                            saveButtonOnTap: () async {
-                              await GetIt.instance<ArchivedRepository>()
-                                  .toggleArchiveStatus(feedId: snaphot.data![index].id);
-                              await GetIt.instance<FeedRepository>().clearTradableListingFeeds();
-                              GetIt.instance<ArchivedRepository>().clearArchivedList();
-
-                              setStateMostViewedState(() {});
-                            },
+                            id: snaphot.data?[index].id ?? 0,
                             seeAdsDetailOnTap: () {
                               if (GetIt.instance<UserRepository>().user?.userId ==
                                   snaphot.data?[index].ownerInfo.userId) {
@@ -545,7 +522,7 @@ class _HomeViewState extends State<HomeView> {
             date: formatter.format(DateTime.now()),
             userName: '',
             productImage: null,
-            saveButtonOnTap: () async {},
+            id: 1,
             seeAdsDetailOnTap: () {},
           ),
         );

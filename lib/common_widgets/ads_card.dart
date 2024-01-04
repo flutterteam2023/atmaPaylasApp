@@ -1,4 +1,8 @@
+// ignore_for_file: always_put_required_named_parameters_first
+
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
+import 'package:atma_paylas_app/features/Feed/models/archived_feed_model.dart';
+import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -7,13 +11,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 
 class AdsCard extends StatelessWidget {
-  const AdsCard({
+  AdsCard({
     super.key,
     required this.adsType,
     required this.address,
     required this.date,
     required this.userName,
-    this.saveButtonOnTap,
     this.seeAdsDetailOnTap,
     required this.productImage,
     required this.productName,
@@ -21,22 +24,31 @@ class AdsCard extends StatelessWidget {
     required this.textColor,
     required this.isSaved,
     required this.width,
+    required this.id,
   });
   final String adsType;
   final String address;
   final String productName;
   final String date;
   final String userName;
-  final void Function()? saveButtonOnTap;
   final void Function()? seeAdsDetailOnTap;
   final String? productImage;
   final Color colorType;
   final Color textColor;
   final bool isSaved;
   final double width;
+  final int id;
+
+  void Function()? saveButtonOnTap;
 
   @override
   Widget build(BuildContext context) {
+    saveButtonOnTap = () {
+      GetIt.instance<ArchivedRepository>().toggleArchiveStatus(feedId: id).then((value) {
+        GetIt.instance<ArchivedRepository>().clearArchivedList();
+        GetIt.instance<ArchivedRepository>().getArchivedFeeds();
+      });
+    };
     return Padding(
       padding: EdgeInsets.only(left: 16.w),
       child: Container(
@@ -65,39 +77,44 @@ class AdsCard extends StatelessWidget {
                             fit: BoxFit.fill,
                           )),
                 if (userName != GetIt.instance<UserRepository>().user?.username)
-                  isSaved == true
-                      ? Positioned(
-                          top: 17.h,
-                          right: 15.w,
-                          child: Bounceable(
-                            onTap: saveButtonOnTap,
-                            child: Container(
-                              height: 32.r,
-                              width: 32.r,
-                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                              child: SvgPicture.asset(
-                                'assets/svg/bookmark.svg',
-                                fit: BoxFit.scaleDown,
+                  ListenableBuilder(
+                    listenable: GetIt.instance<ArchivedRepository>(),
+                    builder: (context, child) {
+                      return GetIt.instance<ArchivedRepository>().isContain(id) == true
+                          ? Positioned(
+                              top: 17.h,
+                              right: 15.w,
+                              child: Bounceable(
+                                onTap: saveButtonOnTap,
+                                child: Container(
+                                  height: 32.r,
+                                  width: 32.r,
+                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/bookmark.svg',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )
-                      : Positioned(
-                          top: 17.h,
-                          right: 15.w,
-                          child: Bounceable(
-                            onTap: saveButtonOnTap,
-                            child: Container(
-                              height: 32.r,
-                              width: 32.r,
-                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                              child: SvgPicture.asset(
-                                'assets/svg/bookmark-outline.svg',
-                                fit: BoxFit.scaleDown,
+                            )
+                          : Positioned(
+                              top: 17.h,
+                              right: 15.w,
+                              child: Bounceable(
+                                onTap: saveButtonOnTap,
+                                child: Container(
+                                  height: 32.r,
+                                  width: 32.r,
+                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/bookmark-outline.svg',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            );
+                    },
+                  ),
                 Positioned(
                   left: 15.w,
                   top: 17.h,

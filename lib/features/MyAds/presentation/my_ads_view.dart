@@ -61,6 +61,7 @@ class MyAdsView extends ConsumerWidget {
                                     future: GetIt.instance<FeedRepository>().myActiveFreeFeeds,
                                     builder: (context, snapshot) {
                                       return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -99,7 +100,7 @@ class MyAdsView extends ConsumerWidget {
                                           ),
                                           if (snapshot.data?.isEmpty ?? true)
                                             SizedBox(
-                                              height: 350.h,
+                                              height: 300.h,
                                               child: Center(
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
@@ -125,13 +126,14 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: 350.h,
+                                              height: 300.h,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
                                                 scrollDirection: Axis.horizontal,
                                                 itemBuilder: (context, index) {
                                                   return AdsCard(
+                                                    id: snapshot.data![index].id,
                                                     width: 265.w,
                                                     isSaved: snapshot.data?[index].isArchived ?? false,
                                                     adsType: 'Ücretsiz Paylaşıyor',
@@ -163,6 +165,7 @@ class MyAdsView extends ConsumerWidget {
                                     future: GetIt.instance<FeedRepository>().myActiveTradableFeeds,
                                     builder: (context, snapshot) {
                                       return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -201,7 +204,7 @@ class MyAdsView extends ConsumerWidget {
                                           ),
                                           if (snapshot.data?.isEmpty ?? true)
                                             SizedBox(
-                                              height: 350.h,
+                                              height: 300.h,
                                               child: Center(
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
@@ -227,13 +230,14 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: 350.h,
+                                              height: 300.h,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
                                                 scrollDirection: Axis.horizontal,
                                                 itemBuilder: (context, index) {
                                                   return AdsCard(
+                                                    id: snapshot.data![index].id,
                                                     width: 265.w,
                                                     adsType: 'Takaslıyor',
                                                     address:
@@ -310,17 +314,7 @@ class MyAdsView extends ConsumerWidget {
                                           adsType: item.listingType == ListingTypes.free.name
                                               ? 'Ücretsiz Paylaşıyor'
                                               : 'Takaslıyor',
-                                          saveButtonOnTap: () async {
-                                            if (item.isArchived) {
-                                              GetIt.instance<ArchivedRepository>().removeArchivedList(item);
-                                              await GetIt.instance<ArchivedRepository>()
-                                                  .toggleArchiveStatus(feedId: item.id);
-                                            } else {
-                                              GetIt.instance<ArchivedRepository>().addArchivedList(item);
-                                              await GetIt.instance<ArchivedRepository>()
-                                                  .toggleArchiveStatus(feedId: item.id);
-                                            }
-                                          },
+                                          id: item.id,
                                           address: '${item.ownerInfo.district} / ${item.ownerInfo.city}',
                                           date: formatter.format(item.createdAt),
                                           userName: item.ownerInfo.username,

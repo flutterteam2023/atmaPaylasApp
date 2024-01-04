@@ -7,6 +7,12 @@ import 'package:fpdart/fpdart.dart';
 
 class ArchivedRepository extends ApiService with ChangeNotifier {
   List<ArchiveFeedModel> _archivedList = [];
+
+  bool isContain(int feedid) {
+    final index = _archivedList.indexWhere((element) => element.id == feedid);
+    return index != -1;
+  }
+
   List<ArchiveFeedModel> get archivedList {
     final list = <ArchiveFeedModel>[];
     for (final element in _archivedList) {

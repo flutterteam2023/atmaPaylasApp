@@ -58,9 +58,7 @@ class CategoryListingView extends StatelessWidget {
                             child: AdsCard(
                               adsType:
                                   r[index].listingType == ListingTypes.free.name ? 'Ücretsiz Paylaşıyor' : 'Takaslıyor',
-                              saveButtonOnTap: () async {
-                                await GetIt.instance<ArchivedRepository>().toggleArchiveStatus(feedId: r[index].id);
-                              },
+                              id: r[index].id,
                               address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
                               date: formatter.format(r[index].createdAt),
                               userName: r[index].ownerInfo.username,

@@ -86,9 +86,7 @@ class SearchingView extends StatelessWidget {
                           adsType: r.item1[index].listingType == ListingTypes.free.name
                               ? 'Ücretsiz Paylaşıyor'
                               : 'Takaslıyor',
-                          saveButtonOnTap: () async {
-                            await GetIt.instance<ArchivedRepository>().toggleArchiveStatus(feedId: r.item1[index].id);
-                          },
+                          id: r.item1[index].id,
                           address: '${r.item1[index].ownerInfo.district} / ${r.item1[index].ownerInfo.city}',
                           date: formatter.format(r.item1[index].createdAt),
                           userName: r.item1[index].ownerInfo.username,
