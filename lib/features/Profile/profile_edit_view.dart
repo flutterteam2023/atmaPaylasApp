@@ -6,6 +6,7 @@ import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,13 @@ class _ProfileEditViewState extends ConsumerState<ProfileEditView> {
                     GetIt.instance<UserRepository>().user = r;
                   },
                 );
-              }).then((value) => AutoRouter.of(context).back());
+              }).then((value) async {
+                await GetIt.instance<FeedRepository>().clearFreeListingFeeds();
+                await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                await GetIt.instance<FeedRepository>().clearTradableListingFeeds();
+
+                AutoRouter.of(context).back();
+              });
             },
           ),
         ),

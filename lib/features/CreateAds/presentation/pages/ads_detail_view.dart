@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
+import 'package:atma_paylas_app/common_widgets/show_gallert.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
@@ -13,8 +14,10 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_viewer/image_viewer.dart';
 
 @RoutePage()
 class AdsDetailView extends StatefulWidget {
@@ -95,17 +98,59 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                     width: 16.w,
                   ),
                   Image.asset('assets/images/line.png'),
-                  SizedBox(
-                    width: 16.w,
-                  ),
-                  Bounceable(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/svg/share-social-outline.svg',
-                      height: 24.r,
-                      width: 24.r,
+                  if (false)
+                    SizedBox(
+                      width: 16.w,
                     ),
+                  IconButton(
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Gap(9),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18),
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(9),
+                            ListTile(
+                              onTap: () async {},
+                              title: const Text('Şikayet Et'),
+                              trailing: const Icon(Icons.arrow_forward_ios),
+                            ),
+                            const Divider(),
+                            ListTile(
+                              onTap: () {},
+                              title: const Text('Profili Gör'),
+                              trailing: const Icon(Icons.arrow_forward_ios),
+                            ),
+                            Gap(MediaQuery.of(context).viewPadding.bottom),
+                          ],
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.more_vert),
                   ),
+                  if (false)
+                    Bounceable(
+                      onTap: () {},
+                      child: SvgPicture.asset(
+                        'assets/svg/share-social-outline.svg',
+                        height: 24.r,
+                        width: 24.r,
+                      ),
+                    ),
                   SizedBox(
                     width: 16.w,
                   ),
@@ -244,15 +289,24 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 8.w),
-                            child: Container(
-                              width: 113.w,
-                              height: 90.h,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png'),
-                                  fit: BoxFit.cover,
+                            child: InkWell(
+                              onTap: () {
+                                final images = <String>[];
+                                if (r.image1 != null) images.add(r.image1!);
+                                if (r.image2 != null) images.add(r.image2!);
+                                if (r.image3 != null) images.add(r.image3!);
+                                showGallery(context, images: images, startIndex: 0);
+                              },
+                              child: Container(
+                                width: 113.w,
+                                height: 90.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -260,14 +314,23 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                           if (r.image2 != null)
                             Padding(
                               padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                width: 113.w,
-                                height: 90.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  image: DecorationImage(
-                                    image: NetworkImage(r.image2!),
-                                    fit: BoxFit.cover,
+                              child: InkWell(
+                                onTap: () {
+                                  final images = <String>[];
+                                  if (r.image1 != null) images.add(r.image1!);
+                                  if (r.image2 != null) images.add(r.image2!);
+                                  if (r.image3 != null) images.add(r.image3!);
+                                  showGallery(context, images: images, startIndex: 1);
+                                },
+                                child: Container(
+                                  width: 113.w,
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(r.image2!),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -277,14 +340,23 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                           if (r.image3 != null)
                             Padding(
                               padding: EdgeInsets.only(left: 8.w),
-                              child: Container(
-                                width: 113.w,
-                                height: 90.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                  image: DecorationImage(
-                                    image: NetworkImage(r.image3!),
-                                    fit: BoxFit.cover,
+                              child: InkWell(
+                                onTap: () {
+                                  final images = <String>[];
+                                  if (r.image1 != null) images.add(r.image1!);
+                                  if (r.image2 != null) images.add(r.image2!);
+                                  if (r.image3 != null) images.add(r.image3!);
+                                  showGallery(context, images: images, startIndex: 2);
+                                },
+                                child: Container(
+                                  width: 113.w,
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(r.image3!),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),

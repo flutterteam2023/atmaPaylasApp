@@ -131,6 +131,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
 
   Future<void> clearMostViewedFeeds() async {
     _mostViewedFeeds.clear();
+    notifyListeners();
   }
 
   Future<List<FeedModel>> get freeListingFeeds async {
@@ -140,6 +141,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
 
   Future<void> clearFreeListingFeeds() async {
     _freeListingFeeds.clear();
+    notifyListeners();
   }
 
   Future<List<FeedModel>> get tradableListingFeeds async {
@@ -149,6 +151,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
 
   Future<void> clearTradableListingFeeds() async {
     _tradableListingFeeds.clear();
+    notifyListeners();
   }
 
   ///this method is used for current user all feeds
