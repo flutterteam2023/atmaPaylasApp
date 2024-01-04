@@ -331,6 +331,28 @@ class _HomeViewState extends State<HomeView> {
                       if (snaphot.connectionState != ConnectionState.done) {
                         return customListViewShimmer(formatter);
                       }
+                      if (snaphot.data?.isEmpty ?? true) {
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.feed,
+                                size: 64,
+                                color: Color(AppColors.primaryColor),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(9),
+                                child: Text(
+                                  'Hiç ilan bulunamadı.',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                       return ListView.builder(
                         padding: EdgeInsets.only(right: 16.w),
                         scrollDirection: Axis.horizontal,
@@ -392,6 +414,28 @@ class _HomeViewState extends State<HomeView> {
                       if (snaphot.connectionState != ConnectionState.done) {
                         return customListViewShimmer(formatter);
                       }
+                      if (snaphot.data?.isEmpty ?? true) {
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.feed,
+                                size: 64,
+                                color: Color(AppColors.primaryColor),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(9),
+                                child: Text(
+                                  'Hiç ilan bulunamadı.',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                       return ListView.builder(
                         padding: EdgeInsets.only(right: 16.w),
                         scrollDirection: Axis.horizontal,
@@ -452,6 +496,28 @@ class _HomeViewState extends State<HomeView> {
                     builder: (context, snaphot) {
                       if (snaphot.connectionState != ConnectionState.done) {
                         return customListViewShimmer(formatter);
+                      }
+                      if (snaphot.data?.isEmpty ?? true) {
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.feed,
+                                size: 64,
+                                color: Color(AppColors.primaryColor),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(9),
+                                child: Text(
+                                  'Hiç ilan bulunamadı.',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       }
                       return ListView.builder(
                         padding: EdgeInsets.only(right: 16.w),
