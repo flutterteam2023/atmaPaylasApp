@@ -47,6 +47,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AdsSuccessCreateView(),
       );
     },
+    BlockedUsersRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BlockedUsersView(),
+      );
+    },
     CategoryListingRoute.name: (routeData) {
       final args = routeData.argsAs<CategoryListingRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -72,6 +78,7 @@ abstract class _$AppRouter extends RootStackRouter {
           userName: args.userName,
           accessToken: args.accessToken,
           feedId: args.feedId,
+          userId: args.userId,
           key: args.key,
         ),
       );
@@ -432,6 +439,20 @@ class AdsSuccessCreateRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [BlockedUsersView]
+class BlockedUsersRoute extends PageRouteInfo<void> {
+  const BlockedUsersRoute({List<PageRouteInfo>? children})
+      : super(
+          BlockedUsersRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BlockedUsersRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CategoryListingView]
 class CategoryListingRoute extends PageRouteInfo<CategoryListingRouteArgs> {
   CategoryListingRoute({
@@ -495,6 +516,7 @@ class ChatRoomRoute extends PageRouteInfo<ChatRoomRouteArgs> {
     required String userName,
     required String accessToken,
     required String? feedId,
+    required int userId,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -503,6 +525,7 @@ class ChatRoomRoute extends PageRouteInfo<ChatRoomRouteArgs> {
             userName: userName,
             accessToken: accessToken,
             feedId: feedId,
+            userId: userId,
             key: key,
           ),
           initialChildren: children,
@@ -519,6 +542,7 @@ class ChatRoomRouteArgs {
     required this.userName,
     required this.accessToken,
     required this.feedId,
+    required this.userId,
     this.key,
   });
 
@@ -528,11 +552,13 @@ class ChatRoomRouteArgs {
 
   final String? feedId;
 
+  final int userId;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'ChatRoomRouteArgs{userName: $userName, accessToken: $accessToken, feedId: $feedId, key: $key}';
+    return 'ChatRoomRouteArgs{userName: $userName, accessToken: $accessToken, feedId: $feedId, userId: $userId, key: $key}';
   }
 }
 

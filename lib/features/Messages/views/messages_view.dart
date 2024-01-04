@@ -68,6 +68,7 @@ class _MessagesViewState extends State<MessagesView> {
                           userName: roooms[index].otherUser.username,
                           accessToken: value,
                           feedId: null,
+                          userId: roooms[index].otherUser.id,
                         ),
                       );
                     }

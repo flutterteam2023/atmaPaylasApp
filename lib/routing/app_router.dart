@@ -31,6 +31,7 @@ import 'package:atma_paylas_app/features/MyAds/presentation/user_ads_detail_view
 import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
+import 'package:atma_paylas_app/features/ReportAndBlock/views/blocked_users_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/change_location_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/password_change_view.dart';
 import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_view.dart';
@@ -156,6 +157,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: HomeRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: BlockedUsersRoute.page,
           initial: false,
         ),
         AutoRoute(

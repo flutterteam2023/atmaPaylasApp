@@ -171,7 +171,7 @@ class LoginView extends HookWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 36.h),
+                padding: EdgeInsets.only(bottom: 36.h, top: 18),
                 child: RichText(
                   text: TextSpan(
                     text: 'Hesabın yok mu? ',
@@ -190,9 +190,10 @@ class LoginView extends HookWidget {
                           fontFamily: 'Rubik',
                           color: const Color(AppColors.primaryColor),
                         ),
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                          context.pushRoute(const Register1Route());
-                        },
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.pushRoute(const Register1Route());
+                          },
                       ),
                     ],
                   ),

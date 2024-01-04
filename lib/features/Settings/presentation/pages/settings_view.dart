@@ -110,6 +110,45 @@ class SettingsView extends ConsumerWidget {
             ),
             const Gap(9),
             InkWell(
+              onTap: () {
+                context.pushRoute(const BlockedUsersRoute());
+              },
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18),
+                      child: Text(
+                        'Engellenen Kullanıcılar',
+                        style: GoogleFonts.rubik(
+                          color: Colors.grey[850],
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 18),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: Color(0xFF7B7B7D),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Gap(9),
+            InkWell(
               onTap: () {},
               borderRadius: BorderRadius.circular(5),
               child: Container(

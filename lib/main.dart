@@ -5,6 +5,7 @@ import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/block_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
@@ -16,7 +17,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -30,7 +30,7 @@ Future<void> main() async {
   GetIt.I.registerSingleton<FeedbackRepository>(FeedbackRepository());
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
   GetIt.I.registerSingleton<ArchivedRepository>(ArchivedRepository());
-
+  GetIt.I.registerSingleton<BlockRepository>(BlockRepository());
   //Sample usage of GetIt
 
 /*   await GetIt.instance<UserRepository>()
