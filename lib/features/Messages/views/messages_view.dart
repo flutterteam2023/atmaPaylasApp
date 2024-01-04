@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:atma_paylas_app/api/log.dart';
+import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/Messages/models/chat_room_model.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
@@ -42,6 +43,7 @@ class _MessagesViewState extends State<MessagesView> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Mesajlar'),
       ),
       body: StreamBuilder(
@@ -54,6 +56,29 @@ class _MessagesViewState extends State<MessagesView> {
               roooms.add(ChatRoomModel.fromJson(element as Map<String, dynamic>));
               Log.success(roooms);
             }
+          }
+
+          if (roooms.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.message,
+                    size: 100,
+                    color: Color(AppColors.primaryColor),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(9),
+                    child: Text(
+                      'Hiç mesaj bulunamadı.',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
           return ListView.builder(
             itemCount: roooms.length,
