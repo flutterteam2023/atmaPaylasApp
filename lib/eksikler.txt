@@ -6,6 +6,10 @@
 18- Tablet uyumluluk testleri
 19- Mağaza görseli ve içerik yazısı hazırlatma
 20- Yayınlama
+Kullanıcı şikayet etme
+Kullanıcı profili görüntüleme
+İlan detay sayfası fotoğrafları büyüterek gösterme
+İlanı detay sayfasında ilanı şikayet etme
 kayıt olma onayla ve devam et butonu klavyenin altında kalıyor ve onayla ve devam et butonunda çok fazla padding (üst kısmında beyaz alan) var
 Kayıt olurken telefon numarası seçici ingilizceden türkçeye çevrilecek
 Kayıt olurken ilçeyi kayıt etmiyor.
