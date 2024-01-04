@@ -1,7 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:atma_paylas_app/common_widgets/custom_border_button.dart';
-import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button_berke.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
@@ -16,7 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
 class UserAdsDetailView extends StatefulWidget {
