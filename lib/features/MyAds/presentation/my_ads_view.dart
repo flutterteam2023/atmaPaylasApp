@@ -79,7 +79,7 @@ class MyAdsView extends ConsumerWidget {
                                                 if (snapshot.data?.isNotEmpty ?? false)
                                                   InkWell(
                                                     onTap: () {
-                                                      context.pushRoute(const SharedProductsRoute());
+                                                      context.pushRoute(const SharingProductsRoute());
                                                     },
                                                     child: Text(
                                                       'Hepsini Gör',
