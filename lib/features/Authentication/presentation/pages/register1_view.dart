@@ -37,7 +37,7 @@ class _Register1ViewState extends ConsumerState<Register1View> {
       child: Scaffold(
         bottomNavigationBar: Container(
           height: 60,
-          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: MediaQuery.of(context).viewPadding.bottom+10.h),
+          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: MediaQuery.of(context).viewPadding.bottom + 10.h),
           child: CustomFilledButtonBerke(
             text: 'Onayla ve Devam et',
             onTap: () {
@@ -62,23 +62,24 @@ class _Register1ViewState extends ConsumerState<Register1View> {
         ),
         appBar: AppBar(
           actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 16.w),
-              child: Bounceable(
-                onTap: () {
-                  context.popRoute();
-                },
-                child: Text(
-                  'Vazgeç',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Rubik',
-                    color: const Color(AppColors.primaryColor),
+            if (false)
+              Padding(
+                padding: EdgeInsets.only(right: 16.w),
+                child: Bounceable(
+                  onTap: () {
+                    context.popRoute();
+                  },
+                  child: Text(
+                    'Vazgeç',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Rubik',
+                      color: const Color(AppColors.primaryColor),
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
           centerTitle: false,
           title: Text(

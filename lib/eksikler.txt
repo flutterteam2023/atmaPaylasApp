@@ -1,18 +1,14 @@
 
 3- Reklam alanı backend 
 6- İlan Detay Sayfası
-7- İlanım Detay Sayfası ve ilanın durumunu değiştirme
-8- Profildeki Takaslananlar Bölümü 
-9- Profildeki Ücretsiz Paylaşılanlar Bölümü
-10- Profili düzenle il/ilçe değiştirme
-11- Ayarlar Sayfası
 12- Gizlilik Politikası, Kullanıcı sözleşmesi bölümlerinin yapılması
-13- Kayıt olma
-14- Şifremi unuttum
-15- İlanların onaylanması için bildirimler sayfası yapılması ve onaylama işlemleri
-16- Android ayarları
 17- Farklı cihaz testleri
 18- Tablet uyumluluk testleri
 19- Mağaza görseli ve içerik yazısı hazırlatma
 20- Yayınlama
-
+kayıt olma onayla ve devam et butonu klavyenin altında kalıyor ve onayla ve devam et butonunda çok fazla padding (üst kısmında beyaz alan) var
+Kayıt olurken telefon numarası seçici ingilizceden türkçeye çevrilecek
+Kayıt olurken ilçeyi kayıt etmiyor.
+Profil fotoğrafı değiştirilirken önizlenen fotoğrafın önünde Icons.person bulunuyor. Eğer önizlenen bir profil fotoğrafı dosyasyı varsa bunu kaldır.
+Profil düzenleme kısmında eğer düzenlenecek bir şey yoksa buton soluk renkli olsun değişiklik yapıldığında ve değişiklikler kayıt edilebilir hale geldiğinde renkgi normale dönsün.
+Kategorilere ait ilanları gösterirken  Erkek kategorisinin alt kategorisi varsa alt kategorileri de gösterilecek şekilde yap 
