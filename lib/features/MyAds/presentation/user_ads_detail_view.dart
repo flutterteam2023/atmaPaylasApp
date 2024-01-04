@@ -279,6 +279,7 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                                   onTap: () async {
                                     await showModalBottomSheet<bool>(
                                       context: context,
+                                      isScrollControlled: true,
                                       builder: (context) => SendToVerifyingOtherUserView(id: widget.id),
                                     ).then((value) {
                                       if (value ?? false) {
@@ -640,9 +641,10 @@ class SendToVerifyingOtherUserView extends HookWidget {
   Widget build(BuildContext context) {
     final otherUserNameController = useTextEditingController();
     final choise = useState(1);
-    return Padding(
-      padding: const EdgeInsets.all(18),
+    return Container(
+      padding: EdgeInsets.only(left: 18, right: 18, top: 18, bottom: MediaQuery.of(context).viewInsets.bottom + 18 * 2),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(

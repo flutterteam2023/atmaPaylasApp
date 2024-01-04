@@ -41,7 +41,7 @@ class SearchingView extends StatelessWidget {
           Log.success(snapshot.data);
 
           return snapshot.data!.fold((l) => Text('Hata oluştu $l'), (r) {
-            return SizedBox(
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   ...List.generate(r.item2.length, (index) {

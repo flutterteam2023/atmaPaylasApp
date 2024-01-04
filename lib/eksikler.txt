@@ -1,10 +1,5 @@
 
-
-1- Ürün kategori ara arama butonu
-2- Kategorilere göre ürünleri listeleme
-3- Reklam alanı için reklam müşteri ile konuşma. Ne reklamı konulacak?
-4- Hepsini gör butonları ve aktifleştirilmesi
-5- Sohbet kısmı
+3- Reklam alanı backend 
 6- İlan Detay Sayfası
 7- İlanım Detay Sayfası ve ilanın durumunu değiştirme
 8- Profildeki Takaslananlar Bölümü 
