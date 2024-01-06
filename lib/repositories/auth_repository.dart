@@ -14,7 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 ///GetIt.instance<AuthRepository>().refresh() is returned as Future<ApiResponse<AccessModel>>
 ///GetIt.instance<AuthRepository>().logout() is returned as Future<ApiResponse<String>>
 class AuthRepository extends ApiService {
-  final storage = const FlutterSecureStorage();
+  var storage = const FlutterSecureStorage();
   String? lastAccessToken;
   Future<ApiResponse<AccessModel>> login(String email, String password) async {
     final resp = await requestMethod<dynamic>(
@@ -73,36 +73,31 @@ class AuthRepository extends ApiService {
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
   }
-   Future<ApiResponse<String>> passwordReset({
+
+  Future<ApiResponse<String>> passwordReset({
     required String email,
-    
   }) async {
-    
     return requestMethod<String>(
       path: '/password_reset_request/',
       method: HttpMethod.post,
       requestModel: {
         'email': email,
-      
       },
       responseConverter: (response) => (response.data as Map<String, dynamic>)['message'] as String,
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
   }
+
   Future<ApiResponse<String>> verifyCode({
     required String email,
     required String code,
-
-    
   }) async {
-    
     return requestMethod<String>(
       path: '/verify_code/',
       method: HttpMethod.post,
       requestModel: {
         'email': email,
         'code': code,
-      
       },
       responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},

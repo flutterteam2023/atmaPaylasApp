@@ -1,6 +1,10 @@
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -41,10 +45,11 @@ class _ChangeLocationViewState extends ConsumerState<ChangeLocationView> {
             Text(
               'Yeni konumunuzu seçip devam edebilirsiniz',
               style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Rubik',
-                  color: Color(AppColors.primaryTextColor)),
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Rubik',
+                color: const Color(AppColors.primaryTextColor),
+              ),
             ),
             SizedBox(
               height: 48.h,
@@ -57,7 +62,7 @@ class _ChangeLocationViewState extends ConsumerState<ChangeLocationView> {
                 color: const Color(AppColors.primaryTextColor),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             FutureBuilder(
               future: GetIt.instance<CityRepository>().getCities(),
               builder: (context, snapshot) {
@@ -147,10 +152,10 @@ class _ChangeLocationViewState extends ConsumerState<ChangeLocationView> {
                               );
                             }).toList()
                           : [
-                              DropdownMenuItem<String>(
+                              const DropdownMenuItem<String>(
                                 value: 'Semt Seçiniz',
                                 child: Text('Semt Seçiniz'),
-                              )
+                              ),
                             ],
                     ),
                   );
@@ -163,15 +168,37 @@ class _ChangeLocationViewState extends ConsumerState<ChangeLocationView> {
               height: 48.h,
             ),
             CustomFilledButton(
-                text: 'Uygula ve Devam Et',
-                onTap: () {
-                  GetIt.instance<UserRepository>()
-                      .editUserProfile(null, null, null, selectedCity.value, selectedDistrict.value)
-                      .then((value) {
-                    value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))),
-                        (r) => context.router.pop());
-                  });
-                })
+              text: 'Uygula ve Devam Et',
+              onTap: () {
+                GetIt.instance<UserRepository>()
+                    .editUserProfile(null, null, null, selectedCity.value, selectedDistrict.value)
+                    .then((value) {
+                  value.fold(
+                    (l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))),
+                    (r) async {
+                      await GetIt.instance<UserRepository>().getMyUserProfile().then((value) {
+                        value.fold(
+                          (l) {
+                            Log.error(l);
+                            GetIt.instance<UserRepository>().user = null;
+                          },
+                          (r) {
+                            Log.success(r.runtimeType);
+                            GetIt.instance<UserRepository>().user = r;
+                          },
+                        );
+                      }).then((value) async {
+                        await GetIt.instance<FeedRepository>().clearFreeListingFeeds();
+                        await GetIt.instance<FeedRepository>().clearMostViewedFeeds();
+                        await GetIt.instance<FeedRepository>().clearTradableListingFeeds();
+
+                        await context.router.pop();
+                      });
+                    },
+                  );
+                });
+              },
+            ),
           ],
         ),
       ),

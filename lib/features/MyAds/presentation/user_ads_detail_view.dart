@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:atma_paylas_app/common_widgets/custom_filled_button_berke.dart';
+import 'package:atma_paylas_app/common_widgets/show_gallert.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_viewer/image_viewer.dart';
 
 @RoutePage()
 class UserAdsDetailView extends StatefulWidget {
@@ -471,14 +473,23 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                             if (r.image1 != null)
                               Padding(
                                 padding: EdgeInsets.only(left: 8.w),
-                                child: Container(
-                                  width: 113.w,
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(r.image1!),
-                                      fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    final images = <String>[];
+                                    if (r.image1 != null) images.add(r.image1!);
+                                    if (r.image2 != null) images.add(r.image2!);
+                                    if (r.image3 != null) images.add(r.image3!);
+                                    showGallery(context, images: images, startIndex: 0);
+                                  },
+                                  child: Container(
+                                    width: 113.w,
+                                    height: 90.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(r.image1!),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -488,14 +499,23 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                             if (r.image2 != null)
                               Padding(
                                 padding: EdgeInsets.only(left: 8.w),
-                                child: Container(
-                                  width: 113.w,
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(r.image2!),
-                                      fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    final images = <String>[];
+                                    if (r.image1 != null) images.add(r.image1!);
+                                    if (r.image2 != null) images.add(r.image2!);
+                                    if (r.image3 != null) images.add(r.image3!);
+                                    showGallery(context, images: images, startIndex: 1);
+                                  },
+                                  child: Container(
+                                    width: 113.w,
+                                    height: 90.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(r.image2!),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -505,14 +525,23 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                             if (r.image3 != null)
                               Padding(
                                 padding: EdgeInsets.only(left: 8.w),
-                                child: Container(
-                                  width: 113.w,
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(r.image3!),
-                                      fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    final images = <String>[];
+                                    if (r.image1 != null) images.add(r.image1!);
+                                    if (r.image2 != null) images.add(r.image2!);
+                                    if (r.image3 != null) images.add(r.image3!);
+                                    showGallery(context, images: images, startIndex: 2);
+                                  },
+                                  child: Container(
+                                    width: 113.w,
+                                    height: 90.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(r.image3!),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),

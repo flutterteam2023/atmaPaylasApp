@@ -323,66 +323,71 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.6,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().mostViewedFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      if (snaphot.data?.isEmpty ?? true) {
-                        return Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.feed,
-                                size: 64,
-                                color: Color(AppColors.primaryColor),
+                  height: 350.h,
+                  child: ListenableBuilder(
+                    listenable: GetIt.instance<FeedRepository>(),
+                    builder: (context, widget) {
+                      return FutureBuilder(
+                        future: GetIt.instance<FeedRepository>().mostViewedFeeds,
+                        builder: (context, snaphot) {
+                          if (snaphot.connectionState != ConnectionState.done) {
+                            return customListViewShimmer(formatter);
+                          }
+                          if (snaphot.data?.isEmpty ?? true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.feed,
+                                    size: 64,
+                                    color: Color(AppColors.primaryColor),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Text(
+                                      'Hiç ilan bulunamadı.',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(9),
-                                child: Text(
-                                  'Hiç ilan bulunamadı.',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            id: snaphot.data?[index].id ?? 0,
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff05473A)
-                                : Colors.white,
-                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff6DCEBB)
-                                : const Color(0xffFD8435),
-                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? 'Ücretsiz Paylaşıyor'
-                                : 'Takas Ediyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            seeAdsDetailOnTap: () {
-                              if (GetIt.instance<UserRepository>().user?.userId ==
-                                  snaphot.data?[index].ownerInfo.userId) {
-                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                              } else {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                              }
+                            );
+                          }
+                          return ListView.builder(
+                            padding: EdgeInsets.only(right: 16.w),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snaphot.data?.length,
+                            itemBuilder: (context, index) {
+                              return AdsCard(
+                                id: snaphot.data?[index].id ?? 0,
+                                isSaved: snaphot.data?[index].isArchived ?? false,
+                                width: 265.w,
+                                textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff05473A)
+                                    : Colors.white,
+                                colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff6DCEBB)
+                                    : const Color(0xffFD8435),
+                                adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? 'Ücretsiz Paylaşıyor'
+                                    : 'Takas Ediyor',
+                                address:
+                                    '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                                productName: '${snaphot.data?[index].title}}',
+                                date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                                userName: '${snaphot.data?[index].ownerInfo.username}',
+                                productImage: snaphot.data?[index].image1,
+                                seeAdsDetailOnTap: () {
+                                  if (GetIt.instance<UserRepository>().user?.userId ==
+                                      snaphot.data?[index].ownerInfo.userId) {
+                                    context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                  } else {
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                  }
+                                },
+                              );
                             },
                           );
                         },
@@ -406,66 +411,71 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.6,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().freeListingFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      if (snaphot.data?.isEmpty ?? true) {
-                        return Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.feed,
-                                size: 64,
-                                color: Color(AppColors.primaryColor),
+                  height: 350.h,
+                  child: ListenableBuilder(
+                    listenable: GetIt.instance<FeedRepository>(),
+                    builder: (context, widget) {
+                      return FutureBuilder(
+                        future: GetIt.instance<FeedRepository>().freeListingFeeds,
+                        builder: (context, snaphot) {
+                          if (snaphot.connectionState != ConnectionState.done) {
+                            return customListViewShimmer(formatter);
+                          }
+                          if (snaphot.data?.isEmpty ?? true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.feed,
+                                    size: 64,
+                                    color: Color(AppColors.primaryColor),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Text(
+                                      'Hiç ilan bulunamadı.',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(9),
-                                child: Text(
-                                  'Hiç ilan bulunamadı.',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff05473A)
-                                : Colors.white,
-                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff6DCEBB)
-                                : const Color(0xffFD8435),
-                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? 'Ücretsiz Paylaşıyor'
-                                : 'Takas Ediyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            id: snaphot.data?[index].id ?? 0,
-                            seeAdsDetailOnTap: () {
-                              if (GetIt.instance<UserRepository>().user?.userId ==
-                                  snaphot.data?[index].ownerInfo.userId) {
-                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                              } else {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                              }
+                            );
+                          }
+                          return ListView.builder(
+                            padding: EdgeInsets.only(right: 16.w),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snaphot.data?.length,
+                            itemBuilder: (context, index) {
+                              return AdsCard(
+                                isSaved: snaphot.data?[index].isArchived ?? false,
+                                width: 265.w,
+                                textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff05473A)
+                                    : Colors.white,
+                                colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff6DCEBB)
+                                    : const Color(0xffFD8435),
+                                adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? 'Ücretsiz Paylaşıyor'
+                                    : 'Takas Ediyor',
+                                address:
+                                    '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                                productName: '${snaphot.data?[index].title}}',
+                                date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                                userName: '${snaphot.data?[index].ownerInfo.username}',
+                                productImage: snaphot.data?[index].image1,
+                                id: snaphot.data?[index].id ?? 0,
+                                seeAdsDetailOnTap: () {
+                                  if (GetIt.instance<UserRepository>().user?.userId ==
+                                      snaphot.data?[index].ownerInfo.userId) {
+                                    context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                  } else {
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                  }
+                                },
+                              );
                             },
                           );
                         },
@@ -489,66 +499,71 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.6,
-                  child: FutureBuilder(
-                    future: GetIt.instance<FeedRepository>().tradableListingFeeds,
-                    builder: (context, snaphot) {
-                      if (snaphot.connectionState != ConnectionState.done) {
-                        return customListViewShimmer(formatter);
-                      }
-                      if (snaphot.data?.isEmpty ?? true) {
-                        return Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.feed,
-                                size: 64,
-                                color: Color(AppColors.primaryColor),
+                  height: 359.h,
+                  child: ListenableBuilder(
+                    listenable: GetIt.instance<FeedRepository>(),
+                    builder: (context, widget) {
+                      return FutureBuilder(
+                        future: GetIt.instance<FeedRepository>().tradableListingFeeds,
+                        builder: (context, snaphot) {
+                          if (snaphot.connectionState != ConnectionState.done) {
+                            return customListViewShimmer(formatter);
+                          }
+                          if (snaphot.data?.isEmpty ?? true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.feed,
+                                    size: 64,
+                                    color: Color(AppColors.primaryColor),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Text(
+                                      'Hiç ilan bulunamadı.',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(9),
-                                child: Text(
-                                  'Hiç ilan bulunamadı.',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snaphot.data?.length,
-                        itemBuilder: (context, index) {
-                          return AdsCard(
-                            isSaved: snaphot.data?[index].isArchived ?? false,
-                            width: 265.w,
-                            textColor: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff05473A)
-                                : Colors.white,
-                            colorType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? const Color(0xff6DCEBB)
-                                : const Color(0xffFD8435),
-                            adsType: snaphot.data?[index].listingType == ListingTypes.free.name
-                                ? 'Ücretsiz Paylaşıyor'
-                                : 'Takas Ediyor',
-                            address:
-                                '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                            productName: '${snaphot.data?[index].title}}',
-                            date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
-                            userName: '${snaphot.data?[index].ownerInfo.username}',
-                            productImage: snaphot.data?[index].image1,
-                            id: snaphot.data?[index].id ?? 0,
-                            seeAdsDetailOnTap: () {
-                              if (GetIt.instance<UserRepository>().user?.userId ==
-                                  snaphot.data?[index].ownerInfo.userId) {
-                                context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
-                              } else {
-                                context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
-                              }
+                            );
+                          }
+                          return ListView.builder(
+                            padding: EdgeInsets.only(right: 16.w),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snaphot.data?.length,
+                            itemBuilder: (context, index) {
+                              return AdsCard(
+                                isSaved: snaphot.data?[index].isArchived ?? false,
+                                width: 265.w,
+                                textColor: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff05473A)
+                                    : Colors.white,
+                                colorType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? const Color(0xff6DCEBB)
+                                    : const Color(0xffFD8435),
+                                adsType: snaphot.data?[index].listingType == ListingTypes.free.name
+                                    ? 'Ücretsiz Paylaşıyor'
+                                    : 'Takas Ediyor',
+                                address:
+                                    '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
+                                productName: '${snaphot.data?[index].title}}',
+                                date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
+                                userName: '${snaphot.data?[index].ownerInfo.username}',
+                                productImage: snaphot.data?[index].image1,
+                                id: snaphot.data?[index].id ?? 0,
+                                seeAdsDetailOnTap: () {
+                                  if (GetIt.instance<UserRepository>().user?.userId ==
+                                      snaphot.data?[index].ownerInfo.userId) {
+                                    context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
+                                  } else {
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                  }
+                                },
+                              );
                             },
                           );
                         },
