@@ -3,7 +3,6 @@
 import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/common_widgets/ads_title.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
-import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
@@ -324,7 +323,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 350.h,
+                  height: MediaQuery.of(context).size.height / 2.6,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().mostViewedFeeds,
                     builder: (context, snaphot) {
@@ -407,7 +406,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 350.h,
+                  height: MediaQuery.of(context).size.height / 2.6,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().freeListingFeeds,
                     builder: (context, snaphot) {
@@ -490,7 +489,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 359.h,
+                  height: MediaQuery.of(context).size.height / 2.6,
                   child: FutureBuilder(
                     future: GetIt.instance<FeedRepository>().tradableListingFeeds,
                     builder: (context, snaphot) {

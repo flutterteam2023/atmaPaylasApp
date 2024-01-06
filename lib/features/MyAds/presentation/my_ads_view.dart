@@ -100,7 +100,7 @@ class MyAdsView extends ConsumerWidget {
                                           ),
                                           if (snapshot.data?.isEmpty ?? true)
                                             SizedBox(
-                                              height: 300.h,
+                                              height: MediaQuery.of(context).size.height / 2.6,
                                               child: Center(
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
@@ -126,7 +126,7 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: 300.h,
+                                              height: MediaQuery.of(context).size.height / 2.6,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
@@ -204,7 +204,7 @@ class MyAdsView extends ConsumerWidget {
                                           ),
                                           if (snapshot.data?.isEmpty ?? true)
                                             SizedBox(
-                                              height: 300.h,
+                                              height: MediaQuery.of(context).size.height / 2.6,
                                               child: Center(
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
@@ -230,7 +230,7 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: 300.h,
+                                              height: MediaQuery.of(context).size.height / 2.6,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
