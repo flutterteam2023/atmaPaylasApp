@@ -132,13 +132,13 @@ class ShareAdsView extends ConsumerWidget {
                                   ? const Color(0xff6DCEBB)
                                   : const Color(0xffFD8435),
                               onTap: () {
-                                context.pushRoute(AdsDetailRoute(id: r[index].id));
+                                context.pushRoute(AdsDetailRoute(id: r[index].id!));
                               },
                               image: r[index].image1,
-                              title: r[index].title,
+                              title: r[index].title!,
                               address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
-                              date: formatter.format(r[index].createdAt),
-                              userName: r[index].ownerInfo.username,
+                              date: formatter.format(r[index].createdAt!),
+                              userName: r[index].ownerInfo.username!,
                             );
                           },
                         ),

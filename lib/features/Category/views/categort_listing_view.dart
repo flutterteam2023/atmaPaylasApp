@@ -58,19 +58,19 @@ class CategoryListingView extends StatelessWidget {
                             child: AdsCard(
                               adsType:
                                   r[index].listingType == ListingTypes.free.name ? 'Ücretsiz Paylaşıyor' : 'Takaslıyor',
-                              id: r[index].id,
+                              id: r[index].id!,
                               address: '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
-                              date: formatter.format(r[index].createdAt),
-                              userName: r[index].ownerInfo.username,
+                              date: formatter.format(r[index].createdAt!),
+                              userName: r[index].ownerInfo.username!,
                               productImage: r[index].image1,
-                              productName: r[index].title,
+                              productName: r[index].title!,
                               textColor: r[index].listingType == ListingTypes.free.name
                                   ? const Color(0xff05473A)
                                   : Colors.white,
                               colorType: r[index].listingType == ListingTypes.free.name
                                   ? const Color(0xff6DCEBB)
                                   : const Color(0xffFD8435),
-                              isSaved: r[index].isArchived,
+                              isSaved: r[index].isArchived!,
                               width: 358.w,
                               seeAdsDetailOnTap: () {
                                 context.pushRoute(UserAdsDetailRoute(id: r[index].id));

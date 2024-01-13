@@ -113,11 +113,11 @@ class SwapProductsView extends StatelessWidget {
                             : const Color(0xffFD8435),
                         onTap: () {},
                         image: snapshot.data![index].image1,
-                        title: snapshot.data![index].title,
+                        title: snapshot.data![index].title!,
                         address:
                             '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
-                        date: formatter.format(snapshot.data![index].createdAt),
-                        userName: snapshot.data![index].ownerInfo.username,
+                        date: formatter.format(snapshot.data![index].createdAt!),
+                        userName: snapshot.data![index].ownerInfo.username!,
                       );
                     },
                   ),

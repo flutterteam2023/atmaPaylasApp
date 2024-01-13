@@ -133,7 +133,7 @@ class MyAdsView extends ConsumerWidget {
                                                 scrollDirection: Axis.horizontal,
                                                 itemBuilder: (context, index) {
                                                   return AdsCard(
-                                                    id: snapshot.data![index].id,
+                                                    id: snapshot.data![index].id!,
                                                     width: 265.w,
                                                     isSaved: snapshot.data?[index].isArchived ?? false,
                                                     adsType: 'Ücretsiz Paylaşıyor',
@@ -237,7 +237,7 @@ class MyAdsView extends ConsumerWidget {
                                                 scrollDirection: Axis.horizontal,
                                                 itemBuilder: (context, index) {
                                                   return AdsCard(
-                                                    id: snapshot.data![index].id,
+                                                    id: snapshot.data![index].id!,
                                                     width: 265.w,
                                                     adsType: 'Takaslıyor',
                                                     address:
@@ -317,7 +317,7 @@ class MyAdsView extends ConsumerWidget {
                                           id: item.id,
                                           address: '${item.ownerInfo.district} / ${item.ownerInfo.city}',
                                           date: formatter.format(item.createdAt),
-                                          userName: item.ownerInfo.username,
+                                          userName: item.ownerInfo.username!,
                                           productImage: item.image1,
                                           productName: item.title,
                                           textColor: item.listingType == ListingTypes.free.name

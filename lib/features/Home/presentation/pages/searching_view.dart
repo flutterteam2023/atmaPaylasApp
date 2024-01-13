@@ -86,19 +86,19 @@ class SearchingView extends StatelessWidget {
                           adsType: r.item1[index].listingType == ListingTypes.free.name
                               ? 'Ücretsiz Paylaşıyor'
                               : 'Takaslıyor',
-                          id: r.item1[index].id,
+                          id: r.item1[index].id!,
                           address: '${r.item1[index].ownerInfo.district} / ${r.item1[index].ownerInfo.city}',
-                          date: formatter.format(r.item1[index].createdAt),
-                          userName: r.item1[index].ownerInfo.username,
+                          date: formatter.format(r.item1[index].createdAt!),
+                          userName: r.item1[index].ownerInfo.username!,
                           productImage: r.item1[index].image1,
-                          productName: r.item1[index].title,
+                          productName: r.item1[index].title!,
                           textColor: r.item1[index].listingType == ListingTypes.free.name
                               ? const Color(0xff05473A)
                               : Colors.white,
                           colorType: r.item1[index].listingType == ListingTypes.free.name
                               ? const Color(0xff6DCEBB)
                               : const Color(0xffFD8435),
-                          isSaved: r.item1[index].isArchived,
+                          isSaved: r.item1[index].isArchived!,
                           width: 358.w,
                           seeAdsDetailOnTap: () {
                             context.pushRoute(UserAdsDetailRoute(id: r.item1[index].id));

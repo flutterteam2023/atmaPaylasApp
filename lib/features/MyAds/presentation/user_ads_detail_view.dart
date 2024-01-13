@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:io';
+
 import 'package:atma_paylas_app/common_widgets/custom_filled_button_berke.dart';
 import 'package:atma_paylas_app/common_widgets/show_gallert.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
@@ -7,6 +9,7 @@ import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -15,12 +18,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_viewer/image_viewer.dart';
+import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
-class UserAdsDetailView extends StatefulWidget {
+class UserAdsDetailView extends StatefulHookWidget {
   const UserAdsDetailView(this.id, {super.key});
   final int? id;
+
 
   @override
   State<UserAdsDetailView> createState() => _UserAdsDetailViewState();
@@ -28,8 +32,92 @@ class UserAdsDetailView extends StatefulWidget {
 
 class _UserAdsDetailViewState extends State<UserAdsDetailView> {
   final formatter = DateFormat('dd/MM/yyyy');
+  
   @override
   Widget build(BuildContext context) {
+    final image = ValueNotifier<File?>(null);
+    final image2 = ValueNotifier<File?>(null);
+    final image3 = ValueNotifier<File?>(null);
+    final choise = ValueNotifier<int?>(null);
+    final titleControlller= useTextEditingController();
+    final descriptionControlller= useTextEditingController();
+
+ 
+
+  // ignore: no_leading_underscores_for_local_identifiers
+  Future<void> _imgFromCamera(int imageNO) async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      if (pickedFile != null) {
+        if(imageNO == 1){
+          image.value = File(pickedFile.path);
+        }else if(imageNO == 2){
+          image2.value = File(pickedFile.path);
+        }else if(imageNO == 3){
+          image3.value = File(pickedFile.path);
+        }
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  // ignore: no_leading_underscores_for_local_identifiers
+  Future<void> _imgFromGallery(int imageNO) async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      if (pickedFile != null) {
+        if(imageNO == 1){
+          image.value = File(pickedFile.path);
+        }else if(imageNO == 2){
+          image2.value = File(pickedFile.path);
+        }else if(imageNO == 3){
+          image3.value = File(pickedFile.path);
+        }
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  
+  // ignore: no_leading_underscores_for_local_identifiers
+  void _showPicker(BuildContext context,int imageNO) {
+    // ignore: inference_failure_on_function_invocation
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SizedBox(
+              height: 150.h,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.photo_library),
+                    title: const Text('Galeriden Seç'),
+                    onTap: () {
+                      // ignore: deprecated_member_use
+                      _imgFromGallery(imageNO);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: const Text('Kameradan Çek'),
+                    onTap: () {
+                      // ignore: deprecated_member_use
+                      _imgFromCamera(imageNO);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },);
+  }
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -58,6 +146,7 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
               onSelected: (String result) async {
                 if (result == 'secenek1') {
                   print('Secenek1');
+                  // ignore: inference_failure_on_function_invocation
                   await showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
@@ -139,7 +228,9 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                     ),
                   );
                 } else if (result == 'secenek2') {
-                  print('Secenek2');
+                  if (kDebugMode) {
+                    print('Secenek2');
+                  }
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -310,30 +401,435 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                                   ),
                                 ),
                                 Bounceable(
-                                  onTap: () {},
-                                  child: Container(
-                                    width: 171.w,
-                                    height: 49.h,
-                                    decoration: BoxDecoration(
-                                      color: const Color(AppColors.primaryColor),
-                                      borderRadius: BorderRadius.circular(5.r),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-                                      child: Center(
-                                        child: Text(
-                                          'İlanı Düzenle',
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Rubik',
-                                            color: Colors.white,
+                                      onTap: () async {
+                                        //buraya show bottom sheet gelecek
+                                        await showModalBottomSheet<bool>(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            snapshot.data!.fold((l) => null, (r) {
+                                              if (r.listingType == ListingTypes.free.name ) {
+                                                choise.value = 0;
+
+                                              }else{
+                                                choise.value =1;
+                                              }
+                                            });
+                                            //buraya ilan düzenleme gelecek yapar mısın
+                                            return Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 18,
+                                                  right: 18,
+                                                  top: 18,
+                                                  bottom: MediaQuery.of(context).viewInsets.bottom + 18 * 2),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Paylaşım Türü',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Rubik',
+                                                      color: const Color(AppColors.primaryTextColor),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  ValueListenableBuilder(
+                                                    valueListenable: choise,
+                                                    builder: (context,_,__) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                         choise.value = 0;
+                                                        
+
+                                                        },
+                                                        borderRadius: BorderRadius.circular(9),
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: const Color(AppColors.primaryColor),
+                                                              width: 1.w,
+                                                            ),
+                                                            borderRadius: BorderRadius.circular(9),
+                                                          ),
+                                                          padding: const EdgeInsets.all(18),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 12.r,
+                                                                width: 12.r,
+                                                                child: Radio(
+                                                                  value:0,
+                                                                  groupValue:choise.value,
+                                                                  onChanged: (value) {
+                                                                    choise.value = 0;
+
+                                                                  },
+                                                                  activeColor: const Color(AppColors.primaryColor),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 8.w,
+                                                              ),
+                                                              Text(
+                                                                'Ücretsiz Paylaştım',
+                                                                style: TextStyle(
+                                                                  fontSize: 14.sp,
+                                                                  fontWeight: FontWeight.w400,
+                                                                  fontFamily: 'Rubik',
+                                                                  color: const Color(AppColors.primaryColor),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  ValueListenableBuilder(
+                                                    valueListenable: choise,
+                                                    builder: (context,_,__) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                         choise.value = 1;
+                                                        },
+                                                        borderRadius: BorderRadius.circular(9),
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: const Color(AppColors.primaryColor),
+                                                              width: 1.w,
+                                                            ),
+                                                            borderRadius: BorderRadius.circular(9),
+                                                          ),
+                                                          padding: const EdgeInsets.all(18),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 12.r,
+                                                                width: 12.r,
+                                                                child: Radio(
+                                                                  value: 1,
+                                                                  groupValue: choise.value,
+                                                                  onChanged: (value) {
+                                                                    choise.value = 1;
+
+
+                                                                  },
+                                                                  activeColor: const Color(AppColors.primaryColor),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 8.w,
+                                                              ),
+                                                              Text(
+                                                                'Takasladım',
+                                                                style: TextStyle(
+                                                                  fontSize: 14.sp,
+                                                                  fontWeight: FontWeight.w400,
+                                                                  fontFamily: 'Rubik',
+                                                                  color: const Color(AppColors.primaryColor),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  const Divider(),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  Text(
+                                                    'İlan Başlığı',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Rubik',
+                                                      color: const Color(AppColors.primaryTextColor),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  TextFormField(
+                                                    controller: titleControlller,
+                                                    decoration:  InputDecoration(
+                                                      hintText: snapshot.data!.fold(
+                                                        (l) => '',
+                                                        (r) => r.title,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  const Divider(),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  Text(
+                                                    'İlan Açıklaması',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Rubik',
+                                                      color: const Color(AppColors.primaryTextColor),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  TextFormField(
+                                                    controller: descriptionControlller,
+                                                    decoration: InputDecoration(
+                                                      hintText: snapshot.data!.fold(
+                                                        (l) => '',
+                                                        (r) => r.description,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  const Divider(),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  Text(
+                                                    'İlan Görselleri',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontFamily: 'Rubik',
+                                                      color: const Color(AppColors.primaryTextColor),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      ValueListenableBuilder(
+                                                        valueListenable: image,
+                                                        builder: (context, value, child) {
+                                                          return Bounceable(
+                                                            onTap: () {
+                                                              //buraya image picker gelecek
+                                                          
+                                                                _showPicker(context,1);
+                                                          
+                                                            
+
+                                                            
+                                                            },
+                                                            child:image.value==null? Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: snapshot.data!.fold(
+                                                                  (l) => const DecorationImage(
+                                                                    image: AssetImage('assets/images/adsdemo.png'),
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                  (r) => r.image1 != null
+                                                                      ? DecorationImage(
+                                                                          image: NetworkImage(r.image1!),
+                                                                          fit: BoxFit.cover,
+                                                                        )
+                                                                      : const DecorationImage(
+                                                                          image: AssetImage('assets/images/adsdemo.png'),
+                                                                          fit: BoxFit.cover,
+                                                                        ),
+                                                                ),
+                                                              ),
+                                                            
+                                                            ):Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: DecorationImage(
+                                                                  image: FileImage(image.value!),
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              ),
+                                                            
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        width: 8.w,
+                                                      ),
+                                                      ValueListenableBuilder(
+                                                        valueListenable: image2,
+                                                        builder: (context, value, child) {
+                                                          return Bounceable(
+                                                            onTap: () {
+                                                              //buraya image picker gelecek
+                                                              _showPicker(context,2);
+                                                            },
+                                                            child:image2.value==null? Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: snapshot.data!.fold(
+                                                                  (l) => const DecorationImage(
+                                                                    image: AssetImage('assets/images/adsdemo.png'),
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                  (r) => r.image2 != null
+                                                                      ? DecorationImage(
+                                                                          image: NetworkImage(r.image2!),
+                                                                          fit: BoxFit.cover,
+                                                                        )
+                                                                      : const DecorationImage(
+                                                                          image: AssetImage('assets/images/adsdemo.png'),
+                                                                          fit: BoxFit.cover,
+                                                                        ),
+                                                                ),
+                                                              ),
+                                                            
+                                                            ):Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: DecorationImage(
+                                                                  image: FileImage(image2.value!),
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              ),
+                                                            
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        width: 8.w,
+                                                      ),
+                                                      ValueListenableBuilder(
+                                                        valueListenable: image3,
+                                                        builder: (context, value, child) {
+                                                          return Bounceable(
+                                                            onTap: () {
+                                                              //buraya image picker gelecek
+                                                              _showPicker(context,3);
+                                                            },
+                                                            child:image3.value==null? Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: snapshot.data!.fold(
+                                                                  (l) => const DecorationImage(
+                                                                    image: AssetImage('assets/images/adsdemo.png'),
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                  (r) => r.image3 != null
+                                                                      ? DecorationImage(
+                                                                          image: NetworkImage(r.image3!),
+                                                                          fit: BoxFit.cover,
+                                                                        )
+                                                                      : const DecorationImage(
+                                                                          image: AssetImage('assets/images/adsdemo.png'),
+                                                                          fit: BoxFit.cover,
+                                                                        ),
+                                                                ),
+                                                              ),
+                                                            
+                                                            ):Container(
+                                                              height: 90.r,
+                                                              width: 90.r,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                image: DecorationImage(
+                                                                  image: FileImage(image3.value!),
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              ),
+                                                            
+                                                            
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  const Divider(),
+                                                  SizedBox(
+                                                    height: 9.h,
+                                                  ),
+                                                  CustomFilledButtonBerke(text: 'İlanımı Güncelle', onTap: () async {
+                                                    await EasyLoading.show(status: 'İlanınız güncelleniyor...');
+                                                    // ignore: use_build_context_synchronously
+                                                    await GetIt.instance<FeedRepository>().updateFeed(
+                                                     snapshot.data!.fold((l) => l.toString(), (r) => r.id.toString()),
+                                                      image.value,
+                                                      image2.value,
+                                                      image3.value,
+                                                      choise.value==0?ListingTypes.free:ListingTypes.tradable,
+                                                      titleControlller.text,
+                                                      descriptionControlller.text,
+                                                      context
+                                                      
+                                                    );
+                                                   
+                                                   
+                                                  },),
+
+                                                   
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) {
+                                          if (value ?? false) {
+                                            setState(() {});
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        width: 171.w,
+                                        height: 49.h,
+                                        decoration: BoxDecoration(
+                                          color: const Color(AppColors.primaryColor),
+                                          borderRadius: BorderRadius.circular(5.r),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+                                          child: Center(
+                                            child: Text(
+                                              'İlanı Düzenle',
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'Rubik',
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
+                                    )
                               ],
                             ),
                           ),
@@ -609,7 +1105,7 @@ class _UserAdsDetailViewState extends State<UserAdsDetailView> {
                                           ),
                                         ),
                                         Text(
-                                          r.ownerInfo.username,
+                                          r.ownerInfo.username!,
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w400,

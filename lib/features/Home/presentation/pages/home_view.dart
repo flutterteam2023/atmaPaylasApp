@@ -298,7 +298,7 @@ class _HomeViewState extends State<HomeView> {
                                     snaphot.data?[index].ownerInfo.userId) {
                                   context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
                                 } else {
-                                  context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                  context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id!));
                                 }
                               },
                             );
@@ -384,7 +384,7 @@ class _HomeViewState extends State<HomeView> {
                                       snaphot.data?[index].ownerInfo.userId) {
                                     context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
                                   } else {
-                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id!));
                                   }
                                 },
                               );
@@ -472,7 +472,7 @@ class _HomeViewState extends State<HomeView> {
                                       snaphot.data?[index].ownerInfo.userId) {
                                     context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
                                   } else {
-                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id!));
                                   }
                                 },
                               );
@@ -560,7 +560,7 @@ class _HomeViewState extends State<HomeView> {
                                       snaphot.data?[index].ownerInfo.userId) {
                                     context.pushRoute(UserAdsDetailRoute(id: snaphot.data![index].id));
                                   } else {
-                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id));
+                                    context.pushRoute(AdsDetailRoute(id: snaphot.data![index].id!));
                                   }
                                 },
                               );

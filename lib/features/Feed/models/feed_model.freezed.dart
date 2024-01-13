@@ -21,29 +21,29 @@ FeedModel _$FeedModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FeedModel {
   @JsonKey(name: 'id')
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
-  int get user => throw _privateConstructorUsedError;
+  int? get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_info')
   OwnerInfo get ownerInfo => throw _privateConstructorUsedError;
   @JsonKey(name: 'category')
-  int get category => throw _privateConstructorUsedError;
+  int? get category => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_path')
-  String get categoryPath => throw _privateConstructorUsedError;
+  String? get categoryPath => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
-  String get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @JsonKey(name: 'listing_type')
-  String get listingType => throw _privateConstructorUsedError;
+  String? get listingType => throw _privateConstructorUsedError;
   @JsonKey(name: 'image1')
   String? get image1 => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
-  bool get isActive => throw _privateConstructorUsedError;
+  bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'view_count')
-  int get viewCount => throw _privateConstructorUsedError;
+  int? get viewCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_archived')
-  bool get isArchived => throw _privateConstructorUsedError;
+  bool? get isArchived => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,18 +57,18 @@ abstract class $FeedModelCopyWith<$Res> {
       _$FeedModelCopyWithImpl<$Res, FeedModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
-      @JsonKey(name: 'user') int user,
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'user') int? user,
       @JsonKey(name: 'owner_info') OwnerInfo ownerInfo,
-      @JsonKey(name: 'category') int category,
-      @JsonKey(name: 'category_path') String categoryPath,
-      @JsonKey(name: 'title') String title,
-      @JsonKey(name: 'listing_type') String listingType,
+      @JsonKey(name: 'category') int? category,
+      @JsonKey(name: 'category_path') String? categoryPath,
+      @JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'listing_type') String? listingType,
       @JsonKey(name: 'image1') String? image1,
-      @JsonKey(name: 'is_active') bool isActive,
-      @JsonKey(name: 'view_count') int viewCount,
-      @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'is_active') bool? isActive,
+      @JsonKey(name: 'view_count') int? viewCount,
+      @JsonKey(name: 'is_archived') bool? isArchived,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 
   $OwnerInfoCopyWith<$Res> get ownerInfo;
 }
@@ -86,68 +86,68 @@ class _$FeedModelCopyWithImpl<$Res, $Val extends FeedModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? user = null,
+    Object? id = freezed,
+    Object? user = freezed,
     Object? ownerInfo = null,
-    Object? category = null,
-    Object? categoryPath = null,
-    Object? title = null,
-    Object? listingType = null,
+    Object? category = freezed,
+    Object? categoryPath = freezed,
+    Object? title = freezed,
+    Object? listingType = freezed,
     Object? image1 = freezed,
-    Object? isActive = null,
-    Object? viewCount = null,
-    Object? isArchived = null,
-    Object? createdAt = null,
+    Object? isActive = freezed,
+    Object? viewCount = freezed,
+    Object? isArchived = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      user: null == user
+              as int?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ownerInfo: null == ownerInfo
           ? _value.ownerInfo
           : ownerInfo // ignore: cast_nullable_to_non_nullable
               as OwnerInfo,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryPath: null == categoryPath
+              as int?,
+      categoryPath: freezed == categoryPath
           ? _value.categoryPath
           : categoryPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      listingType: null == listingType
+              as String?,
+      listingType: freezed == listingType
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: null == isActive
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      viewCount: null == viewCount
+              as bool?,
+      viewCount: freezed == viewCount
           ? _value.viewCount
           : viewCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      isArchived: null == isArchived
+              as int?,
+      isArchived: freezed == isArchived
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
+              as bool?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 
@@ -169,18 +169,18 @@ abstract class _$$FeedModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
-      @JsonKey(name: 'user') int user,
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'user') int? user,
       @JsonKey(name: 'owner_info') OwnerInfo ownerInfo,
-      @JsonKey(name: 'category') int category,
-      @JsonKey(name: 'category_path') String categoryPath,
-      @JsonKey(name: 'title') String title,
-      @JsonKey(name: 'listing_type') String listingType,
+      @JsonKey(name: 'category') int? category,
+      @JsonKey(name: 'category_path') String? categoryPath,
+      @JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'listing_type') String? listingType,
       @JsonKey(name: 'image1') String? image1,
-      @JsonKey(name: 'is_active') bool isActive,
-      @JsonKey(name: 'view_count') int viewCount,
-      @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'is_active') bool? isActive,
+      @JsonKey(name: 'view_count') int? viewCount,
+      @JsonKey(name: 'is_archived') bool? isArchived,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 
   @override
   $OwnerInfoCopyWith<$Res> get ownerInfo;
@@ -197,68 +197,68 @@ class __$$FeedModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? user = null,
+    Object? id = freezed,
+    Object? user = freezed,
     Object? ownerInfo = null,
-    Object? category = null,
-    Object? categoryPath = null,
-    Object? title = null,
-    Object? listingType = null,
+    Object? category = freezed,
+    Object? categoryPath = freezed,
+    Object? title = freezed,
+    Object? listingType = freezed,
     Object? image1 = freezed,
-    Object? isActive = null,
-    Object? viewCount = null,
-    Object? isArchived = null,
-    Object? createdAt = null,
+    Object? isActive = freezed,
+    Object? viewCount = freezed,
+    Object? isArchived = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_$FeedModelImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      user: null == user
+              as int?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ownerInfo: null == ownerInfo
           ? _value.ownerInfo
           : ownerInfo // ignore: cast_nullable_to_non_nullable
               as OwnerInfo,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryPath: null == categoryPath
+              as int?,
+      categoryPath: freezed == categoryPath
           ? _value.categoryPath
           : categoryPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      listingType: null == listingType
+              as String?,
+      listingType: freezed == listingType
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: null == isActive
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      viewCount: null == viewCount
+              as bool?,
+      viewCount: freezed == viewCount
           ? _value.viewCount
           : viewCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      isArchived: null == isArchived
+              as int?,
+      isArchived: freezed == isArchived
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
+              as bool?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -285,40 +285,40 @@ class _$FeedModelImpl implements _FeedModel {
 
   @override
   @JsonKey(name: 'id')
-  final int id;
+  final int? id;
   @override
   @JsonKey(name: 'user')
-  final int user;
+  final int? user;
   @override
   @JsonKey(name: 'owner_info')
   final OwnerInfo ownerInfo;
   @override
   @JsonKey(name: 'category')
-  final int category;
+  final int? category;
   @override
   @JsonKey(name: 'category_path')
-  final String categoryPath;
+  final String? categoryPath;
   @override
   @JsonKey(name: 'title')
-  final String title;
+  final String? title;
   @override
   @JsonKey(name: 'listing_type')
-  final String listingType;
+  final String? listingType;
   @override
   @JsonKey(name: 'image1')
   final String? image1;
   @override
   @JsonKey(name: 'is_active')
-  final bool isActive;
+  final bool? isActive;
   @override
   @JsonKey(name: 'view_count')
-  final int viewCount;
+  final int? viewCount;
   @override
   @JsonKey(name: 'is_archived')
-  final bool isArchived;
+  final bool? isArchived;
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString() {
@@ -385,18 +385,18 @@ class _$FeedModelImpl implements _FeedModel {
 
 abstract class _FeedModel implements FeedModel {
   const factory _FeedModel(
-          {@JsonKey(name: 'id') required final int id,
-          @JsonKey(name: 'user') required final int user,
+          {@JsonKey(name: 'id') required final int? id,
+          @JsonKey(name: 'user') required final int? user,
           @JsonKey(name: 'owner_info') required final OwnerInfo ownerInfo,
-          @JsonKey(name: 'category') required final int category,
-          @JsonKey(name: 'category_path') required final String categoryPath,
-          @JsonKey(name: 'title') required final String title,
-          @JsonKey(name: 'listing_type') required final String listingType,
+          @JsonKey(name: 'category') required final int? category,
+          @JsonKey(name: 'category_path') required final String? categoryPath,
+          @JsonKey(name: 'title') required final String? title,
+          @JsonKey(name: 'listing_type') required final String? listingType,
           @JsonKey(name: 'image1') required final String? image1,
-          @JsonKey(name: 'is_active') required final bool isActive,
-          @JsonKey(name: 'view_count') required final int viewCount,
-          @JsonKey(name: 'is_archived') required final bool isArchived,
-          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+          @JsonKey(name: 'is_active') required final bool? isActive,
+          @JsonKey(name: 'view_count') required final int? viewCount,
+          @JsonKey(name: 'is_archived') required final bool? isArchived,
+          @JsonKey(name: 'created_at') required final DateTime? createdAt}) =
       _$FeedModelImpl;
 
   factory _FeedModel.fromJson(Map<String, dynamic> json) =
@@ -404,40 +404,40 @@ abstract class _FeedModel implements FeedModel {
 
   @override
   @JsonKey(name: 'id')
-  int get id;
+  int? get id;
   @override
   @JsonKey(name: 'user')
-  int get user;
+  int? get user;
   @override
   @JsonKey(name: 'owner_info')
   OwnerInfo get ownerInfo;
   @override
   @JsonKey(name: 'category')
-  int get category;
+  int? get category;
   @override
   @JsonKey(name: 'category_path')
-  String get categoryPath;
+  String? get categoryPath;
   @override
   @JsonKey(name: 'title')
-  String get title;
+  String? get title;
   @override
   @JsonKey(name: 'listing_type')
-  String get listingType;
+  String? get listingType;
   @override
   @JsonKey(name: 'image1')
   String? get image1;
   @override
   @JsonKey(name: 'is_active')
-  bool get isActive;
+  bool? get isActive;
   @override
   @JsonKey(name: 'view_count')
-  int get viewCount;
+  int? get viewCount;
   @override
   @JsonKey(name: 'is_archived')
-  bool get isArchived;
+  bool? get isArchived;
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$FeedModelImplCopyWith<_$FeedModelImpl> get copyWith =>
@@ -451,21 +451,21 @@ OwnerInfo _$OwnerInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OwnerInfo {
   @JsonKey(name: 'user_id')
-  int get userId => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
-  String get username => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'surname')
-  String get surname => throw _privateConstructorUsedError;
+  String? get surname => throw _privateConstructorUsedError;
   @JsonKey(name: 'city')
-  String get city => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
   @JsonKey(name: 'district')
-  String get district => throw _privateConstructorUsedError;
+  String? get district => throw _privateConstructorUsedError;
   @JsonKey(name: 'profile_image')
   String? get profileImage => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone_number')
-  String get phoneNumber => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -479,14 +479,14 @@ abstract class $OwnerInfoCopyWith<$Res> {
       _$OwnerInfoCopyWithImpl<$Res, OwnerInfo>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'username') String username,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'surname') String surname,
-      @JsonKey(name: 'city') String city,
-      @JsonKey(name: 'district') String district,
+      {@JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'username') String? username,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'surname') String? surname,
+      @JsonKey(name: 'city') String? city,
+      @JsonKey(name: 'district') String? district,
       @JsonKey(name: 'profile_image') String? profileImage,
-      @JsonKey(name: 'phone_number') String phoneNumber});
+      @JsonKey(name: 'phone_number') String? phoneNumber});
 }
 
 /// @nodoc
@@ -502,48 +502,48 @@ class _$OwnerInfoCopyWithImpl<$Res, $Val extends OwnerInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
-    Object? username = null,
-    Object? name = null,
-    Object? surname = null,
-    Object? city = null,
-    Object? district = null,
+    Object? userId = freezed,
+    Object? username = freezed,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? city = freezed,
+    Object? district = freezed,
     Object? profileImage = freezed,
-    Object? phoneNumber = null,
+    Object? phoneNumber = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      username: null == username
+              as int?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      surname: null == surname
+              as String?,
+      surname: freezed == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
+              as String?,
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      district: null == district
+              as String?,
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: null == phoneNumber
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -557,14 +557,14 @@ abstract class _$$OwnerInfoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'username') String username,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'surname') String surname,
-      @JsonKey(name: 'city') String city,
-      @JsonKey(name: 'district') String district,
+      {@JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'username') String? username,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'surname') String? surname,
+      @JsonKey(name: 'city') String? city,
+      @JsonKey(name: 'district') String? district,
       @JsonKey(name: 'profile_image') String? profileImage,
-      @JsonKey(name: 'phone_number') String phoneNumber});
+      @JsonKey(name: 'phone_number') String? phoneNumber});
 }
 
 /// @nodoc
@@ -578,48 +578,48 @@ class __$$OwnerInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
-    Object? username = null,
-    Object? name = null,
-    Object? surname = null,
-    Object? city = null,
-    Object? district = null,
+    Object? userId = freezed,
+    Object? username = freezed,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? city = freezed,
+    Object? district = freezed,
     Object? profileImage = freezed,
-    Object? phoneNumber = null,
+    Object? phoneNumber = freezed,
   }) {
     return _then(_$OwnerInfoImpl(
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      username: null == username
+              as int?,
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      surname: null == surname
+              as String?,
+      surname: freezed == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
+              as String?,
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      district: null == district
+              as String?,
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: null == phoneNumber
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -642,28 +642,28 @@ class _$OwnerInfoImpl implements _OwnerInfo {
 
   @override
   @JsonKey(name: 'user_id')
-  final int userId;
+  final int? userId;
   @override
   @JsonKey(name: 'username')
-  final String username;
+  final String? username;
   @override
   @JsonKey(name: 'name')
-  final String name;
+  final String? name;
   @override
   @JsonKey(name: 'surname')
-  final String surname;
+  final String? surname;
   @override
   @JsonKey(name: 'city')
-  final String city;
+  final String? city;
   @override
   @JsonKey(name: 'district')
-  final String district;
+  final String? district;
   @override
   @JsonKey(name: 'profile_image')
   final String? profileImage;
   @override
   @JsonKey(name: 'phone_number')
-  final String phoneNumber;
+  final String? phoneNumber;
 
   @override
   String toString() {
@@ -710,14 +710,14 @@ class _$OwnerInfoImpl implements _OwnerInfo {
 
 abstract class _OwnerInfo implements OwnerInfo {
   const factory _OwnerInfo(
-          {@JsonKey(name: 'user_id') required final int userId,
-          @JsonKey(name: 'username') required final String username,
-          @JsonKey(name: 'name') required final String name,
-          @JsonKey(name: 'surname') required final String surname,
-          @JsonKey(name: 'city') required final String city,
-          @JsonKey(name: 'district') required final String district,
+          {@JsonKey(name: 'user_id') required final int? userId,
+          @JsonKey(name: 'username') required final String? username,
+          @JsonKey(name: 'name') required final String? name,
+          @JsonKey(name: 'surname') required final String? surname,
+          @JsonKey(name: 'city') required final String? city,
+          @JsonKey(name: 'district') required final String? district,
           @JsonKey(name: 'profile_image') required final String? profileImage,
-          @JsonKey(name: 'phone_number') required final String phoneNumber}) =
+          @JsonKey(name: 'phone_number') required final String? phoneNumber}) =
       _$OwnerInfoImpl;
 
   factory _OwnerInfo.fromJson(Map<String, dynamic> json) =
@@ -725,28 +725,28 @@ abstract class _OwnerInfo implements OwnerInfo {
 
   @override
   @JsonKey(name: 'user_id')
-  int get userId;
+  int? get userId;
   @override
   @JsonKey(name: 'username')
-  String get username;
+  String? get username;
   @override
   @JsonKey(name: 'name')
-  String get name;
+  String? get name;
   @override
   @JsonKey(name: 'surname')
-  String get surname;
+  String? get surname;
   @override
   @JsonKey(name: 'city')
-  String get city;
+  String? get city;
   @override
   @JsonKey(name: 'district')
-  String get district;
+  String? get district;
   @override
   @JsonKey(name: 'profile_image')
   String? get profileImage;
   @override
   @JsonKey(name: 'phone_number')
-  String get phoneNumber;
+  String? get phoneNumber;
   @override
   @JsonKey(ignore: true)
   _$$OwnerInfoImplCopyWith<_$OwnerInfoImpl> get copyWith =>

@@ -128,7 +128,7 @@ class SharedProductsView extends ConsumerWidget {
                         address:
                             '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
                         date: formatter.format(snapshot.data![index].createdAt),
-                        userName: snapshot.data![index].ownerInfo.username,
+                        userName: snapshot.data![index].ownerInfo.username!,
                       );
                     },
                   ),

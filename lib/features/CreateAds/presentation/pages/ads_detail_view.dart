@@ -424,7 +424,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                         ),
                                       ),
                                       Text(
-                                        r.ownerInfo.username,
+                                        r.ownerInfo.username!,
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w400,
@@ -457,10 +457,10 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                 if (value != null) {
                                   context.pushRoute(
                                     ChatRoomRoute(
-                                      userName: r.ownerInfo.username,
+                                      userName: r.ownerInfo.username!,
                                       accessToken: value,
                                       feedId: r.id.toString(),
-                                      userId: r.ownerInfo.userId,
+                                      userId: r.ownerInfo.userId!,
                                     ),
                                   );
                                 }

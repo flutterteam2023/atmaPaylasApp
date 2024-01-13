@@ -10,7 +10,10 @@ import 'package:atma_paylas_app/features/Category/models/main_category_model.dar
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get_it/get_it.dart';
@@ -400,6 +403,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
     );
   }
 
+
   Future<ApiResponse<Tuple2<List<FeedModel>, List<MainCategoryModel>>>> searchListings(String query) async {
     return requestMethod<Tuple2<List<FeedModel>, List<MainCategoryModel>>>(
       path: '/search_listings/?query=$query',
@@ -420,5 +424,51 @@ class FeedRepository extends ApiService with ChangeNotifier {
         'Content-Type': 'application/json',
       },
     );
+  }
+
+  Future<Either<String, String>> updateFeed(
+    String feedId,
+    File? image1,
+    File? image2,
+    File? image3,
+    ListingTypes listingType,
+    String title,
+    String description,
+    BuildContext context
+  ) async {
+    const storage = FlutterSecureStorage();
+    final accessToken = await storage.read(key: 'access_token');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+    final request = http.MultipartRequest('PUT', Uri.parse('$BASE_URL/update_listing/$feedId/'));
+    request.fields.addAll({
+      'listing_type': listingType.name,
+      'title': title,
+      'description': description,
+    });
+
+    if (image1 != null) request.files.add(await http.MultipartFile.fromPath('image1', image1.path));
+    if (image2 != null) request.files.add(await http.MultipartFile.fromPath('image2', image2.path));
+    if (image3 != null) request.files.add(await http.MultipartFile.fromPath('image3', image3.path));
+
+    request.headers.addAll(headers);
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      Log.success(await response.stream.bytesToString());
+      //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için myFeeds listesini temizliyoruz
+      _myFeeds.clear();
+       await EasyLoading.dismiss();
+       Navigator.of(context).pop();
+       notifyListeners();
+      return Right((jsonDecode(await response.stream.bytesToString()) as Map<String, dynamic>)['success'] as String);
+    } else {
+      Log.error(response.reasonPhrase);
+      return Left(response.reasonPhrase ?? 'Error');
+    }
   }
 }
