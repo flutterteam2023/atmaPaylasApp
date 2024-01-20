@@ -56,7 +56,7 @@ class ShareAdsCard extends StatelessWidget {
                 children: [
                   if (image != null)
                     ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(5),
                         ),
                         child: Image.network(image!, fit: BoxFit.cover, width: 143.w, height: 156.h))
@@ -86,7 +86,7 @@ class ShareAdsCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 9,
             ),
             Expanded(

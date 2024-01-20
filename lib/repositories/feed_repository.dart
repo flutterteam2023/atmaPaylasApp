@@ -1,17 +1,12 @@
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Category/models/main_category_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -26,7 +21,8 @@ enum ListingTypes { free, tradable }
 ///GetIt.instance<FeedRepository>().addFeed()
 class FeedRepository extends ApiService with ChangeNotifier {
   ///this method is used for add feed
-  ///if you want to add feed, you must send image1, image2, image3, listingType, categoryId, title, description
+  ///if you want to add feed, you must send
+  ///image1, image2, image3, listingType, categoryId, title, description
   Future<Either<String, String>> addFeed(
     File? image1,
     File? image2,
@@ -51,9 +47,30 @@ class FeedRepository extends ApiService with ChangeNotifier {
       'description': description,
     });
 
-    if (image1 != null) request.files.add(await http.MultipartFile.fromPath('image1', image1.path));
-    if (image2 != null) request.files.add(await http.MultipartFile.fromPath('image2', image2.path));
-    if (image3 != null) request.files.add(await http.MultipartFile.fromPath('image3', image3.path));
+    if (image1 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image1',
+          image1.path,
+        ),
+      );
+    }
+    if (image2 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image2',
+          image2.path,
+        ),
+      );
+    }
+    if (image3 != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image3',
+          image3.path,
+        ),
+      );
+    }
 
     request.headers.addAll(headers);
 
@@ -61,9 +78,14 @@ class FeedRepository extends ApiService with ChangeNotifier {
 
     if (response.statusCode == 200) {
       Log.success(await response.stream.bytesToString());
-      //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için myFeeds listesini temizliyoruz
+      //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için
+      //myFeeds listesini temizliyoruz
       _myFeeds.clear();
-      return Right((jsonDecode(await response.stream.bytesToString()) as Map<String, dynamic>)['success'] as String);
+      return Right(
+        (jsonDecode(
+          await response.stream.bytesToString(),
+        ) as Map<String, dynamic>)['success'] as String,
+      );
     } else {
       Log.error(response.reasonPhrase);
       return Left(response.reasonPhrase ?? 'Error');

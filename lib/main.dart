@@ -1,8 +1,10 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:convert';
+
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
-import 'package:atma_paylas_app/features/Home/presentation/pages/home_view.dart';
+import 'package:atma_paylas_app/features/ReportAndBlock/viewmodel/report.viewmodel.dart';
 import 'package:atma_paylas_app/repositories/arhived_repository.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
 import 'package:atma_paylas_app/repositories/block_repository.dart';
@@ -10,10 +12,12 @@ import 'package:atma_paylas_app/repositories/category_repository.dart';
 import 'package:atma_paylas_app/repositories/city_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/feedback_repository.dart';
+import 'package:atma_paylas_app/repositories/report_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:atma_paylas_app/routing/routing_observer.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +27,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   GetIt.I.registerSingleton<CategoryRepository>(CategoryRepository());
   GetIt.I.registerSingleton<AuthRepository>(AuthRepository());
   GetIt.I.registerSingleton<UserRepository>(UserRepository());
@@ -31,6 +36,9 @@ Future<void> main() async {
   GetIt.I.registerSingleton<FeedRepository>(FeedRepository());
   GetIt.I.registerSingleton<ArchivedRepository>(ArchivedRepository());
   GetIt.I.registerSingleton<BlockRepository>(BlockRepository());
+  GetIt.I.registerSingleton<ReportRepository>(ReportRepository());
+
+  GetIt.I.registerSingleton<ReportViewModel>(ReportViewModel());
   //Sample usage of GetIt
 
 /*   await GetIt.instance<UserRepository>()

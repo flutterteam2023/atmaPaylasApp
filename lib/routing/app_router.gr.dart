@@ -222,6 +222,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const RegisterNotificationView(),
       );
     },
+    ReportRoute.name: (routeData) {
+      final args = routeData.argsAs<ReportRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ReportView(
+          userId: args.userId,
+          key: args.key,
+        ),
+      );
+    },
     SearchingRoute.name: (routeData) {
       final args = routeData.argsAs<SearchingRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -933,6 +943,43 @@ class RegisterNotificationRoute extends PageRouteInfo<void> {
   static const String name = 'RegisterNotificationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ReportView]
+class ReportRoute extends PageRouteInfo<ReportRouteArgs> {
+  ReportRoute({
+    required int? userId,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ReportRoute.name,
+          args: ReportRouteArgs(
+            userId: userId,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ReportRoute';
+
+  static const PageInfo<ReportRouteArgs> page = PageInfo<ReportRouteArgs>(name);
+}
+
+class ReportRouteArgs {
+  const ReportRouteArgs({
+    required this.userId,
+    this.key,
+  });
+
+  final int? userId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ReportRouteArgs{userId: $userId, key: $key}';
+  }
 }
 
 /// generated route for
