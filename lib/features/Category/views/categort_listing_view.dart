@@ -73,7 +73,7 @@ class CategoryListingView extends StatelessWidget {
                               isSaved: r[index].isArchived!,
                               width: 358.w,
                               seeAdsDetailOnTap: () {
-                                context.pushRoute(UserAdsDetailRoute(id: r[index].id));
+                                context.pushRoute(AdsDetailRoute(id: r[index].id!));
                               },
                             ),
                           );

@@ -155,6 +155,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NegativeNotificationView(),
       );
     },
+    OtherProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<OtherProfileRouteArgs>(
+          orElse: () => const OtherProfileRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: OtherProfileView(
+          key: args.key,
+          feed: args.feed,
+        ),
+      );
+    },
     PasswordChangeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -728,6 +739,44 @@ class NegativeNotificationRoute extends PageRouteInfo<void> {
   static const String name = 'NegativeNotificationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [OtherProfileView]
+class OtherProfileRoute extends PageRouteInfo<OtherProfileRouteArgs> {
+  OtherProfileRoute({
+    Key? key,
+    FeedDetailModel? feed,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OtherProfileRoute.name,
+          args: OtherProfileRouteArgs(
+            key: key,
+            feed: feed,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'OtherProfileRoute';
+
+  static const PageInfo<OtherProfileRouteArgs> page =
+      PageInfo<OtherProfileRouteArgs>(name);
+}
+
+class OtherProfileRouteArgs {
+  const OtherProfileRouteArgs({
+    this.key,
+    this.feed,
+  });
+
+  final Key? key;
+
+  final FeedDetailModel? feed;
+
+  @override
+  String toString() {
+    return 'OtherProfileRouteArgs{key: $key, feed: $feed}';
+  }
 }
 
 /// generated route for

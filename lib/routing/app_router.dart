@@ -17,6 +17,7 @@ import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_info_a
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/ads_success_create_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/create_ads_view.dart';
 import 'package:atma_paylas_app/features/CreateAds/presentation/pages/transition_category_view.dart';
+import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/feedback_approval_view.dart';
 import 'package:atma_paylas_app/features/FeedBackApproval/presentation/pages/give_feedback_view.dart';
 import 'package:atma_paylas_app/features/Help/presentation/pages/help_view.dart';
@@ -29,6 +30,7 @@ import 'package:atma_paylas_app/features/MyAds/presentation/ads_state_view.dart'
 import 'package:atma_paylas_app/features/MyAds/presentation/my_ads_view.dart';
 import 'package:atma_paylas_app/features/MyAds/presentation/user_ads_detail_view.dart';
 import 'package:atma_paylas_app/features/Navigator/navigator_view.dart';
+import 'package:atma_paylas_app/features/Profile/other_profile_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_edit_view.dart';
 import 'package:atma_paylas_app/features/Profile/profile_view.dart';
 import 'package:atma_paylas_app/features/ReportAndBlock/views/blocked_users_view.dart';
@@ -84,6 +86,7 @@ class AppRouter extends _$AppRouter {
           page: Register1Route.page,
           initial: false,
         ),
+        AutoRoute(page: OtherProfileRoute.page, initial: false),
         AutoRoute(page: ProfileEditRoute.page, initial: false),
         AutoRoute(
           page: Register2Route.page,

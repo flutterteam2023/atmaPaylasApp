@@ -131,7 +131,10 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                             ),
                             const Divider(),
                             ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                
+                                context.pushRoute(OtherProfileRoute(feed: r));
+                              },
                               title: const Text('Profili Gör'),
                               trailing: const Icon(Icons.arrow_forward_ios),
                             ),
