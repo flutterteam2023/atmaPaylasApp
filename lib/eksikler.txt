@@ -1,9 +1,6 @@
 
-3- Reklam alanı backend 
-6- İlan Detay Sayfası
-12- Gizlilik Politikası, Kullanıcı sözleşmesi bölümlerinin yapılması
+
 17- Farklı cihaz testleri
-18- Tablet uyumluluk testleri
 19- Mağaza görseli ve içerik yazısı hazırlatma
 20- Yayınlama
 Kullanıcı şikayet etme

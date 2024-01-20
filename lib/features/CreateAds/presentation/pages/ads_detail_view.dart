@@ -11,6 +11,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -125,7 +126,14 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                             ),
                             const Gap(9),
                             ListTile(
-                              onTap: () async {},
+                              onTap: () async {
+                                await snapshot.data?.fold(
+                                  EasyLoading.showError,
+                                  (r) => context.pushRoute(
+                                    ReportRoute(userId: r.ownerInfo.userId),
+                                  ),
+                                );
+                              },
                               title: const Text('Şikayet Et'),
                               trailing: const Icon(Icons.arrow_forward_ios),
                             ),
@@ -176,9 +184,11 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5.r),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                          r.image1 ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png"),
-                                      fit: BoxFit.cover),
+                                    image: NetworkImage(
+                                      r.image1 ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               Positioned(
@@ -307,7 +317,8 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                   borderRadius: const BorderRadius.all(Radius.circular(5)),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png'),
+                                      r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png',
+                                    ),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

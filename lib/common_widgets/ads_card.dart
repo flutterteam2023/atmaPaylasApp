@@ -70,6 +70,17 @@ class AdsCard extends StatelessWidget {
                             width: width,
                             height: 129,
                             fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/clockdemo.png',
+                                width: width,
+                                height: 129,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const SizedBox();
+                                },
+                              );
+                            },
                           )
                         : Image.asset(
                             'assets/images/clockdemo.png',
