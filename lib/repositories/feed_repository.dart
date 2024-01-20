@@ -333,6 +333,68 @@ class FeedRepository extends ApiService with ChangeNotifier {
     });
   }
 
+ List<FeedDetailModel> _otherUserActiveFeeds = [];
+  List<FeedDetailModel> _otherUserActiveFeedsFree = [];
+
+  Future<List<FeedDetailModel>> getOtherUserActiveFeeds(String userId) async {
+    _otherUserActiveFeeds.clear();
+    return requestMethod<List<FeedDetailModel>>(
+      path: '/active_listings/$userId',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => (response.data as List<dynamic>)
+          .map(
+            (e) => FeedDetailModel.fromJson(e as Map<String, dynamic>).copyWith(
+                /* image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null, */
+                ),
+          )
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    ).then((value) {
+      value.fold(
+        Log.error,
+        (r) {
+          for (final element in r) {
+            if (element.listingType == ListingTypes.tradable.name) {
+             _otherUserActiveFeeds.add(element);
+            }
+          }
+        },
+      );
+
+      return _otherUserActiveFeeds ;
+    });
+  }
+  Future<List<FeedDetailModel>> getOtherUserActiveFeedsFree(String userId) async {
+    _otherUserActiveFeedsFree.clear();
+    return requestMethod<List<FeedDetailModel>>(
+      path: '/active_listings/$userId',
+      method: HttpMethod.get,
+      requestModel: null,
+      responseConverter: (response) => (response.data as List<dynamic>)
+          .map(
+            (e) => FeedDetailModel.fromJson(e as Map<String, dynamic>).copyWith(
+                /* image1: FeedModel.fromJson(e).image1 != null ? IMAGE_BASE_URL + FeedModel.fromJson(e).image1! : null, */
+                ),
+          )
+          .toList(),
+      headers: {'Accept': 'application/json'},
+    ).then((value) {
+      value.fold(
+        Log.error,
+        (r) {
+          for (final element in r) {
+            if (element.listingType == ListingTypes.free.name) {
+              _otherUserActiveFeedsFree.add(element);
+            }
+          }
+        },
+      );
+
+      return _otherUserActiveFeedsFree;
+    });
+  }
+
   final Set<FeedDetailModel> _waitingToConfigmFeeds = {};
 
   void clearWaitingToConfirmFeeds() {
@@ -403,7 +465,6 @@ class FeedRepository extends ApiService with ChangeNotifier {
     );
   }
 
-
   Future<ApiResponse<Tuple2<List<FeedModel>, List<MainCategoryModel>>>> searchListings(String query) async {
     return requestMethod<Tuple2<List<FeedModel>, List<MainCategoryModel>>>(
       path: '/search_listings/?query=$query',
@@ -426,16 +487,8 @@ class FeedRepository extends ApiService with ChangeNotifier {
     );
   }
 
-  Future<Either<String, String>> updateFeed(
-    String feedId,
-    File? image1,
-    File? image2,
-    File? image3,
-    ListingTypes listingType,
-    String title,
-    String description,
-    BuildContext context
-  ) async {
+  Future<Either<String, String>> updateFeed(String feedId, File? image1, File? image2, File? image3,
+      ListingTypes listingType, String title, String description, BuildContext context) async {
     const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: 'access_token');
     final headers = {
@@ -462,9 +515,9 @@ class FeedRepository extends ApiService with ChangeNotifier {
       Log.success(await response.stream.bytesToString());
       //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için myFeeds listesini temizliyoruz
       _myFeeds.clear();
-       await EasyLoading.dismiss();
-       Navigator.of(context).pop();
-       notifyListeners();
+      await EasyLoading.dismiss();
+      Navigator.of(context).pop();
+      notifyListeners();
       return Right((jsonDecode(await response.stream.bytesToString()) as Map<String, dynamic>)['success'] as String);
     } else {
       Log.error(response.reasonPhrase);

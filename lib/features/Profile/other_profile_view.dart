@@ -1,9 +1,13 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:atma_paylas_app/common_widgets/ads_card.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -244,6 +248,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
             ),
           ),
           body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(18),
               child: Column(
@@ -268,25 +273,121 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                               Tab(text: 'Takaslanan Ürünler'),
                               Tab(text: 'Ücretsiz Paylaşılan'),
                             ]),
-                            Container(
+                            SizedBox(
                               height: MediaQuery.of(context).size.height - 150.h, //height of TabBarView
-                              child: TabBarView(children:[
-                                Container(
-                                  height: 50,
-                                  width: 50,
-                                  color: Colors.red,
+                              child: TabBarView(
+                                
+                                children:[
+                                FutureBuilder(
+                                  future: GetIt.instance<FeedRepository>().getOtherUserActiveFeeds( widget.feed!.ownerInfo.userId!.toString()),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Hata');
+                                      
+                                    }
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Center(child: CircularProgressIndicator());
+                                    }
+                                    if (snapshot.hasData) {
+                                      return ListView.builder(
+                                        padding: EdgeInsets.only(bottom: 150.h),
+
+                              
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                           //burada sadece takaslanan ürünler gösterilecek
+                                           DateFormat formatter = DateFormat('dd.MM.yyyy');
+                                
+                                            if (snapshot.data![index].listingType == ListingTypes.tradable.name) {
+                                              return Padding(
+                                              padding: EdgeInsets.only(right: 16.w, top: 16.h),
+                                              child: AdsCard(
+                                                adsType:
+                                                   snapshot.data![index].listingType == ListingTypes.free.name ? 'Ücretsiz Paylaşıyor' : 'Takaslıyor',
+                                                id: snapshot.data![index].id,
+                                                address: '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
+                                                date: formatter.format(snapshot.data![index].createdAt),
+                                                userName: snapshot.data![index].ownerInfo.username!,
+                                                productImage:snapshot.data![index].image1,
+                                                productName: snapshot.data![index].title,
+                                                textColor: snapshot.data![index].listingType == ListingTypes.free.name
+                                                    ? const Color(0xff05473A)
+                                                    : Colors.white,
+                                                colorType: snapshot.data![index].listingType == ListingTypes.free.name
+                                                    ? const Color(0xff6DCEBB)
+                                                    : const Color(0xffFD8435),
+                                                isSaved: snapshot.data![index].isArchived,
+                                                width: 358.w,
+                                                seeAdsDetailOnTap: () {
+                                                  context.pushRoute(AdsDetailRoute(id: snapshot.data![index].id));
+                                                },
+                                              ),
+                                            );
+                                              
+                                            }
+                                          },
+                                        );
+                                      
+                                    }
+                                    return const Center(child: CircularProgressIndicator());
+                                  },
                                 ),
-                                Container(
-                                  height: 50,
-                                  width: 50,
-                                  color: Colors.blue,
-                                )
+                                FutureBuilder(
+                                  future: GetIt.instance<FeedRepository>().getOtherUserActiveFeedsFree( widget.feed!.ownerInfo.userId!.toString()),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Hata');
+                                      
+                                    }
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Center(child: CircularProgressIndicator());
+                                    }
+                                    if (snapshot.hasData) {
+                                      return ListView.builder(
+                                        padding: EdgeInsets.only(bottom: 150.h),
+                                          itemCount: snapshot.data!.length,
+                                          itemBuilder: (context, index) {
+                                           //burada sadece takaslanan ürünler gösterilecek
+                                           DateFormat formatter = DateFormat('dd.MM.yyyy');
+                                                                      
+                                            return Padding(
+                                              padding: EdgeInsets.only(right: 16.w, top: 16.h),
+                                              child: AdsCard(
+                                                adsType:
+                                                    snapshot.data![index].listingType == ListingTypes.free.name ? 'Ücretsiz Paylaşıyor' : 'Takaslıyor',
+                                                id: snapshot.data![index].id,
+                                                address: '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
+                                                date: formatter.format(snapshot.data![index].createdAt),
+                                                userName: snapshot.data![index].ownerInfo.username!,
+                                                productImage: snapshot.data![index].image1,
+                                                productName: snapshot.data![index].title,
+                                                textColor: snapshot.data![index].listingType == ListingTypes.free.name
+                                                    ? const Color(0xff05473A)
+                                                    : Colors.white,
+                                                colorType: snapshot.data![index].listingType == ListingTypes.free.name
+                                                    ? const Color(0xff6DCEBB)
+                                                    : const Color(0xffFD8435),
+                                                isSaved: snapshot.data![index].isArchived,
+                                                width: 358.w,
+                                                seeAdsDetailOnTap: () {
+                                                  context.pushRoute(AdsDetailRoute(id: snapshot.data![index].id));
+
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      
+                                    }
+                                    return const Center(child: CircularProgressIndicator());
+                                  },
+                                ),
                                 
                               ]),
                             )
                           ],
                         );
-
+          
                           });
                           
                         }
