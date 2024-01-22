@@ -14,6 +14,9 @@ class UserMessage with _$UserMessage {
     @JsonKey(name: "content") required Content content,
     @JsonKey(name: "timestamp") required String timestamp,
     @JsonKey(name: "other_username") required String? otherUsername,
+    @JsonKey(name: "url") required String? url,
+
+
   }) = _UserMessage;
 
   factory UserMessage.fromJson(Map<String, dynamic> json) => _$UserMessageFromJson(json);

@@ -375,7 +375,7 @@ class _HomeViewState extends State<HomeView> {
                                     : 'Takas Ediyor',
                                 address:
                                     '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                                productName: '${snaphot.data?[index].title}}',
+                                productName: '${snaphot.data?[index].title}',
                                 date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                                 userName: '${snaphot.data?[index].ownerInfo.username}',
                                 productImage: snaphot.data?[index].image1,
@@ -462,7 +462,7 @@ class _HomeViewState extends State<HomeView> {
                                     : 'Takas Ediyor',
                                 address:
                                     '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                                productName: '${snaphot.data?[index].title}}',
+                                productName: '${snaphot.data?[index].title}',
                                 date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                                 userName: '${snaphot.data?[index].ownerInfo.username}',
                                 productImage: snaphot.data?[index].image1,
@@ -550,7 +550,7 @@ class _HomeViewState extends State<HomeView> {
                                     : 'Takas Ediyor',
                                 address:
                                     '${snaphot.data?[index].ownerInfo.district} / ${snaphot.data?[index].ownerInfo.city}',
-                                productName: '${snaphot.data?[index].title}}',
+                                productName: '${snaphot.data?[index].title}',
                                 date: formatter.format(snaphot.data?[index].createdAt ?? DateTime.now()),
                                 userName: '${snaphot.data?[index].ownerInfo.username}',
                                 productImage: snaphot.data?[index].image1,

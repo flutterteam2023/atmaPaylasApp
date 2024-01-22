@@ -28,6 +28,8 @@ mixin _$UserMessage {
   String get timestamp => throw _privateConstructorUsedError;
   @JsonKey(name: "other_username")
   String? get otherUsername => throw _privateConstructorUsedError;
+  @JsonKey(name: "url")
+  String? get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +47,8 @@ abstract class $UserMessageCopyWith<$Res> {
       {@JsonKey(name: "username") String username,
       @JsonKey(name: "content") Content content,
       @JsonKey(name: "timestamp") String timestamp,
-      @JsonKey(name: "other_username") String? otherUsername});
+      @JsonKey(name: "other_username") String? otherUsername,
+      @JsonKey(name: "url") String? url});
 
   $ContentCopyWith<$Res> get content;
 }
@@ -67,6 +70,7 @@ class _$UserMessageCopyWithImpl<$Res, $Val extends UserMessage>
     Object? content = null,
     Object? timestamp = null,
     Object? otherUsername = freezed,
+    Object? url = freezed,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -84,6 +88,10 @@ class _$UserMessageCopyWithImpl<$Res, $Val extends UserMessage>
       otherUsername: freezed == otherUsername
           ? _value.otherUsername
           : otherUsername // ignore: cast_nullable_to_non_nullable
+              as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -109,7 +117,8 @@ abstract class _$$UserMessageImplCopyWith<$Res>
       {@JsonKey(name: "username") String username,
       @JsonKey(name: "content") Content content,
       @JsonKey(name: "timestamp") String timestamp,
-      @JsonKey(name: "other_username") String? otherUsername});
+      @JsonKey(name: "other_username") String? otherUsername,
+      @JsonKey(name: "url") String? url});
 
   @override
   $ContentCopyWith<$Res> get content;
@@ -130,6 +139,7 @@ class __$$UserMessageImplCopyWithImpl<$Res>
     Object? content = null,
     Object? timestamp = null,
     Object? otherUsername = freezed,
+    Object? url = freezed,
   }) {
     return _then(_$UserMessageImpl(
       username: null == username
@@ -148,6 +158,10 @@ class __$$UserMessageImplCopyWithImpl<$Res>
           ? _value.otherUsername
           : otherUsername // ignore: cast_nullable_to_non_nullable
               as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -159,7 +173,8 @@ class _$UserMessageImpl implements _UserMessage {
       {@JsonKey(name: "username") required this.username,
       @JsonKey(name: "content") required this.content,
       @JsonKey(name: "timestamp") required this.timestamp,
-      @JsonKey(name: "other_username") required this.otherUsername});
+      @JsonKey(name: "other_username") required this.otherUsername,
+      @JsonKey(name: "url") required this.url});
 
   factory _$UserMessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserMessageImplFromJson(json);
@@ -176,10 +191,13 @@ class _$UserMessageImpl implements _UserMessage {
   @override
   @JsonKey(name: "other_username")
   final String? otherUsername;
+  @override
+  @JsonKey(name: "url")
+  final String? url;
 
   @override
   String toString() {
-    return 'UserMessage(username: $username, content: $content, timestamp: $timestamp, otherUsername: $otherUsername)';
+    return 'UserMessage(username: $username, content: $content, timestamp: $timestamp, otherUsername: $otherUsername, url: $url)';
   }
 
   @override
@@ -193,13 +211,14 @@ class _$UserMessageImpl implements _UserMessage {
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.otherUsername, otherUsername) ||
-                other.otherUsername == otherUsername));
+                other.otherUsername == otherUsername) &&
+            (identical(other.url, url) || other.url == url));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, username, content, timestamp, otherUsername);
+  int get hashCode => Object.hash(
+      runtimeType, username, content, timestamp, otherUsername, url);
 
   @JsonKey(ignore: true)
   @override
@@ -220,8 +239,8 @@ abstract class _UserMessage implements UserMessage {
       {@JsonKey(name: "username") required final String username,
       @JsonKey(name: "content") required final Content content,
       @JsonKey(name: "timestamp") required final String timestamp,
-      @JsonKey(name: "other_username")
-      required final String? otherUsername}) = _$UserMessageImpl;
+      @JsonKey(name: "other_username") required final String? otherUsername,
+      @JsonKey(name: "url") required final String? url}) = _$UserMessageImpl;
 
   factory _UserMessage.fromJson(Map<String, dynamic> json) =
       _$UserMessageImpl.fromJson;
@@ -238,6 +257,9 @@ abstract class _UserMessage implements UserMessage {
   @override
   @JsonKey(name: "other_username")
   String? get otherUsername;
+  @override
+  @JsonKey(name: "url")
+  String? get url;
   @override
   @JsonKey(ignore: true)
   _$$UserMessageImplCopyWith<_$UserMessageImpl> get copyWith =>

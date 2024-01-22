@@ -12,6 +12,7 @@ _$UserMessageImpl _$$UserMessageImplFromJson(Map<String, dynamic> json) =>
       content: Content.fromJson(json['content'] as Map<String, dynamic>),
       timestamp: json['timestamp'] as String,
       otherUsername: json['other_username'] as String?,
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$$UserMessageImplToJson(_$UserMessageImpl instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$UserMessageImplToJson(_$UserMessageImpl instance) =>
       'content': instance.content,
       'timestamp': instance.timestamp,
       'other_username': instance.otherUsername,
+      'url': instance.url,
     };
 
 _$ContentImpl _$$ContentImplFromJson(Map<String, dynamic> json) =>

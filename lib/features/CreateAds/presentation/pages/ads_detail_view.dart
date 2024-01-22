@@ -17,8 +17,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_viewer/image_viewer.dart';
 
 @RoutePage()
 class AdsDetailView extends StatefulWidget {
@@ -100,6 +98,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                   ),
                   Image.asset('assets/images/line.png'),
                   if (false)
+                    // ignore: dead_code
                     SizedBox(
                       width: 16.w,
                     ),
@@ -154,6 +153,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                     icon: const Icon(Icons.more_vert),
                   ),
                   if (false)
+                    // ignore: dead_code
                     Bounceable(
                       onTap: () {},
                       child: SvgPicture.asset(

@@ -47,6 +47,50 @@ class MyMessageWidget extends StatelessWidget {
     );
   }
 }
+class MyImageMessage extends StatelessWidget {
+  const MyImageMessage({
+    super.key,
+    required this.item,
+  });
+
+  final UserMessage? item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        
+        Container(
+          decoration: BoxDecoration(
+              color: Color(AppColors.primaryColor),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+                bottomLeft: Radius.circular(18),
+              )),
+          padding: const EdgeInsets.symmetric(
+            vertical: 13.5,
+            horizontal: 18,
+          ),
+          margin: const EdgeInsets.only(
+            right: 18,
+            bottom: 18,
+            left: 18,
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
+            child: Image.network(
+              "https://atmapaylas.com.tr${item?.url}"?? "null",
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      
+      ],
+    );
+  }
+}
 
 class OtherMessageView extends StatelessWidget {
   const OtherMessageView({
@@ -79,6 +123,45 @@ class OtherMessageView extends StatelessWidget {
             child: Text(
               "${item?.content.text}",
               textAlign: TextAlign.left,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class OtherImageView extends StatelessWidget {
+  const OtherImageView({
+    super.key,
+    required this.item,
+  });
+
+  final UserMessage? item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: Color(AppColors.primaryLightColor),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+                bottomRight: Radius.circular(18),
+              )),
+          padding: const EdgeInsets.symmetric(vertical: 13.5, horizontal: 18),
+          margin: const EdgeInsets.only(
+            left: 18,
+            right: 18,
+            bottom: 18,
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
+            child: Image.network(
+              "https://atmapaylas.com.tr${item?.url}"?? "null",
+              fit: BoxFit.cover,
             ),
           ),
         ),
