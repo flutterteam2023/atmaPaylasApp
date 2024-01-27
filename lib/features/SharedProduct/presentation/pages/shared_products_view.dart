@@ -123,7 +123,9 @@ class SharedProductsView extends ConsumerWidget {
                             context.pushRoute(AdsDetailRoute(id: snapshot.data![index].id));
                           }
                         },
-                        image: snapshot.data![index].image1,
+                        image: snapshot.data![index].images.isNotEmpty
+                            ? snapshot.data![index].images.first.image
+                            : null,
                         title: snapshot.data![index].title,
                         address:
                             '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',

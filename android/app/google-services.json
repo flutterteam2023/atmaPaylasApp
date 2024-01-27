@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "701886679203",
+    "project_id": "atmapaylas-412414",
+    "storage_bucket": "atmapaylas-412414.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701886679203:android:03e12c9e076443a5aad716",
+        "android_client_info": {
+          "package_name": "com.atmapaylas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmoqd9SRDJknVQZC981j4yRGdfdMVYjds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701886679203:android:763b3ade5bcb5415aad716",
+        "android_client_info": {
+          "package_name": "com.example.atma_paylas_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmoqd9SRDJknVQZC981j4yRGdfdMVYjds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

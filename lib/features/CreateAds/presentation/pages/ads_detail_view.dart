@@ -185,7 +185,7 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                                   borderRadius: BorderRadius.circular(5.r),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      r.image1 ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                                      r.images[0].image ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -295,89 +295,34 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                     ),
                     SizedBox(
                       height: 90.h,
-                      child: ListView(
+                      child: ListView.builder(
                         padding: EdgeInsets.only(left: 8.w, right: 16.w),
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.w),
-                            child: InkWell(
+                        itemCount: r.images.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: 8.w),
+                            child: GestureDetector(
                               onTap: () {
-                                final images = <String>[];
-                                if (r.image1 != null) images.add(r.image1!);
-                                if (r.image2 != null) images.add(r.image2!);
-                                if (r.image3 != null) images.add(r.image3!);
-                                showGallery(context, images: images, startIndex: 0);
+                                showGallery(context,images: r.images.map((e) => e.image).toList(), startIndex: index);
                               },
                               child: Container(
-                                width: 113.w,
                                 height: 90.h,
+                                width: 90.w,
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                  borderRadius: BorderRadius.circular(5.r),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      r.image1 ?? 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png',
+                                      r.images[index].image ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
                                     ),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          if (r.image2 != null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: InkWell(
-                                onTap: () {
-                                  final images = <String>[];
-                                  if (r.image1 != null) images.add(r.image1!);
-                                  if (r.image2 != null) images.add(r.image2!);
-                                  if (r.image3 != null) images.add(r.image3!);
-                                  showGallery(context, images: images, startIndex: 1);
-                                },
-                                child: Container(
-                                  width: 113.w,
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(r.image2!),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                          if (r.image3 != null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: InkWell(
-                                onTap: () {
-                                  final images = <String>[];
-                                  if (r.image1 != null) images.add(r.image1!);
-                                  if (r.image2 != null) images.add(r.image2!);
-                                  if (r.image3 != null) images.add(r.image3!);
-                                  showGallery(context, images: images, startIndex: 2);
-                                },
-                                child: Container(
-                                  width: 113.w,
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(r.image3!),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-                        ],
+                          );
+                        },
                       ),
                     ),
                     SizedBox(

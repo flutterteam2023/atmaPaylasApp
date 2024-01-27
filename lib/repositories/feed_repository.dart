@@ -13,6 +13,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:tuple/tuple.dart';
 
 enum ListingTypes { free, tradable }
@@ -24,9 +25,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
   ///if you want to add feed, you must send
   ///image1, image2, image3, listingType, categoryId, title, description
   Future<Either<String, String>> addFeed(
-    File? image1,
-    File? image2,
-    File? image3,
+    List<File?> images,
     ListingTypes listingType,
     int categoryId,
     String title,
@@ -47,36 +46,47 @@ class FeedRepository extends ApiService with ChangeNotifier {
       'description': description,
     });
 
-    if (image1 != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'image1',
-          image1.path,
-        ),
-      );
-    }
-    if (image2 != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'image2',
-          image2.path,
-        ),
-      );
-    }
-    if (image3 != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'image3',
-          image3.path,
-        ),
-      );
+    // if (image1 != null) {
+    //   request.files.add(
+    //     await http.MultipartFile.fromPath(
+    //       'image1',
+    //       image1.path,
+    //     ),
+    //   );
+    // }
+    // if (image2 != null) {
+    //   request.files.add(
+    //     await http.MultipartFile.fromPath(
+    //       'image2',
+    //       image2.path,
+    //     ),
+    //   );
+    // }
+    // if (image3 != null) {
+    //   request.files.add(
+    //     await http.MultipartFile.fromPath(
+    //       'image3',
+    //       image3.path,
+    //     ),
+    //   );
+    // }
+
+    for (final image in images) {
+      if (image != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'images',
+            image.path,
+          ),
+        );
+      }
     }
 
     request.headers.addAll(headers);
 
     final response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       Log.success(await response.stream.bytesToString());
       //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için
       //myFeeds listesini temizliyoruz
@@ -509,7 +519,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
     );
   }
 
-  Future<Either<String, String>> updateFeed(String feedId, File? image1, File? image2, File? image3,
+  Future<Either<String, String>> updateFeed(String feedId, List<int> id,List<XFile> images,
       ListingTypes listingType, String title, String description, BuildContext context) async {
     const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: 'access_token');
@@ -524,10 +534,31 @@ class FeedRepository extends ApiService with ChangeNotifier {
       'title': title,
       'description': description,
     });
+    if (id.isNotEmpty) {
+       for (final i in id) {
+      request.fields.addAll({
+        'delete_images': i.toString(),
+      });
+    }
+    }else{
+      request.fields.addAll({
+        'delete_images': 0.toString(),
+      });
+    }
 
-    if (image1 != null) request.files.add(await http.MultipartFile.fromPath('image1', image1.path));
-    if (image2 != null) request.files.add(await http.MultipartFile.fromPath('image2', image2.path));
-    if (image3 != null) request.files.add(await http.MultipartFile.fromPath('image3', image3.path));
+   if (images.isNotEmpty) {
+    for (final image in images) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'new_images',
+          image.path,
+        ),
+      );
+        }
+     
+   }
+
+    
 
     request.headers.addAll(headers);
 
@@ -538,8 +569,8 @@ class FeedRepository extends ApiService with ChangeNotifier {
       //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için myFeeds listesini temizliyoruz
       _myFeeds.clear();
       await EasyLoading.dismiss();
-      Navigator.of(context).pop();
       notifyListeners();
+      Navigator.pop(context);
       return Right((jsonDecode(await response.stream.bytesToString()) as Map<String, dynamic>)['success'] as String);
     } else {
       Log.error(response.reasonPhrase);

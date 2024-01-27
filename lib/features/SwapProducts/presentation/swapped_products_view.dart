@@ -122,7 +122,7 @@ class SwappedProductsView extends StatelessWidget {
                             context.pushRoute(AdsDetailRoute(id: snapshot.data![index].id));
                           }
                         },
-                        image: snapshot.data![index].image1,
+                        image: snapshot.data![index].images.first.image,
                         title: snapshot.data![index].title,
                         address:
                             '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',

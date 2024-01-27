@@ -191,7 +191,7 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
                                       context.pushRoute(AdsDetailRoute(id: snapshot.data!.first[index].id));
                                     }
                                   },
-                                  image: snapshot.data?.first[index].image1,
+                                  image: snapshot.data?.first[index].images.first.image,
                                   title: snapshot.data?.first[index].title ?? 'impossible',
                                   address:
                                       '${snapshot.data?.first[index].ownerInfo.district} / ${snapshot.data?.first[index].ownerInfo.city}',
@@ -258,7 +258,7 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
                                             context.pushRoute(AdsDetailRoute(id: snapshot.data!.last[index].id));
                                           }
                                         },
-                                        image: snapshot.data?.last[index].image1,
+                                        image: snapshot.data?.last[index].images.first.image,
                                         title: snapshot.data?.last[index].title ?? 'impossible',
                                         address:
                                             '${snapshot.data?.last[index].ownerInfo.district} / ${snapshot.data?.last[index].ownerInfo.city}',

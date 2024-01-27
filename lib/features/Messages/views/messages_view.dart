@@ -120,7 +120,7 @@ class _MessagesViewState extends State<MessagesView> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(9),
                                 child: Image.network(
-                                  roooms[index].listing!.image1Url,
+                              roooms[index].listing!.image1Url??'https://atmapaylas.com.tr/media/listing_images/2021/10/13/20211013155153-1.jpg',
                                   height: 64,
                                   width: 64,
                                   fit: BoxFit.cover,
@@ -170,7 +170,10 @@ class _MessagesViewState extends State<MessagesView> {
                                   fontSize: 16,
                                 ),
                               ),
-                              if (roooms[index].latestMessage != null)
+                              //roooms[index].latestMessage!.content bu verinin tipini kontrol et
+
+                    
+                              if (roooms[index].latestMessage != null && roooms[index].latestMessage!.content != "[Image]")
                                 Text(
                                   roooms[index].latestMessage!.content,
                                   maxLines: 1,
@@ -180,6 +183,17 @@ class _MessagesViewState extends State<MessagesView> {
                                     fontSize: 14,
                                   ),
                                 ),
+                              if (roooms[index].latestMessage != null && roooms[index].latestMessage!.content == "[Image]")
+                                const Text(
+                                  'Fotoğraf',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              
                             ],
                           ),
                         ),

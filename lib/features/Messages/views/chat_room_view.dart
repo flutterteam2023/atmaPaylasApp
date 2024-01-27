@@ -1,7 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/Messages/models/feed_information_for_chat_model.dart';
@@ -17,10 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:path/path.dart' as path;
 
 @RoutePage()
 class ChatRoomView extends StatefulWidget {
@@ -41,16 +38,13 @@ class ChatRoomView extends StatefulWidget {
 
 class _ChatRoomViewState extends State<ChatRoomView> {
   late WebSocketChannel channel;
-  late ImagePicker _imagePicker;
   final x = <UserMessage>[];
 
-  XFile? _selectedImage;
   @override
   void initState() {
     channel = IOWebSocketChannel.connect(
       'wss://atmapaylas.com.tr/ws/chat/${widget.accessToken}/${widget.userName}/${widget.feedId == null ? "" : "${widget.feedId}/"}',
     );
-    _imagePicker = ImagePicker();
     super.initState();
   }
 
@@ -182,6 +176,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         otherUser: widget.userName,
         socket: channel,
         onTap: ()  {
+
           
         },
       ),

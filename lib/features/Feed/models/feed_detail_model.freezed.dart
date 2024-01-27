@@ -32,12 +32,8 @@ mixin _$FeedDetailModel {
   String get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'listing_type')
   String get listingType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image1')
-  String? get image1 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image2')
-  String? get image2 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image3')
-  String? get image3 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'images')
+  List<AdsImage> get images => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'view_count')
@@ -70,9 +66,7 @@ abstract class $FeedDetailModelCopyWith<$Res> {
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'description') String description,
       @JsonKey(name: 'listing_type') String listingType,
-      @JsonKey(name: 'image1') String? image1,
-      @JsonKey(name: 'image2') String? image2,
-      @JsonKey(name: 'image3') String? image3,
+      @JsonKey(name: 'images') List<AdsImage> images,
       @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'view_count') int viewCount,
       @JsonKey(name: 'receiver_user') int? receiverUser,
@@ -102,9 +96,7 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
     Object? title = null,
     Object? description = null,
     Object? listingType = null,
-    Object? image1 = freezed,
-    Object? image2 = freezed,
-    Object? image3 = freezed,
+    Object? images = null,
     Object? isActive = null,
     Object? viewCount = null,
     Object? receiverUser = freezed,
@@ -137,18 +129,10 @@ class _$FeedDetailModelCopyWithImpl<$Res, $Val extends FeedDetailModel>
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
               as String,
-      image1: freezed == image1
-          ? _value.image1
-          : image1 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image2: freezed == image2
-          ? _value.image2
-          : image2 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image3: freezed == image3
-          ? _value.image3
-          : image3 // ignore: cast_nullable_to_non_nullable
-              as String?,
+      images: null == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<AdsImage>,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -200,9 +184,7 @@ abstract class _$$FeedDetailModelImplCopyWith<$Res>
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'description') String description,
       @JsonKey(name: 'listing_type') String listingType,
-      @JsonKey(name: 'image1') String? image1,
-      @JsonKey(name: 'image2') String? image2,
-      @JsonKey(name: 'image3') String? image3,
+      @JsonKey(name: 'images') List<AdsImage> images,
       @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'view_count') int viewCount,
       @JsonKey(name: 'receiver_user') int? receiverUser,
@@ -231,9 +213,7 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? listingType = null,
-    Object? image1 = freezed,
-    Object? image2 = freezed,
-    Object? image3 = freezed,
+    Object? images = null,
     Object? isActive = null,
     Object? viewCount = null,
     Object? receiverUser = freezed,
@@ -266,18 +246,10 @@ class __$$FeedDetailModelImplCopyWithImpl<$Res>
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
               as String,
-      image1: freezed == image1
-          ? _value.image1
-          : image1 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image2: freezed == image2
-          ? _value.image2
-          : image2 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image3: freezed == image3
-          ? _value.image3
-          : image3 // ignore: cast_nullable_to_non_nullable
-              as String?,
+      images: null == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<AdsImage>,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -316,15 +288,14 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
       @JsonKey(name: 'title') required this.title,
       @JsonKey(name: 'description') required this.description,
       @JsonKey(name: 'listing_type') required this.listingType,
-      @JsonKey(name: 'image1') required this.image1,
-      @JsonKey(name: 'image2') required this.image2,
-      @JsonKey(name: 'image3') required this.image3,
+      @JsonKey(name: 'images') required final List<AdsImage> images,
       @JsonKey(name: 'is_active') required this.isActive,
       @JsonKey(name: 'view_count') required this.viewCount,
       @JsonKey(name: 'receiver_user') required this.receiverUser,
       @JsonKey(name: 'receiver_confirmed') required this.receiverConfirmed,
       @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'is_archived') required this.isArchived});
+      @JsonKey(name: 'is_archived') required this.isArchived})
+      : _images = images;
 
   factory _$FeedDetailModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FeedDetailModelImplFromJson(json);
@@ -347,15 +318,15 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
   @override
   @JsonKey(name: 'listing_type')
   final String listingType;
+  final List<AdsImage> _images;
   @override
-  @JsonKey(name: 'image1')
-  final String? image1;
-  @override
-  @JsonKey(name: 'image2')
-  final String? image2;
-  @override
-  @JsonKey(name: 'image3')
-  final String? image3;
+  @JsonKey(name: 'images')
+  List<AdsImage> get images {
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
+
   @override
   @JsonKey(name: 'is_active')
   final bool isActive;
@@ -377,7 +348,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
 
   @override
   String toString() {
-    return 'FeedDetailModel(id: $id, ownerInfo: $ownerInfo, category: $category, title: $title, description: $description, listingType: $listingType, image1: $image1, image2: $image2, image3: $image3, isActive: $isActive, viewCount: $viewCount, receiverUser: $receiverUser, receiverConfirmed: $receiverConfirmed, createdAt: $createdAt, isArchived: $isArchived)';
+    return 'FeedDetailModel(id: $id, ownerInfo: $ownerInfo, category: $category, title: $title, description: $description, listingType: $listingType, images: $images, isActive: $isActive, viewCount: $viewCount, receiverUser: $receiverUser, receiverConfirmed: $receiverConfirmed, createdAt: $createdAt, isArchived: $isArchived)';
   }
 
   @override
@@ -395,9 +366,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
                 other.description == description) &&
             (identical(other.listingType, listingType) ||
                 other.listingType == listingType) &&
-            (identical(other.image1, image1) || other.image1 == image1) &&
-            (identical(other.image2, image2) || other.image2 == image2) &&
-            (identical(other.image3, image3) || other.image3 == image3) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.viewCount, viewCount) ||
@@ -422,9 +391,7 @@ class _$FeedDetailModelImpl implements _FeedDetailModel {
       title,
       description,
       listingType,
-      image1,
-      image2,
-      image3,
+      const DeepCollectionEquality().hash(_images),
       isActive,
       viewCount,
       receiverUser,
@@ -455,9 +422,7 @@ abstract class _FeedDetailModel implements FeedDetailModel {
           @JsonKey(name: 'title') required final String title,
           @JsonKey(name: 'description') required final String description,
           @JsonKey(name: 'listing_type') required final String listingType,
-          @JsonKey(name: 'image1') required final String? image1,
-          @JsonKey(name: 'image2') required final String? image2,
-          @JsonKey(name: 'image3') required final String? image3,
+          @JsonKey(name: 'images') required final List<AdsImage> images,
           @JsonKey(name: 'is_active') required final bool isActive,
           @JsonKey(name: 'view_count') required final int viewCount,
           @JsonKey(name: 'receiver_user') required final int? receiverUser,
@@ -489,14 +454,8 @@ abstract class _FeedDetailModel implements FeedDetailModel {
   @JsonKey(name: 'listing_type')
   String get listingType;
   @override
-  @JsonKey(name: 'image1')
-  String? get image1;
-  @override
-  @JsonKey(name: 'image2')
-  String? get image2;
-  @override
-  @JsonKey(name: 'image3')
-  String? get image3;
+  @JsonKey(name: 'images')
+  List<AdsImage> get images;
   @override
   @JsonKey(name: 'is_active')
   bool get isActive;
@@ -518,5 +477,168 @@ abstract class _FeedDetailModel implements FeedDetailModel {
   @override
   @JsonKey(ignore: true)
   _$$FeedDetailModelImplCopyWith<_$FeedDetailModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AdsImage _$AdsImageFromJson(Map<String, dynamic> json) {
+  return _AdsImage.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AdsImage {
+  @JsonKey(name: 'image')
+  String get image => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id')
+  int get id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AdsImageCopyWith<AdsImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AdsImageCopyWith<$Res> {
+  factory $AdsImageCopyWith(AdsImage value, $Res Function(AdsImage) then) =
+      _$AdsImageCopyWithImpl<$Res, AdsImage>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'image') String image, @JsonKey(name: 'id') int id});
+}
+
+/// @nodoc
+class _$AdsImageCopyWithImpl<$Res, $Val extends AdsImage>
+    implements $AdsImageCopyWith<$Res> {
+  _$AdsImageCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? image = null,
+    Object? id = null,
+  }) {
+    return _then(_value.copyWith(
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AdsImageImplCopyWith<$Res>
+    implements $AdsImageCopyWith<$Res> {
+  factory _$$AdsImageImplCopyWith(
+          _$AdsImageImpl value, $Res Function(_$AdsImageImpl) then) =
+      __$$AdsImageImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'image') String image, @JsonKey(name: 'id') int id});
+}
+
+/// @nodoc
+class __$$AdsImageImplCopyWithImpl<$Res>
+    extends _$AdsImageCopyWithImpl<$Res, _$AdsImageImpl>
+    implements _$$AdsImageImplCopyWith<$Res> {
+  __$$AdsImageImplCopyWithImpl(
+      _$AdsImageImpl _value, $Res Function(_$AdsImageImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? image = null,
+    Object? id = null,
+  }) {
+    return _then(_$AdsImageImpl(
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AdsImageImpl implements _AdsImage {
+  const _$AdsImageImpl(
+      {@JsonKey(name: 'image') required this.image,
+      @JsonKey(name: 'id') required this.id});
+
+  factory _$AdsImageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AdsImageImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'image')
+  final String image;
+  @override
+  @JsonKey(name: 'id')
+  final int id;
+
+  @override
+  String toString() {
+    return 'AdsImage(image: $image, id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AdsImageImpl &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, image, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AdsImageImplCopyWith<_$AdsImageImpl> get copyWith =>
+      __$$AdsImageImplCopyWithImpl<_$AdsImageImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AdsImageImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AdsImage implements AdsImage {
+  const factory _AdsImage(
+      {@JsonKey(name: 'image') required final String image,
+      @JsonKey(name: 'id') required final int id}) = _$AdsImageImpl;
+
+  factory _AdsImage.fromJson(Map<String, dynamic> json) =
+      _$AdsImageImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'image')
+  String get image;
+  @override
+  @JsonKey(name: 'id')
+  int get id;
+  @override
+  @JsonKey(ignore: true)
+  _$$AdsImageImplCopyWith<_$AdsImageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

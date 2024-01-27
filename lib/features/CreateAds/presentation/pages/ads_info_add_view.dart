@@ -208,12 +208,7 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                     children: [
                       Bounceable(
                         onTap: (){
-                          if (images.value.length<3) {
-                            _pickImage();
-                            
-                          }else{
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('En fazla 3 fotoğraf eklenebilir')));
-                          }
+                         _pickImage();
                         },
                         child: Container(
                           width: 105.w,
@@ -329,20 +324,27 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                         height: 48.h,
                       ),
                       CustomFilledButton(text: 'İlanı Yayınla', onTap: (){
-                        if (images.value.length<3) {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('En az 3 fotoğraf eklenebilir')));
-                          
+                        if (titleController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('İlan başlığı boş bırakılamaz')));
+                        }else if (descriptionController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('İlan açıklaması boş bırakılamaz')));
+                        }else if (listingType.value.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('İlan tipi seçilmelidir')));
+                        }else if (images.value.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('En az 1 fotoğraf eklenmelidir')));
                         }else{
-                         GetIt.instance<FeedRepository>().addFeed(images.value[0], images.value[1], images.value[2],listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text).then((value) {
+                         GetIt.instance<FeedRepository>().addFeed(images.value,listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text).then((value) {
                           value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) {
+                            ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(r)));
                             images.value.clear();
                             titleController.clear();
                             descriptionController.clear();
                             
-                            context.replaceRoute(AdsSuccessCreateRoute());
+
+                            
+                            ;
                           });
                          });
-
                         }
 
                       })

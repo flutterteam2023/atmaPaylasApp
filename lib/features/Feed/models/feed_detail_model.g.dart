@@ -15,9 +15,9 @@ _$FeedDetailModelImpl _$$FeedDetailModelImplFromJson(
       title: json['title'] as String,
       description: json['description'] as String,
       listingType: json['listing_type'] as String,
-      image1: json['image1'] as String?,
-      image2: json['image2'] as String?,
-      image3: json['image3'] as String?,
+      images: (json['images'] as List<dynamic>)
+          .map((e) => AdsImage.fromJson(e as Map<String, dynamic>))
+          .toList(),
       isActive: json['is_active'] as bool,
       viewCount: json['view_count'] as int,
       receiverUser: json['receiver_user'] as int?,
@@ -35,13 +35,23 @@ Map<String, dynamic> _$$FeedDetailModelImplToJson(
       'title': instance.title,
       'description': instance.description,
       'listing_type': instance.listingType,
-      'image1': instance.image1,
-      'image2': instance.image2,
-      'image3': instance.image3,
+      'images': instance.images,
       'is_active': instance.isActive,
       'view_count': instance.viewCount,
       'receiver_user': instance.receiverUser,
       'receiver_confirmed': instance.receiverConfirmed,
       'created_at': instance.createdAt.toIso8601String(),
       'is_archived': instance.isArchived,
+    };
+
+_$AdsImageImpl _$$AdsImageImplFromJson(Map<String, dynamic> json) =>
+    _$AdsImageImpl(
+      image: json['image'] as String,
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$$AdsImageImplToJson(_$AdsImageImpl instance) =>
+    <String, dynamic>{
+      'image': instance.image,
+      'id': instance.id,
     };

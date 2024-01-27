@@ -308,7 +308,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                                 address: '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
                                                 date: formatter.format(snapshot.data![index].createdAt),
                                                 userName: snapshot.data![index].ownerInfo.username!,
-                                                productImage:snapshot.data![index].image1,
+                                                productImage:snapshot.data![index].images.first.image,
                                                 productName: snapshot.data![index].title,
                                                 textColor: snapshot.data![index].listingType == ListingTypes.free.name
                                                     ? const Color(0xff05473A)
@@ -359,7 +359,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                                 address: '${snapshot.data![index].ownerInfo.district} / ${snapshot.data![index].ownerInfo.city}',
                                                 date: formatter.format(snapshot.data![index].createdAt),
                                                 userName: snapshot.data![index].ownerInfo.username!,
-                                                productImage: snapshot.data![index].image1,
+                                                productImage: snapshot.data![index].images.first.image,
                                                 productName: snapshot.data![index].title,
                                                 textColor: snapshot.data![index].listingType == ListingTypes.free.name
                                                     ? const Color(0xff05473A)

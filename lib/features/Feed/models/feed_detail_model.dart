@@ -16,9 +16,7 @@ class FeedDetailModel with _$FeedDetailModel {
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'description') required String description,
     @JsonKey(name: 'listing_type') required String listingType,
-    @JsonKey(name: 'image1') required String? image1,
-    @JsonKey(name: 'image2') required String? image2,
-    @JsonKey(name: 'image3') required String? image3,
+    @JsonKey(name: 'images') required List<AdsImage> images,
     @JsonKey(name: 'is_active') required bool isActive,
     @JsonKey(name: 'view_count') required int viewCount,
     @JsonKey(name: 'receiver_user') required int? receiverUser,
@@ -28,6 +26,22 @@ class FeedDetailModel with _$FeedDetailModel {
   }) = _FeedDetailModel;
 
   factory FeedDetailModel.fromJson(Map<String, dynamic> json) => _$FeedDetailModelFromJson(json).copyWith(
+      /*    image1: json['image1'] != null ? '$IMAGE_BASE_URL${json['image1']}' : null,
+        image2: json['image2'] != null ? '$IMAGE_BASE_URL${json['image2']}' : null,
+        image3: json['image3'] != null ? '$IMAGE_BASE_URL${json['image3']}' : null, */
+      );
+}
+
+@freezed
+class AdsImage with _$AdsImage {
+  const factory AdsImage({
+   
+    @JsonKey(name: 'image') required String image,
+    @JsonKey(name: 'id') required int id,
+
+  }) = _AdsImage;
+
+  factory AdsImage.fromJson(Map<String, dynamic> json) => _$AdsImageFromJson(json).copyWith(
       /*    image1: json['image1'] != null ? '$IMAGE_BASE_URL${json['image1']}' : null,
         image2: json['image2'] != null ? '$IMAGE_BASE_URL${json['image2']}' : null,
         image3: json['image3'] != null ? '$IMAGE_BASE_URL${json['image3']}' : null, */
