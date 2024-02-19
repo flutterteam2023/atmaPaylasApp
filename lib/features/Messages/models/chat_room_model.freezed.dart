@@ -501,7 +501,7 @@ mixin _$Listing {
   @JsonKey(name: 'listing_type')
   String get listingType => throw _privateConstructorUsedError;
   @JsonKey(name: 'image1_url')
-  String get image1Url => throw _privateConstructorUsedError;
+  String? get image1Url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -517,7 +517,7 @@ abstract class $ListingCopyWith<$Res> {
       {@JsonKey(name: 'id') int id,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'listing_type') String listingType,
-      @JsonKey(name: 'image1_url') String image1Url});
+      @JsonKey(name: 'image1_url') String? image1Url});
 }
 
 /// @nodoc
@@ -536,7 +536,7 @@ class _$ListingCopyWithImpl<$Res, $Val extends Listing>
     Object? id = null,
     Object? title = null,
     Object? listingType = null,
-    Object? image1Url = null,
+    Object? image1Url = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -551,10 +551,10 @@ class _$ListingCopyWithImpl<$Res, $Val extends Listing>
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
               as String,
-      image1Url: null == image1Url
+      image1Url: freezed == image1Url
           ? _value.image1Url
           : image1Url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -570,7 +570,7 @@ abstract class _$$ListingImplCopyWith<$Res> implements $ListingCopyWith<$Res> {
       {@JsonKey(name: 'id') int id,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'listing_type') String listingType,
-      @JsonKey(name: 'image1_url') String image1Url});
+      @JsonKey(name: 'image1_url') String? image1Url});
 }
 
 /// @nodoc
@@ -587,7 +587,7 @@ class __$$ListingImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? listingType = null,
-    Object? image1Url = null,
+    Object? image1Url = freezed,
   }) {
     return _then(_$ListingImpl(
       id: null == id
@@ -602,10 +602,10 @@ class __$$ListingImplCopyWithImpl<$Res>
           ? _value.listingType
           : listingType // ignore: cast_nullable_to_non_nullable
               as String,
-      image1Url: null == image1Url
+      image1Url: freezed == image1Url
           ? _value.image1Url
           : image1Url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -633,7 +633,7 @@ class _$ListingImpl implements _Listing {
   final String listingType;
   @override
   @JsonKey(name: 'image1_url')
-  final String image1Url;
+  final String? image1Url;
 
   @override
   String toString() {
@@ -677,7 +677,7 @@ abstract class _Listing implements Listing {
           {@JsonKey(name: 'id') required final int id,
           @JsonKey(name: 'title') required final String title,
           @JsonKey(name: 'listing_type') required final String listingType,
-          @JsonKey(name: 'image1_url') required final String image1Url}) =
+          @JsonKey(name: 'image1_url') required final String? image1Url}) =
       _$ListingImpl;
 
   factory _Listing.fromJson(Map<String, dynamic> json) = _$ListingImpl.fromJson;
@@ -693,7 +693,7 @@ abstract class _Listing implements Listing {
   String get listingType;
   @override
   @JsonKey(name: 'image1_url')
-  String get image1Url;
+  String? get image1Url;
   @override
   @JsonKey(ignore: true)
   _$$ListingImplCopyWith<_$ListingImpl> get copyWith =>

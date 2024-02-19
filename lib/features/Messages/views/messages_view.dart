@@ -52,11 +52,12 @@ class _MessagesViewState extends State<MessagesView> {
           final roooms = <ChatRoomModel>[];
           if (snapshot.connectionState == ConnectionState.active) {
             final data = jsonDecode(snapshot.data.toString());
+            Log.success(data);
             for (final element in data['previews'] as List<dynamic>) {
               roooms.add(ChatRoomModel.fromJson(element as Map<String, dynamic>));
-              Log.success(roooms);
             }
           }
+          Log.success(roooms, path: 'rooms');
 
           if (roooms.isEmpty) {
             return Center(
@@ -107,9 +108,7 @@ class _MessagesViewState extends State<MessagesView> {
                     borderRadius: BorderRadius.circular(9),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       if (roooms[index].listing != null)
                         Stack(
@@ -120,10 +119,29 @@ class _MessagesViewState extends State<MessagesView> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(9),
                                 child: Image.network(
-                              roooms[index].listing!.image1Url??'https://atmapaylas.com.tr/media/listing_images/2021/10/13/20211013155153-1.jpg',
+                                  roooms[index].listing!.image1Url ??
+                                      'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg',
                                   height: 64,
                                   width: 64,
                                   fit: BoxFit.cover,
+                                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                    if (wasSynchronouslyLoaded) {
+                                      return child;
+                                    }
+                                    return AnimatedOpacity(
+                                      opacity: frame == null ? 0 : 1,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.easeOut,
+                                      child: child,
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const SizedBox(
+                                      height: 64,
+                                      width: 64,
+                                      child: Icon(Icons.error),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
@@ -172,8 +190,8 @@ class _MessagesViewState extends State<MessagesView> {
                               ),
                               //roooms[index].latestMessage!.content bu verinin tipini kontrol et
 
-                    
-                              if (roooms[index].latestMessage != null && roooms[index].latestMessage!.content != "[Image]")
+                              if (roooms[index].latestMessage != null &&
+                                  roooms[index].latestMessage!.content != '[Image]')
                                 Text(
                                   roooms[index].latestMessage!.content,
                                   maxLines: 1,
@@ -183,7 +201,8 @@ class _MessagesViewState extends State<MessagesView> {
                                     fontSize: 14,
                                   ),
                                 ),
-                              if (roooms[index].latestMessage != null && roooms[index].latestMessage!.content == "[Image]")
+                              if (roooms[index].latestMessage != null &&
+                                  roooms[index].latestMessage!.content == '[Image]')
                                 const Text(
                                   'Fotoğraf',
                                   maxLines: 1,
@@ -193,7 +212,6 @@ class _MessagesViewState extends State<MessagesView> {
                                     fontSize: 14,
                                   ),
                                 ),
-                              
                             ],
                           ),
                         ),

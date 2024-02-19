@@ -54,39 +54,44 @@ class AdsCard extends StatelessWidget {
       child: Container(
         width: 265.w,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.r),
-            color: Colors.white,
-            border: Border.all(color: Color(0xffE0E0E0), width: 2)),
+          borderRadius: BorderRadius.circular(5.r),
+          color: Colors.white,
+          border: Border.all(color: Color(0xffE0E0E0), width: 2),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
                 ClipRRect(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(5.r), topRight: Radius.circular(5.r)),
-                    child: productImage != null
-                        ? Image.network(
-                            productImage!,
-                            width: width,
-                            height: 129,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                'assets/images/clockdemo.png',
-                                width: width,
-                                height: 129,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const SizedBox();
-                                },
-                              );
-                            },
-                          )
-                        : Image.asset(
-                            'assets/images/clockdemo.png',
-                            width: width,
-                            fit: BoxFit.fill,
-                          )),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5.r),
+                    topRight: Radius.circular(5.r),
+                  ),
+                  child: productImage != null
+                      ? Image.network(
+                          productImage!,
+                          width: width,
+                          height: 129,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/clockdemo.png',
+                              width: width,
+                              height: 129,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const SizedBox();
+                              },
+                            );
+                          },
+                        )
+                      : Image.asset(
+                          'assets/images/clockdemo.png',
+                          width: width,
+                          fit: BoxFit.fill,
+                        ),
+                ),
                 if (userName != GetIt.instance<UserRepository>().user?.username)
                   ListenableBuilder(
                     listenable: GetIt.instance<ArchivedRepository>(),
@@ -100,7 +105,10 @@ class AdsCard extends StatelessWidget {
                                 child: Container(
                                   height: 32.r,
                                   width: 32.r,
-                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
                                   child: SvgPicture.asset(
                                     'assets/svg/bookmark.svg',
                                     fit: BoxFit.scaleDown,
@@ -218,16 +226,17 @@ class AdsCard extends StatelessWidget {
                             decoration:
                                 const BoxDecoration(color: Color(AppColors.primaryColor), shape: BoxShape.circle),
                             child: Center(
-                                child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 20.r,
-                            )),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 20.r,
+                              ),
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

@@ -76,8 +76,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
   //   File imageFile = File(imagePath);
   //   List<int> imageBytes = await imageFile.readAsBytes();
 
-   
-   
   //   // Veriyi gönder
   //   channel.sink.add(jsonEncode({'type': 'image', 'url': imageBytes}));
 
@@ -175,24 +173,21 @@ class _ChatRoomViewState extends State<ChatRoomView> {
       bottomNavigationBar: SendMessageField(
         otherUser: widget.userName,
         socket: channel,
-        onTap: ()  {
-
-          
-        },
+        onTap: () {},
       ),
       body: StreamBuilder(
         stream: channel.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             final data = jsonDecode(snapshot.data.toString());
-            print(data['listing_details']);
+            print(data['listingDetails']);
             if (data['type'] != null) {
               print((data as Map<String, dynamic>)['type']);
               for (final element in data['messages'] as List<dynamic>) {
                 messages.add(element as Map<String, dynamic>);
               }
-              feedInformationForChatModel = data['listing_details'] != null
-                  ? FeedInformationForChatModel.fromJson(data['listing_details'] as Map<String, dynamic>)
+              feedInformationForChatModel = data['listingDetails'] != null
+                  ? FeedInformationForChatModel.fromJson(data['listingDetails'] as Map<String, dynamic>)
                   : null;
               print(messages);
             } else {

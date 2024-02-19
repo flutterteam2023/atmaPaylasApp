@@ -48,7 +48,7 @@ _$ListingImpl _$$ListingImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       title: json['title'] as String,
       listingType: json['listing_type'] as String,
-      image1Url: json['image1_url'] as String,
+      image1Url: json['image1_url'] as String?,
     );
 
 Map<String, dynamic> _$$ListingImplToJson(_$ListingImpl instance) =>

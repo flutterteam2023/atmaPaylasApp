@@ -36,11 +36,11 @@ class Listing with _$Listing {
     @JsonKey(name: 'id') required int id,
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'listing_type') required String listingType,
-    @JsonKey(name: 'image1_url') required String image1Url,
+    @JsonKey(name: 'image1_url') required String? image1Url,
   }) = _Listing;
 
   factory Listing.fromJson(Map<String, dynamic> json) => _$ListingFromJson(json).copyWith(
-        image1Url: '$IMAGE_BASE_URL${json['image1_url']}',
+        image1Url: json['image1Url'] == null ? null : '$IMAGE_BASE_URL${json['image1_url']}',
       );
 }
 

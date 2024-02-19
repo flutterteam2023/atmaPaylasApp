@@ -51,7 +51,7 @@ class Register2View extends HookConsumerWidget {
       child: Scaffold(
         bottomNavigationBar: Container(
           height: 60,
-          margin: EdgeInsets.only(right: 18, left: 18, bottom: MediaQuery.of(context).viewPadding.bottom+10.h),
+          margin: EdgeInsets.only(right: 18, left: 18, bottom: MediaQuery.of(context).viewPadding.bottom + 10.h),
           child: CustomFilledButtonBerke(
             text: 'Hesabımı Oluştur',
             onTap: () async {
@@ -279,6 +279,9 @@ class Register2View extends HookConsumerWidget {
                             isExpanded: true,
                             validator: Validatorless.required('İl seçiniz'),
                             value: cityController.text.isEmpty ? null : cityController.text,
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                            },
                             items: (r.isEmpty ? ['İller Getirilemedi', 'dasd'] : r)
                                 .toSet()
                                 .map(
@@ -315,6 +318,29 @@ class Register2View extends HookConsumerWidget {
                 ListenableBuilder(
                   listenable: cityController,
                   builder: (context, wid) {
+                    if (cityController.text.isEmpty) {
+                      DropdownButtonFormField<String>(
+                        hint: const Text('İlçe Seçiniz'),
+                        isExpanded: true,
+                        validator: Validatorless.required('İlçe seçiniz'),
+                        value: districtController.text.isEmpty ? null : districtController.text,
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          EasyLoading.showToast('Önce şehir seçiniz');
+                          districtController.clear();
+                        },
+                        items: (['Önce İl Seçmeniz Gereklidir'])
+                            .toSet()
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e,
+                                child: Text(e),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {},
+                      );
+                    }
                     return FutureBuilder(
                       future: GetIt.instance<CityRepository>().getDistricts(cityController.text),
                       builder: (context, snapshot) {
@@ -326,6 +352,9 @@ class Register2View extends HookConsumerWidget {
                               (r) => DropdownButtonFormField<String>(
                                 hint: const Text('İlçe Seçiniz'),
                                 isExpanded: true,
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                },
                                 validator: Validatorless.required('İlçe seçiniz'),
                                 value: districtController.text.isEmpty ? null : districtController.text,
                                 items: (r.isNotEmpty ? r : ['İlçele', 'asd', 'asdsa'])
@@ -345,6 +374,7 @@ class Register2View extends HookConsumerWidget {
                               validator: Validatorless.required('İlçe seçiniz'),
                               value: districtController.text.isEmpty ? null : districtController.text,
                               onTap: () {
+                                FocusScope.of(context).unfocus();
                                 EasyLoading.showToast('Önce şehir seçiniz');
                               },
                               isExpanded: true,
