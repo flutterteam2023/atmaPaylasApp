@@ -20,6 +20,7 @@ class ForgotPasswordView extends HookWidget {
   final formKey = GlobalKey<FormState>();
 
     final emailController = useTextEditingController();
+    final isloading = useState(false);
 
     return Form(
       key: formKey,
@@ -92,12 +93,19 @@ class ForgotPasswordView extends HookWidget {
                     ),
                   ),
               SizedBox(height: 48.h,),
-              CustomFilledButton(text: 'Doğrulama Kodunu Gönder', onTap:(){
+            isloading.value==false?  CustomFilledButton(text: 'Doğrulama Kodunu Gönder', onTap:(){
                  if (formKey.currentState!.validate()) {
+                  isloading.value = true;
                   // ignore: lines_longer_than_80_chars
                   GetIt.instance<AuthRepository>().passwordReset(email: emailController.value.text).then((value){
                     // ignore: lines_longer_than_80_chars
-                    value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.pushRoute(SecturityVerificationRoute(email: emailController.value.text)));
+                    value.fold((l) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
+                      isloading.value = false;
+                    }, (r) {
+                      isloading.value = false;
+                      context.pushRoute(SecturityVerificationRoute(email: emailController.value.text));
+                    });
                   });
                  
                  
@@ -106,7 +114,7 @@ class ForgotPasswordView extends HookWidget {
                   
                 }
     
-              })
+              }):Center(child: CircularProgressIndicator(color: Color(AppColors.primaryColor),))
             ],
           ),
         ),

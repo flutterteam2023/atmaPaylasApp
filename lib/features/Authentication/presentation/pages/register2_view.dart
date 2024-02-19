@@ -31,6 +31,8 @@ class Register2View extends HookConsumerWidget {
     required this.username,
     required this.email,
     required this.phoneNumber,
+    required this.name,
+    required this.surname,
     super.key,
   });
   final String phoneNumber;
@@ -38,12 +40,13 @@ class Register2View extends HookConsumerWidget {
   final String username;
   final String password;
   final String confirmPassword;
+  final String name;
+  final String surname;
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nameController = useTextEditingController();
-    final surnameController = useTextEditingController();
+
     final cityController = useTextEditingController();
     final districtController = useTextEditingController();
     return Form(
@@ -63,8 +66,8 @@ class Register2View extends HookConsumerWidget {
                     username: username,
                     password: password,
                     confirmation: confirmPassword,
-                    name: nameController.text,
-                    surname: surnameController.text,
+                    name: name,
+                    surname:surname,
                     phoneNumber: phoneNumber,
                     userLocatedCity: cityController.text,
                     userLocatedDistrict: districtController.text,
@@ -211,50 +214,7 @@ class Register2View extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                SizedBox(height: 24.h),
-                Text(
-                  'Ad',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Rubik',
-                    color: const Color(AppColors.primaryTextColor),
-                  ),
-                ),
-                SizedBox(height: 5.h),
-                TextFormField(
-                  controller: nameController,
-                  keyboardType: TextInputType.name,
-                  validator: Validatorless.multiple([
-                    Validatorless.required('Ad boş bırakılamaz'),
-                    Validatorless.min(2, 'Ad en az 2 karakter olmalıdır'),
-                  ]),
-                  decoration: const InputDecoration(
-                    hintText: 'İsim',
-                  ),
-                ),
-                SizedBox(height: 24.h),
-                Text(
-                  'Soyad',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Rubik',
-                    color: const Color(AppColors.primaryTextColor),
-                  ),
-                ),
-                SizedBox(height: 5.h),
-                TextFormField(
-                  controller: surnameController,
-                  keyboardType: TextInputType.name,
-                  validator: Validatorless.multiple([
-                    Validatorless.required('Ad boş bırakılamaz'),
-                    Validatorless.min(2, 'Ad en az 2 karakter olmalıdır'),
-                  ]),
-                  decoration: const InputDecoration(
-                    hintText: 'Soyisim',
-                  ),
-                ),
+                
                 SizedBox(height: 24.h),
                 Text(
                   'Bulunduğun İl',

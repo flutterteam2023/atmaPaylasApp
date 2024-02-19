@@ -28,10 +28,14 @@ class _Register1ViewState extends ConsumerState<Register1View> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+  final obscuretext = useState(true);
+
     final emailController = useTextEditingController();
     final usernameController = useTextEditingController();
     final passwordController = useTextEditingController();
     final passwordConfirmController = useTextEditingController();
+    final nameController = useTextEditingController();
+    final surnameController = useTextEditingController();
     return Form(
       key: formKey,
       child: Scaffold(
@@ -53,7 +57,9 @@ class _Register1ViewState extends ConsumerState<Register1View> {
                     email: emailController.text,
                     username: usernameController.text,
                     password: passwordController.text,
-                    confirmPassword: passwordConfirmController.text,
+                    confirmPassword: passwordController.text,
+                    name: nameController.text, 
+                    surname: surnameController.text,
                   ),
                 );
               }
@@ -194,6 +200,51 @@ class _Register1ViewState extends ConsumerState<Register1View> {
                   },
                 ),
                 SizedBox(
+                  height: 24.h,),
+                 Text(
+                  'Ad',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Rubik',
+                    color: const Color(AppColors.primaryTextColor),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                TextFormField(
+                  controller: nameController,
+                  keyboardType: TextInputType.name,
+                  validator: Validatorless.multiple([
+                    Validatorless.required('Ad boş bırakılamaz'),
+                    Validatorless.min(2, 'Ad en az 2 karakter olmalıdır'),
+                  ]),
+                  decoration: const InputDecoration(
+                    hintText: 'İsim',
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  'Soyad',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Rubik',
+                    color: const Color(AppColors.primaryTextColor),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                TextFormField(
+                  controller: surnameController,
+                  keyboardType: TextInputType.name,
+                  validator: Validatorless.multiple([
+                    Validatorless.required('Ad boş bırakılamaz'),
+                    Validatorless.min(2, 'Ad en az 2 karakter olmalıdır'),
+                  ]),
+                  decoration: const InputDecoration(
+                    hintText: 'Soyisim',
+                  ),
+                ),
+                SizedBox(
                   height: 24.h,
                 ),
                 Text(
@@ -260,18 +311,21 @@ class _Register1ViewState extends ConsumerState<Register1View> {
                 TextFormField(
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
+                  obscureText: obscuretext.value,
+                  
                   validator: Validatorless.multiple([
                     Validatorless.required('Şifre boş bırakılamaz'),
                     Validatorless.max(32, 'Şifre en fazla 32 karakter olabilir'),
                     Validatorless.min(8, 'Şifre en az 8 karakter olabilir'),
-                    Validatorless.compare(passwordConfirmController, 'Şifreler eşleşmiyor'),
                     Validatorless.regex(
                       RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
                       'Şifre en az bir büyük harf ve bir sayı içermelidir',
                     ),
                   ]),
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                    suffixIcon: Bounceable(onTap: (){
+                      obscuretext.value = !obscuretext.value; 
+                    }, child:obscuretext.value==true? const Icon(Icons.visibility_off):const Icon(Icons.visibility),),
                     hintText: '***********',
                   ),
                 ),
@@ -304,35 +358,8 @@ class _Register1ViewState extends ConsumerState<Register1View> {
                 SizedBox(
                   height: 24.h,
                 ),
-                Text(
-                  'Şifre Tekrar',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Rubik',
-                    color: const Color(AppColors.primaryTextColor),
-                  ),
-                ),
-                SizedBox(height: 5.h),
-                TextFormField(
-                  controller: passwordConfirmController,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  validator: Validatorless.multiple([
-                    Validatorless.required('Şifre Tekrar boş bırakılamaz'),
-                    Validatorless.max(32, 'Şifre Tekrar en fazla 32 karakter olabilir'),
-                    Validatorless.min(8, 'Şifre Tekrar en az 8 karakter olabilir'),
-                    Validatorless.compare(passwordController, 'Şifreler eşleşmiyor'),
-                    Validatorless.regex(
-                      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
-                      'Şifre en az bir büyük harf ve bir sayı içermelidir',
-                    ),
-                  ]),
-                  decoration: const InputDecoration(
-                    hintText: '***********',
-                  ),
-                ),
-                SizedBox(height: 45.h),
+               
+               
               ],
             ),
           ),

@@ -8,12 +8,13 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 @RoutePage()
-class SecturityVerificationView extends ConsumerStatefulWidget {
+class SecturityVerificationView extends StatefulHookConsumerWidget {
   final String email;
   const SecturityVerificationView(this.email, {super.key});
   @override
@@ -22,8 +23,12 @@ class SecturityVerificationView extends ConsumerStatefulWidget {
 class _SecturityVerificationViewState extends ConsumerState<SecturityVerificationView> {
   bool _onEditing = true;
   String? _code;
+
+
   @override
   Widget build(BuildContext context) {
+  final isloading = useState(false);
+
     return Scaffold(
       appBar:AppBar(
         actions: [
@@ -158,15 +163,28 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
           SizedBox(
               height: 48.h,
             ),
-            CustomFilledButton(
+          isloading.value==false?  CustomFilledButton(
               onTap: () {
+                if (_code!=null && _code!.length==6) {
+                  isloading.value = true;
                 GetIt.instance<AuthRepository>().verifyCode(email: widget.email, code: _code!).then((value) {
-                  value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) => context.pushRoute( SecturityVerifDetailRoute(email: widget.email)));
+                  value.fold((l){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
+                    isloading.value = false;
+                  }, (r){
+                    isloading.value = false;
+                    context.pushRoute( SecturityVerifDetailRoute(email: widget.email));
+                  });
                 });
+                  
+                }else 
+                {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Doğrulama Kodu 6 haneli olmalıdır')));
+                }
               },
               text: 'Onayla ve Devam Et',
               
-            ),
+            ):Center(child: CircularProgressIndicator(color: Color(AppColors.primaryColor),))
             
               ],
             ),

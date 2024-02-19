@@ -200,6 +200,8 @@ abstract class _$AppRouter extends RootStackRouter {
           username: args.username,
           email: args.email,
           phoneNumber: args.phoneNumber,
+          name: args.name,
+          surname: args.surname,
           key: args.key,
         ),
       );
@@ -854,6 +856,8 @@ class Register2Route extends PageRouteInfo<Register2RouteArgs> {
     required String username,
     required String email,
     required String phoneNumber,
+    required String name,
+    required String surname,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -864,6 +868,8 @@ class Register2Route extends PageRouteInfo<Register2RouteArgs> {
             username: username,
             email: email,
             phoneNumber: phoneNumber,
+            name: name,
+            surname: surname,
             key: key,
           ),
           initialChildren: children,
@@ -882,6 +888,8 @@ class Register2RouteArgs {
     required this.username,
     required this.email,
     required this.phoneNumber,
+    required this.name,
+    required this.surname,
     this.key,
   });
 
@@ -895,11 +903,15 @@ class Register2RouteArgs {
 
   final String phoneNumber;
 
+  final String name;
+
+  final String surname;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'Register2RouteArgs{confirmPassword: $confirmPassword, password: $password, username: $username, email: $email, phoneNumber: $phoneNumber, key: $key}';
+    return 'Register2RouteArgs{confirmPassword: $confirmPassword, password: $password, username: $username, email: $email, phoneNumber: $phoneNumber, name: $name, surname: $surname, key: $key}';
   }
 }
 
