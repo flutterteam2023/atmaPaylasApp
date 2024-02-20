@@ -30,7 +30,7 @@ mixin _$FeedInformationForChatModel {
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'image1_url')
-  String get image1Url => throw _privateConstructorUsedError;
+  String? get image1Url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +51,7 @@ abstract class $FeedInformationForChatModelCopyWith<$Res> {
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'listing_type') String listingType,
       @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'image1_url') String image1Url});
+      @JsonKey(name: 'image1_url') String? image1Url});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$FeedInformationForChatModelCopyWithImpl<$Res,
     Object? title = null,
     Object? listingType = null,
     Object? createdAt = null,
-    Object? image1Url = null,
+    Object? image1Url = freezed,
   }) {
     return _then(_value.copyWith(
       listingId: null == listingId
@@ -91,10 +91,10 @@ class _$FeedInformationForChatModelCopyWithImpl<$Res,
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      image1Url: null == image1Url
+      image1Url: freezed == image1Url
           ? _value.image1Url
           : image1Url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -113,7 +113,7 @@ abstract class _$$FeedInformationForChatModelImplCopyWith<$Res>
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'listing_type') String listingType,
       @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'image1_url') String image1Url});
+      @JsonKey(name: 'image1_url') String? image1Url});
 }
 
 /// @nodoc
@@ -133,7 +133,7 @@ class __$$FeedInformationForChatModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? listingType = null,
     Object? createdAt = null,
-    Object? image1Url = null,
+    Object? image1Url = freezed,
   }) {
     return _then(_$FeedInformationForChatModelImpl(
       listingId: null == listingId
@@ -152,10 +152,10 @@ class __$$FeedInformationForChatModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      image1Url: null == image1Url
+      image1Url: freezed == image1Url
           ? _value.image1Url
           : image1Url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -189,7 +189,7 @@ class _$FeedInformationForChatModelImpl
   final DateTime createdAt;
   @override
   @JsonKey(name: 'image1_url')
-  final String image1Url;
+  final String? image1Url;
 
   @override
   String toString() {
@@ -239,7 +239,7 @@ abstract class _FeedInformationForChatModel
           @JsonKey(name: 'title') required final String title,
           @JsonKey(name: 'listing_type') required final String listingType,
           @JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'image1_url') required final String image1Url}) =
+          @JsonKey(name: 'image1_url') required final String? image1Url}) =
       _$FeedInformationForChatModelImpl;
 
   factory _FeedInformationForChatModel.fromJson(Map<String, dynamic> json) =
@@ -259,7 +259,7 @@ abstract class _FeedInformationForChatModel
   DateTime get createdAt;
   @override
   @JsonKey(name: 'image1_url')
-  String get image1Url;
+  String? get image1Url;
   @override
   @JsonKey(ignore: true)
   _$$FeedInformationForChatModelImplCopyWith<_$FeedInformationForChatModelImpl>

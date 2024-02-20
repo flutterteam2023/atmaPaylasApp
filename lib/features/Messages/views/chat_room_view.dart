@@ -1,15 +1,12 @@
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'dart:convert';
+// ignore_for_file: lines_longer_than_80_chars, prefer_single_quotes, avoid_dynamic_calls
 
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
-import 'package:atma_paylas_app/features/Messages/models/feed_information_for_chat_model.dart';
-import 'package:atma_paylas_app/features/Messages/models/user_message_model.dart';
+import 'package:atma_paylas_app/features/Messages/models/message_type_enum.dart';
+import 'package:atma_paylas_app/features/Messages/viewmodel/chat_viewmodel.dart';
 import 'package:atma_paylas_app/features/Messages/widgets/chat_bubbles_widget.dart';
 import 'package:atma_paylas_app/features/Messages/widgets/send_message_widget.dart';
 import 'package:atma_paylas_app/repositories/block_repository.dart';
 import 'package:atma_paylas_app/repositories/feed_repository.dart';
-import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -38,83 +35,22 @@ class ChatRoomView extends StatefulWidget {
 
 class _ChatRoomViewState extends State<ChatRoomView> {
   late WebSocketChannel channel;
-  final x = <UserMessage>[];
-
+  late ChatViewModel viewModel;
   @override
   void initState() {
     channel = IOWebSocketChannel.connect(
       'wss://atmapaylas.com.tr/ws/chat/${widget.accessToken}/${widget.userName}/${widget.feedId == null ? "" : "${widget.feedId}/"}',
     );
+    viewModel = ChatViewModel(channel: channel);
     super.initState();
   }
-
-  // Future<File> pickImageFromGallery() async {
-  //   // İlgili galeri seçim işlemleri burada gerçekleştirilmelidir.
-  //   // Bu örneğin kapsamında değildir.
-  //   // Seçilen resmi bir File olarak döndürün.
-  //   // Örneğin, image_picker paketi kullanılabilir.
-  //   return _imagePicker.pickMedia();
-  // }
-
-  // Future<String> saveImageToPath(File imageFile, String targetPath) async {
-  //   // Hedef dizini oluştur (eğer yoksa)
-  //   Directory directory = Directory(targetPath);
-  //   if (!directory.existsSync()) {
-  //     directory.createSync(recursive: true);
-  //   }
-
-  //   // Dosyayı kaydet
-  //   String fileName = path.basename(imageFile.path);
-  //   String savedImagePath = path.join(targetPath, fileName);
-  //   await imageFile.copy(savedImagePath);
-
-  //   return savedImagePath;
-  // }
-
-  // Future<void> sendImageViaWebSocket(String imagePath) async {
-  //   // Resmi byte dizisine çevir
-  //   File imageFile = File(imagePath);
-  //   List<int> imageBytes = await imageFile.readAsBytes();
-
-  //   // Veriyi gönder
-  //   channel.sink.add(jsonEncode({'type': 'image', 'url': imageBytes}));
-
-  //   // Bağlantıyı kapat (İşiniz bittiğinde)
-  //   await channel.sink.close();
-  // }
-  // //  Future<void> _pickImage() async {
-  // //   final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
-
-  // //   if (pickedFile != null) {
-  // //     setState(() {
-  // //       _selectedImage = pickedFile;
-  // //       // x.add(
-  // //       //   UserMessage(
-  // //       //     username: GetIt.instance<UserRepository>().user?.username ?? 'null',
-  // //       //     content: Content(
-  // //       //       type: 'image',
-  // //       //       text: _selectedImage!.path,
-  // //       //     ),
-  // //       //     timestamp: DateTime.now().toIso8601String(),
-  // //       //     otherUsername: GetIt.instance<UserRepository>().user?.username ?? 'null',
-  // //       //     url: _selectedImage!.path,
-  // //       //   ),
-  // //       // );
-  // //       channel.sink.add(jsonEncode({'type': 'image', 'url': _selectedImage!.path}));
-
-  // //       print(_selectedImage!.path);
-  // //     });
-  // //   }
-  // // }
 
   @override
   void dispose() {
     channel.sink.close();
+    viewModel.dispose();
     super.dispose();
   }
-
-  List<Map<String, dynamic>> messages = <Map<String, dynamic>>[];
-  FeedInformationForChatModel? feedInformationForChatModel;
 
   @override
   Widget build(BuildContext context) {
@@ -122,180 +58,147 @@ class _ChatRoomViewState extends State<ChatRoomView> {
       appBar: AppBar(
         title: Text(widget.userName),
         actions: [
-          IconButton(
-            onPressed: () {
-              showModalBottomSheet<void>(
-                context: context,
-                builder: (context) => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Gap(9),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Gap(9),
-                    ListTile(
-                      onTap: () async {
-                        await GetIt.instance<BlockRepository>().addBlockUser(widget.userId).then((value) {
-                          value.fold(
-                            EasyLoading.showToast,
-                            EasyLoading.showToast,
-                          );
-                        });
-                      },
-                      title: const Text('Engelle'),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                    ),
-                    const Divider(),
-                    const ListTile(
-                      title: Text('Profili Gör'),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                    ),
-                    Gap(MediaQuery.of(context).viewPadding.bottom),
-                  ],
-                ),
-              );
-            },
-            icon: const Icon(Icons.more_vert),
-          ),
+          _buildOptions(context),
         ],
       ),
       bottomNavigationBar: SendMessageField(
         otherUser: widget.userName,
         socket: channel,
-        onTap: () {},
+        onTap: () async {
+          await viewModel.sendImage();
+        },
       ),
-      body: StreamBuilder(
-        stream: channel.stream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final data = jsonDecode(snapshot.data.toString());
-            print(data['listingDetails']);
-            if (data['type'] != null) {
-              print((data as Map<String, dynamic>)['type']);
-              for (final element in data['messages'] as List<dynamic>) {
-                messages.add(element as Map<String, dynamic>);
+      body: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, child) {
+          return ListView.builder(
+            itemCount: viewModel.messages.length,
+            reverse: true,
+            itemBuilder: (context, index) {
+              if (viewModel.messages[index].type == MessageType.image) {
+                if (viewModel.messages[index].isMyMessage) {
+                  return MyImageMessage(imageUrl: viewModel.messages[index].message);
+                } else {
+                  return OtherImageView(imageUrl: viewModel.messages[index].message);
+                }
               }
-              feedInformationForChatModel = data['listingDetails'] != null
-                  ? FeedInformationForChatModel.fromJson(data['listingDetails'] as Map<String, dynamic>)
-                  : null;
-              print(messages);
-            } else {
-              messages.insert(0, data['message'] as Map<String, dynamic>);
-              print(messages);
-            }
+              if (viewModel.messages[index].isMyMessage) {
+                return MyMessageWidget(message: viewModel.messages[index].message);
+              } else {
+                return OtherMessageView(message: viewModel.messages[index].message);
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
 
-            return Scaffold(
-              appBar: feedInformationForChatModel == null
-                  ? null
-                  : AppBar(
-                      toolbarHeight: 0,
-                      bottom: PreferredSize(
-                        preferredSize: Size(
-                          MediaQuery.of(context).size.width,
-                          72,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            context.pushRoute(AdsDetailRoute(id: feedInformationForChatModel!.listingId));
-                          },
-                          child: Container(
-                            color: const Color(AppColors.primaryLightColor),
-                            child: ListTile(
-                              title: Text(
-                                feedInformationForChatModel?.title ?? 'null',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              subtitle: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 9),
-                                    decoration: BoxDecoration(
-                                      color: feedInformationForChatModel?.listingType == ListingTypes.free.name
-                                          ? const Color(0xff6DCEBB)
-                                          : const Color(0xffFD8435),
-                                      borderRadius: BorderRadius.circular(9),
-                                    ),
-                                    child: Text(
-                                      feedInformationForChatModel?.listingType == ListingTypes.free.name
-                                          ? 'Ücretsiz Paylaşılıyor'
-                                          : 'Takaslanıyor',
-                                      style: TextStyle(
-                                        color: feedInformationForChatModel?.listingType == ListingTypes.free.name
-                                            ? const Color(0xff05473A)
-                                            : Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              leading: CircleAvatar(
-                                radius: 32,
-                                backgroundImage: NetworkImage(
-                                  feedInformationForChatModel?.image1Url ?? 'null',
-                                ),
-                              ),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                            ),
-                          ),
-                        ),
-                      ),
+  IconButton _buildOptions(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        showModalBottomSheet<void>(
+          context: context,
+          builder: (context) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Gap(9),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: Colors.grey[700],
                     ),
-              body: ListView.builder(
-                reverse: true,
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  messages.forEach((element) {
-                    x.add(
-                      UserMessage(
-                        username: element['username'] as String,
-                        content: Content(
-                          type: element['type'] as String,
-                          text: element['content'] as String? ?? element['message'] as String? ?? 'imposible',
-                        ),
-                        timestamp: element['timestamp'] as String? ?? DateTime.now().toIso8601String(),
-                        otherUsername: element['username'] as String == GetIt.instance<UserRepository>().user?.username
-                            ? GetIt.instance<UserRepository>().user?.username
-                            : element['username'] as String,
-                        url: element['url'] as String? ?? '',
-                      ),
+                  ),
+                ],
+              ),
+              const Gap(9),
+              ListTile(
+                onTap: () async {
+                  await GetIt.instance<BlockRepository>().addBlockUser(widget.userId).then((value) {
+                    value.fold(
+                      EasyLoading.showToast,
+                      EasyLoading.showToast,
                     );
                   });
-                  if (x[index].username == GetIt.instance<UserRepository>().user?.username) {
-                    if (x[index].content.type == 'image') {
-                      return MyImageMessage(item: x[index]);
-                    } else if (x[index].content.type == 'text') {
-                      return MyMessageWidget(item: x[index]);
-                    }
-                  } else {
-                    if (x[index].content.type == 'image') {
-                      return OtherImageView(item: x[index]);
-                    } else if (x[index].content.type == 'text') {
-                      return OtherMessageView(item: x[index]);
-                    }
-                  }
-                  return Text((messages[index]['content'] ?? messages[index]).toString());
                 },
+                title: const Text('Engelle'),
+                trailing: const Icon(Icons.arrow_forward_ios),
               ),
-            );
-          } else {
-            return const CircularProgressIndicator.adaptive();
-          }
-        },
+              const Divider(),
+              const ListTile(
+                title: Text('Profili Gör'),
+                trailing: Icon(Icons.arrow_forward_ios),
+              ),
+              Gap(MediaQuery.of(context).viewPadding.bottom),
+            ],
+          ),
+        );
+      },
+      icon: const Icon(Icons.more_vert),
+    );
+  }
+
+  AppBar _buildFeedInformation(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 0,
+      bottom: PreferredSize(
+        preferredSize: Size(
+          MediaQuery.of(context).size.width,
+          72,
+        ),
+        child: InkWell(
+          onTap: () {
+            context.pushRoute(AdsDetailRoute(id: viewModel.feedInformationForChatModel!.listingId));
+          },
+          child: Container(
+            color: const Color(AppColors.primaryLightColor),
+            child: ListTile(
+              title: Text(
+                viewModel.feedInformationForChatModel?.title ?? 'null',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 9),
+                    decoration: BoxDecoration(
+                      color: viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
+                          ? const Color(0xff6DCEBB)
+                          : const Color(0xffFD8435),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    child: Text(
+                      viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
+                          ? 'Ücretsiz Paylaşılıyor'
+                          : 'Takaslanıyor',
+                      style: TextStyle(
+                        color: viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
+                            ? const Color(0xff05473A)
+                            : Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              leading: CircleAvatar(
+                radius: 32,
+                backgroundImage: NetworkImage(
+                  viewModel.feedInformationForChatModel?.image1Url ?? 'null',
+                ),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            ),
+          ),
+        ),
       ),
     );
   }

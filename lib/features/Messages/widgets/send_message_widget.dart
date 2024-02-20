@@ -53,7 +53,7 @@ class SendMessageField extends HookWidget {
                       borderRadius: BorderRadius.circular(9),
                       child: TextFormField(
                         controller: controller,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           prefixIcon: Bounceable(
                             onTap: onTap,
                             child: Icon(
@@ -84,7 +84,7 @@ class SendMessageField extends HookWidget {
                           onPressed: () {
                             try {
                               socket.sink.add(jsonEncode({'type': 'text', 'message': controller.text}));
-                              
+
                               controller.clear();
                             } catch (e) {
                               Log.error(e, path: 'socket error sending ');
