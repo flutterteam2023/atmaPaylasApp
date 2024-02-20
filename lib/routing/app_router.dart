@@ -1,4 +1,5 @@
 import 'package:atma_paylas_app/api/log.dart';
+import 'package:atma_paylas_app/features/Authentication/presentation/pages/email_vireification_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/forgot_password_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/login_view.dart';
 import 'package:atma_paylas_app/features/Authentication/presentation/pages/negative_notification_view.dart';
@@ -119,6 +120,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: ChangeLocationRoute.page,
+          initial: false,
+        ),
+        AutoRoute(
+          page: EmailVerificationRoute.page,
           initial: false,
         ),
         AutoRoute(

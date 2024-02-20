@@ -1,8 +1,10 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +12,18 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 @RoutePage()
-class SecturityVerificationView extends StatefulHookConsumerWidget {
+class EmailVerificationView extends StatefulHookConsumerWidget {
   final String email;
-  const SecturityVerificationView(this.email, {super.key});
+  final String? password;
+  const EmailVerificationView(this.email, this.password, {super.key});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SecturityVerificationViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _EmailVerificationViewState();
 }
-class _SecturityVerificationViewState extends ConsumerState<SecturityVerificationView> {
+class _EmailVerificationViewState extends ConsumerState<EmailVerificationView> {
   bool _onEditing = true;
   String? _code;
 
@@ -162,17 +166,52 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
           SizedBox(
               height: 48.h,
             ),
-          isloading.value==false?  CustomFilledButton(
-              onTap: () {
+          if (isloading.value==false) CustomFilledButton(
+              onTap: ()async {
                 if (_code!=null && _code!.length==6) {
                   isloading.value = true;
-                GetIt.instance<AuthRepository>().verifyCode(email: widget.email, code: _code!).then((value) {
+                await GetIt.instance<AuthRepository>().verifyLogin(email: widget.email, code: _code!).then((value) {
                   value.fold((l){
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
                     isloading.value = false;
-                  }, (r){
+                  }, (r)async{
                     isloading.value = false;
-                    context.pushRoute( SecturityVerifDetailRoute(email: widget.email));
+                 await  GetIt.instance<AuthRepository>()
+                          .login(
+                        widget.email,
+                        widget.password!,
+                      )
+                          .then((value) {
+                        value.fold(
+                          (l) => Fluttertoast.showToast(msg: l),
+                          
+                          (r) async {
+                            if (r.success==null) {
+                              await GetIt.instance<UserRepository>().getMyUserProfile().then((val) {
+                              val.fold(
+                                (l) {
+                                  Log.error(l);
+                                  GetIt.instance<UserRepository>().user = null;
+                                },
+                                (r) {
+                                  Log.success(r.runtimeType);
+                                
+                              
+                                  GetIt.instance<UserRepository>().user = r;
+                                  context.pushRoute(const NavigatorRoute());
+                                },
+                              );
+                            });
+                              
+                            } else {
+                              await Fluttertoast.showToast(msg: r.success!);
+                              // ignore: use_build_context_synchronously
+                              await context.pushRoute(EmailVerificationRoute(email:widget.email,password: widget.password));
+                              
+                            }
+                          },
+                        );
+                      });
                   });
                 });
                   
@@ -183,7 +222,7 @@ class _SecturityVerificationViewState extends ConsumerState<SecturityVerificatio
               },
               text: 'Onayla ve Devam Et',
               
-            ):Center(child: CircularProgressIndicator(color: Color(AppColors.primaryColor),))
+            ) else const Center(child: CircularProgressIndicator(color: Color(AppColors.primaryColor),))
             
               ],
             ),

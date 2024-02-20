@@ -95,7 +95,7 @@ class Register2View extends HookConsumerWidget {
                                 (r) {
                                   Log.success(r.runtimeType);
                                   GetIt.instance<UserRepository>().user = r;
-                                  context.pushRoute(const NavigatorRoute());
+                                  context.pushRoute(EmailVerificationRoute(email: email, password: password));
                                 },
                               );
                             });

@@ -89,6 +89,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CreateAdsView(),
       );
     },
+    EmailVerificationRoute.name: (routeData) {
+      final args = routeData.argsAs<EmailVerificationRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EmailVerificationView(
+          args.email,
+          args.password,
+          key: args.key,
+        ),
+      );
+    },
     FeedBackApprovalRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -597,6 +608,49 @@ class CreateAdsRoute extends PageRouteInfo<void> {
   static const String name = 'CreateAdsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EmailVerificationView]
+class EmailVerificationRoute extends PageRouteInfo<EmailVerificationRouteArgs> {
+  EmailVerificationRoute({
+    required String email,
+    required String? password,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EmailVerificationRoute.name,
+          args: EmailVerificationRouteArgs(
+            email: email,
+            password: password,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EmailVerificationRoute';
+
+  static const PageInfo<EmailVerificationRouteArgs> page =
+      PageInfo<EmailVerificationRouteArgs>(name);
+}
+
+class EmailVerificationRouteArgs {
+  const EmailVerificationRouteArgs({
+    required this.email,
+    required this.password,
+    this.key,
+  });
+
+  final String email;
+
+  final String? password;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EmailVerificationRouteArgs{email: $email, password: $password, key: $key}';
+  }
 }
 
 /// generated route for

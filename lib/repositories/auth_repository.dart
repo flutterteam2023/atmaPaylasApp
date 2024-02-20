@@ -30,11 +30,15 @@ class AuthRepository extends ApiService {
     return resp.fold(
       ApiResponse.left,
       (r) async {
-        //access token
+        String? response = ((r as Response<dynamic>).data as Map<String, dynamic>)['access'] as String?;
 
-        await storage.write(
+        //access token
+        
+
+       if (response!=null) {
+         await storage.write(
           key: 'access_token',
-          value: ((r as Response<dynamic>).data as Map<String, dynamic>)['access'] as String,
+          value: ((r as Response<dynamic>).data as Map<String, dynamic>)['access'] as String?,
         );
         //refresh token
         final setCookieHeaders = r.headers['set-cookie'];
@@ -42,6 +46,11 @@ class AuthRepository extends ApiService {
         final cookieValue = firstSetCookieHeader.split(';').first;
         await storage.write(key: 'refresh_token', value: cookieValue);
         return ApiResponse.right(AccessModel.fromJson(r.data as Map<String, dynamic>));
+         
+       } else {
+          return ApiResponse.right(AccessModel.fromJson(r.data as Map<String, dynamic>));
+         
+       }
       },
     );
   }
@@ -94,6 +103,21 @@ class AuthRepository extends ApiService {
   }) async {
     return requestMethod<String>(
       path: '/verify_code/',
+      method: HttpMethod.post,
+      requestModel: {
+        'email': email,
+        'code': code,
+      },
+      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+  }
+    Future<ApiResponse<String>> verifyLogin({
+    required String email,
+    required String code,
+  }) async {
+    return requestMethod<String>(
+      path: '/verify_login/',
       method: HttpMethod.post,
       requestModel: {
         'email': email,

@@ -149,8 +149,10 @@ class LoginView extends HookWidget {
                           .then((value) {
                         value.fold(
                           (l) => Fluttertoast.showToast(msg: l),
+                          
                           (r) async {
-                            await GetIt.instance<UserRepository>().getMyUserProfile().then((val) {
+                            if (r.success==null) {
+                              await GetIt.instance<UserRepository>().getMyUserProfile().then((val) {
                               val.fold(
                                 (l) {
                                   Log.error(l);
@@ -158,11 +160,20 @@ class LoginView extends HookWidget {
                                 },
                                 (r) {
                                   Log.success(r.runtimeType);
+                                
+                              
                                   GetIt.instance<UserRepository>().user = r;
                                   context.pushRoute(const NavigatorRoute());
                                 },
                               );
                             });
+                              
+                            } else {
+                              await Fluttertoast.showToast(msg: r.success!);
+                              // ignore: use_build_context_synchronously
+                              await context.pushRoute(EmailVerificationRoute(email: emailcontroller.text,password: passcontroller.text));
+                              
+                            }
                           },
                         );
                       });
