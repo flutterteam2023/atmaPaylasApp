@@ -139,7 +139,6 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                             const Divider(),
                             ListTile(
                               onTap: () {
-                                
                                 context.pushRoute(OtherProfileRoute(feed: r));
                               },
                               title: const Text('Profili Gör'),
@@ -176,54 +175,83 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 200.h,
-                                width: 358.w,
+                          if (r.images.isEmpty)
+                            Bounceable(
+                              onTap: () {},
+                              child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      r.images[0].image ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  color: r.listingType == ListingTypes.free.name
+                                      ? const Color(0xff6DCEBB)
+                                      : const Color(0xffFD8435),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+                                  child: Text(
+                                    r.listingType == ListingTypes.free.name ? 'Ücretsiz Paylaşıyor' : 'Takaslanıyor',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Rubik',
+                                      color: r.listingType == ListingTypes.free.name
+                                          ? const Color(0xff05473A)
+                                          : Colors.white,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: 16.h,
-                                left: 16.w,
-                                child: Bounceable(
-                                  onTap: () {},
-                                  child: Container(
+                            ),
+                          if (r.images.isNotEmpty)
+                            Stack(
+                              children: [
+                                if (r.images.isNotEmpty)
+                                  Container(
+                                    height: 200.h,
+                                    width: 358.w,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      color: r.listingType == ListingTypes.free.name
-                                          ? const Color(0xff6DCEBB)
-                                          : const Color(0xffFD8435),
+                                      borderRadius: BorderRadius.circular(5.r),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          r.images[0].image ??
+                                              "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
-                                      child: Text(
-                                        r.listingType == ListingTypes.free.name
-                                            ? 'Ücretsiz Paylaşıyor'
-                                            : 'Takaslanıyor',
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Rubik',
-                                          color: r.listingType == ListingTypes.free.name
-                                              ? const Color(0xff05473A)
-                                              : Colors.white,
+                                  ),
+                                Positioned(
+                                  top: 16.h,
+                                  left: 16.w,
+                                  child: Bounceable(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        color: r.listingType == ListingTypes.free.name
+                                            ? const Color(0xff6DCEBB)
+                                            : const Color(0xffFD8435),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+                                        child: Text(
+                                          r.listingType == ListingTypes.free.name
+                                              ? 'Ücretsiz Paylaşıyor'
+                                              : 'Takaslanıyor',
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Rubik',
+                                            color: r.listingType == ListingTypes.free.name
+                                                ? const Color(0xff05473A)
+                                                : Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                           SizedBox(
                             height: 16.h,
                           ),
@@ -293,38 +321,41 @@ class _AdsDetailViewState extends State<AdsDetailView> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 90.h,
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(left: 8.w, right: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: r.images.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: 8.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                showGallery(context,images: r.images.map((e) => e.image).toList(), startIndex: index);
-                              },
-                              child: Container(
-                                height: 90.h,
-                                width: 90.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      r.images[index].image ?? "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                    if (r.images.isNotEmpty)
+                      SizedBox(
+                        height: 90.h,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(left: 8.w, right: 16.w),
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: r.images.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(right: 8.w),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showGallery(context,
+                                      images: r.images.map((e) => e.image).toList(), startIndex: index);
+                                },
+                                child: Container(
+                                  height: 90.h,
+                                  width: 90.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.r),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        r.images[index].image ??
+                                            "https://cdn-icons-png.flaticon.com/512/1160/1160358.png",
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
                     SizedBox(
                       height: 24.h,
                     ),

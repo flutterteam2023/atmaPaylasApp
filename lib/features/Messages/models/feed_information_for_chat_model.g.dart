@@ -13,7 +13,7 @@ _$FeedInformationForChatModelImpl _$$FeedInformationForChatModelImplFromJson(
       title: json['title'] as String,
       listingType: json['listing_type'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      image1Url: json['image1_url'] as String,
+      image1Url: json['image1_url'] as String?,
     );
 
 Map<String, dynamic> _$$FeedInformationForChatModelImplToJson(
