@@ -170,12 +170,52 @@ class _HomeViewState extends State<HomeView> {
                             future: GetIt.instance<CategoryRepository>().getMainCategories(),
                             builder: (context, snapshot) {
                               if (snapshot.data == null) {
-                                return const CircularProgressIndicator.adaptive();
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  child: ListView.builder(
+                                    padding: const EdgeInsets.only(right: 16),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 20,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(left: 8.w),
+                                        child: Bounceable(
+                                          onTap: () {},
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(100.r),
+                                              color: Colors.white,
+                                              border: Border.all(
+                                                color: const Color(AppColors.primaryColor),
+                                                width: 2,
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                                              child: Center(
+                                                child: Text(
+                                                  "r[index]",
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Rubik',
+                                                    color: const Color(AppColors.primaryColor),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
                               }
                               return snapshot.data!.fold(
                                 (l) => const SizedBox(),
                                 (r) => ListView.builder(
-                                  padding: const EdgeInsets.only(left: 0, right: 16),
+                                  padding: const EdgeInsets.only(right: 16),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: r.length,
                                   itemBuilder: (context, index) {
