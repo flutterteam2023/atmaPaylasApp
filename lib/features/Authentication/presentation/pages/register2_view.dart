@@ -49,16 +49,18 @@ class Register2View extends HookConsumerWidget {
 
     final cityController = useTextEditingController();
     final districtController = useTextEditingController();
+    final isloading = useState(false);
     return Form(
       key: formKey,
       child: Scaffold(
-        bottomNavigationBar: Container(
+        bottomNavigationBar:isloading.value==false? Container(
           height: 60,
           margin: EdgeInsets.only(right: 18, left: 18, bottom: MediaQuery.of(context).viewPadding.bottom + 10.h),
           child: CustomFilledButtonBerke(
             text: 'Hesabımı Oluştur',
             onTap: () async {
               if (formKey.currentState!.validate()) {
+                isloading.value = true;
                 await GetIt.instance<AuthRepository>()
                     .register(
                   RegisterRequestModel(
@@ -69,39 +71,30 @@ class Register2View extends HookConsumerWidget {
                     name: name,
                     surname:surname,
                     phoneNumber: phoneNumber,
-                    userLocatedCity: cityController.text,
-                    userLocatedDistrict: districtController.text,
+                    userLocatedCity: cityController.value.text,
+                    userLocatedDistrict: districtController.value.text,
                   ),
                 )
                     .then((value) {
                   value.fold(
-                    (l) => Fluttertoast.showToast(msg: l),
+                    (l) {
+                      isloading.value = false;
+                      Fluttertoast.showToast(msg: l);
+                    },
                     (r) async {
-                      await GetIt.instance<AuthRepository>()
-                          .login(
-                        email,
-                        password,
-                      )
-                          .then((value) {
-                        value.fold(
-                          (l) => Fluttertoast.showToast(msg: l),
-                          (r) async {
-                            await GetIt.instance<UserRepository>().getMyUserProfile().then((val) {
-                              val.fold(
-                                (l) {
-                                  Log.error(l);
-                                  GetIt.instance<UserRepository>().user = null;
-                                },
-                                (r) {
-                                  Log.success(r.runtimeType);
-                                  GetIt.instance<UserRepository>().user = r;
-                                  context.pushRoute(EmailVerificationRoute(email: email, password: password));
-                                },
-                              );
-                            });
-                          },
-                        );
+                     await GetIt.instance<AuthRepository>().login(email, password).then((value) {
+                      value.fold((loginl){
+                        isloading.value = false;
+                        Fluttertoast.showToast(msg: loginl);
+
+                      
+                      }, (loginr) async{
+                        isloading.value = false;
+                        await context.pushRoute( EmailVerificationRoute( email: email, password: password));
+                       
+                      
                       });
+                     });
                     },
                   );
                 });
@@ -109,6 +102,14 @@ class Register2View extends HookConsumerWidget {
                 Log.error('Formu doğru doldurunuz');
               }
             },
+          )
+        ):SizedBox(
+          width: 50,
+          height: 50,
+          child: Center(
+            child: const CircularProgressIndicator(
+              
+              color: Color(AppColors.primaryColor),),
           ),
         ),
         appBar: AppBar(
@@ -238,7 +239,7 @@ class Register2View extends HookConsumerWidget {
                             hint: const Text('İl Seçiniz'),
                             isExpanded: true,
                             validator: Validatorless.required('İl seçiniz'),
-                            value: cityController.text.isEmpty ? null : cityController.text,
+                            value: cityController.value.text.isEmpty ? null : cityController.value.text,
                             onTap: () {
                               FocusScope.of(context).unfocus();
                             },
@@ -278,12 +279,12 @@ class Register2View extends HookConsumerWidget {
                 ListenableBuilder(
                   listenable: cityController,
                   builder: (context, wid) {
-                    if (cityController.text.isEmpty) {
+                    if (cityController.value.text.isEmpty) {
                       DropdownButtonFormField<String>(
                         hint: const Text('İlçe Seçiniz'),
                         isExpanded: true,
                         validator: Validatorless.required('İlçe seçiniz'),
-                        value: districtController.text.isEmpty ? null : districtController.text,
+                        value: districtController.value.text.isEmpty ? null : districtController.value.text,
                         onTap: () {
                           FocusScope.of(context).unfocus();
                           EasyLoading.showToast('Önce şehir seçiniz');
@@ -298,7 +299,11 @@ class Register2View extends HookConsumerWidget {
                               ),
                             )
                             .toList(),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value != null) {
+                            districtController.text = value;
+                          }
+                        },
                       );
                     }
                     return FutureBuilder(
@@ -326,7 +331,11 @@ class Register2View extends HookConsumerWidget {
                                       ),
                                     )
                                     .toList(),
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    districtController.text = value;
+                                  }
+                                },
                               ),
                             ) ??
                             DropdownButtonFormField<String>(
@@ -388,6 +397,7 @@ class Register2View extends HookConsumerWidget {
                     ],
                   ),
                 ),
+               
                 SizedBox(
                   height: 57.h,
                 ),

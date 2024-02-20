@@ -54,6 +54,39 @@ class AuthRepository extends ApiService {
       },
     );
   }
+    Future<ApiResponse<AccessModel>> verifyLogin({
+    required String email,
+    required String code,
+  }) async {
+    final resp =await requestMethod<dynamic>(
+      path: '/verify_login/',
+      method: HttpMethod.post,
+      requestModel: {
+        'email': email,
+        'code': code,
+      },
+      responseConverter: (response) => response,
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    );
+    return resp.fold((l) {
+      return ApiResponse.left(l);
+      
+    }, (r)async {
+       await storage.write(
+          key: 'access_token',
+          value: ((r as Response<dynamic>).data as Map<String, dynamic>)['access'] as String?,
+        );
+        //refresh token
+        final setCookieHeaders = r.headers['set-cookie'];
+        final firstSetCookieHeader = setCookieHeaders![0];
+        final cookieValue = firstSetCookieHeader.split(';').first;
+        await storage.write(key: 'refresh_token', value: cookieValue);
+        return ApiResponse.right(AccessModel.fromJson(r.data as Map<String, dynamic>));
+
+      
+    });
+    
+  }
 
   Future<ApiResponse<RegisterResponseModel>> register(RegisterRequestModel request) async {
     return requestMethod<RegisterResponseModel>(
@@ -112,21 +145,7 @@ class AuthRepository extends ApiService {
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     );
   }
-    Future<ApiResponse<String>> verifyLogin({
-    required String email,
-    required String code,
-  }) async {
-    return requestMethod<String>(
-      path: '/verify_login/',
-      method: HttpMethod.post,
-      requestModel: {
-        'email': email,
-        'code': code,
-      },
-      responseConverter: (response) => (response.data as Map<String, dynamic>)['success'] as String,
-      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-    );
-  }
+  
 
   Future<ApiResponse<String>> changePassword({
     required String currentPassword,
