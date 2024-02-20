@@ -7,6 +7,8 @@ import 'package:atma_paylas_app/features/Category/models/main_category_model.dar
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
+import 'package:atma_paylas_app/routing/app_router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -30,6 +32,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
     int categoryId,
     String title,
     String description,
+    BuildContext context,
   ) async {
     const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: 'access_token');
@@ -91,11 +94,15 @@ class FeedRepository extends ApiService with ChangeNotifier {
       //yeni feed eklendiğinde myFeeds listesinin güncellenmesi için
       //myFeeds listesini temizliyoruz
       _myFeeds.clear();
+      // ignore: use_build_context_synchronously
+      await context.pushRoute(const NavigatorRoute());
       return Right(
         (jsonDecode(
           await response.stream.bytesToString(),
         ) as Map<String, dynamic>)['success'] as String,
       );
+      
+      
     } else {
       Log.error(response.reasonPhrase);
       return Left(response.reasonPhrase ?? 'Error');
