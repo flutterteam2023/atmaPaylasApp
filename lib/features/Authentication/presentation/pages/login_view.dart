@@ -1,12 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:atma_paylas_app/api/log.dart';
-import 'package:atma_paylas_app/common_widgets/auth_textfield.dart';
-import 'package:atma_paylas_app/common_widgets/custom_filled_button.dart';
 import 'package:atma_paylas_app/common_widgets/custom_filled_button_berke.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
-import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
@@ -26,6 +23,7 @@ class LoginView extends HookWidget {
   Widget build(BuildContext context) {
     final emailcontroller = useTextEditingController();
     final passcontroller = useTextEditingController();
+    final isloading = useState(false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -74,7 +72,7 @@ class LoginView extends HookWidget {
                     height: 37.h,
                   ),
                   Text(
-                    "E-Posta Adresi",
+                    'E-Posta Adresi',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
@@ -138,9 +136,10 @@ class LoginView extends HookWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  CustomFilledButtonBerke(
+                if (isloading.value==false) CustomFilledButtonBerke(
                     text: 'Giriş Yap',
                     onTap: () async {
+                      isloading.value = true;
                       await GetIt.instance<AuthRepository>()
                           .login(
                         emailcontroller.text,
@@ -148,7 +147,10 @@ class LoginView extends HookWidget {
                       )
                           .then((value) {
                         value.fold(
-                          (l) => Fluttertoast.showToast(msg: l),
+                          (l) {
+                            isloading.value = false;
+                            Fluttertoast.showToast(msg: l);
+                          },
                           
                           (r) async {
                             if (r.success==null) {
@@ -157,19 +159,25 @@ class LoginView extends HookWidget {
                                 (l) {
                                   Log.error(l);
                                   GetIt.instance<UserRepository>().user = null;
+                                  isloading.value = false;
+
                                 },
                                 (r) {
+                                  
                                   Log.success(r.runtimeType);
                                 
                               
                                   GetIt.instance<UserRepository>().user = r;
                                   context.pushRoute(const NavigatorRoute());
+                                  isloading.value = false;
                                 },
                               );
                             });
                               
                             } else {
                               await Fluttertoast.showToast(msg: r.success!);
+                                  isloading.value = false;
+
                               // ignore: use_build_context_synchronously
                               await context.pushRoute(EmailVerificationRoute(email: emailcontroller.text,password: passcontroller.text));
                               
@@ -178,7 +186,7 @@ class LoginView extends HookWidget {
                         );
                       });
                     },
-                  ),
+                  ) else const Center(child: CircularProgressIndicator(color: Color(AppColors.primaryColor),)),
                 ],
               ),
               Padding(

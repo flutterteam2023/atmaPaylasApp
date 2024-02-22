@@ -42,6 +42,7 @@ import 'package:atma_paylas_app/features/Settings/presentation/pages/settings_vi
 import 'package:atma_paylas_app/features/ShareAds/presentation/pages/share_ads_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/shared_products_view.dart';
 import 'package:atma_paylas_app/features/SharedProduct/presentation/pages/sharing_products_view.dart';
+import 'package:atma_paylas_app/features/Splash/pages/easy_splash_view.dart';
 import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swapped_products_view.dart';
@@ -69,8 +70,12 @@ class AppRouter extends _$AppRouter {
           initial: false,
         ),
         AutoRoute(
-          page: WelcomeRoute.page,
+          page: EasySplashRoute.page,
           initial: true,
+        ),
+        AutoRoute(
+          page: WelcomeRoute.page,
+          initial: false,
           guards: [
             AutoRouteGuard.simple(
               (resolver, router) {

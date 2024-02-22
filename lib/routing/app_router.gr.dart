@@ -89,6 +89,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CreateAdsView(),
       );
     },
+    EasySplashRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EasySplashView(),
+      );
+    },
     EmailVerificationRoute.name: (routeData) {
       final args = routeData.argsAs<EmailVerificationRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -606,6 +612,20 @@ class CreateAdsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CreateAdsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EasySplashView]
+class EasySplashRoute extends PageRouteInfo<void> {
+  const EasySplashRoute({List<PageRouteInfo>? children})
+      : super(
+          EasySplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EasySplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
