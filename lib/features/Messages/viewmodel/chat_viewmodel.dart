@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatViewModel extends ChangeNotifier {
@@ -114,12 +115,28 @@ class ChatViewModel extends ChangeNotifier {
   }
 
   Future<void> sendImage() async {
-    final photoPath = await pickFile(
+    var photoPath = await pickFile(
       type: FileType.image,
       onFileLoading: (p0) async {},
     );
     if (photoPath != null) {
-      final file = File(photoPath);
+      await ImageCropper().cropImage(
+        sourcePath: photoPath,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+        ],
+      ).then((value) {
+        if (value != null) {
+          final path = value.path;
+          photoPath = path;
+        }
+      });
+    }
+
+    if (photoPath != null) {
+      final file = File(photoPath!);
       final bytes = await file.readAsBytes();
       channel.sink.add(bytes);
     }

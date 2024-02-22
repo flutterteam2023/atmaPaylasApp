@@ -52,11 +52,15 @@ class _MessagesViewState extends State<MessagesView> {
           final roooms = <ChatRoomModel>[];
           if (snapshot.connectionState == ConnectionState.active) {
             final data = jsonDecode(snapshot.data.toString());
-            Log.success(data);
+            Log.success(data, path: 'meesage channels view');
             for (final element in data['previews'] as List<dynamic>) {
               roooms.add(ChatRoomModel.fromJson(element as Map<String, dynamic>));
             }
           }
+          roooms.sort(
+            (a, b) =>
+                (b.latestMessage?.timestamp ?? DateTime.now()).compareTo(a.latestMessage?.timestamp ?? DateTime.now()),
+          );
           Log.success(roooms, path: 'rooms');
 
           if (roooms.isEmpty) {
