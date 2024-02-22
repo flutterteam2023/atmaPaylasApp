@@ -38,6 +38,7 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
     final listingType = useState('');
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
+    final isloading = useState(false);
   final images = useState<List<File?>>([]);
  Future<void> _pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -323,7 +324,7 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                       SizedBox(
                         height: 48.h,
                       ),
-                      CustomFilledButton(text: 'İlanı Yayınla', onTap: (){
+                    if (isloading.value==false) CustomFilledButton(text: 'İlanı Yayınla', onTap: (){
                         if (titleController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('İlan başlığı boş bırakılamaz')));
                         }else if (descriptionController.text.isEmpty) {
@@ -333,12 +334,15 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                         }else if (images.value.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('En az 1 fotoğraf eklenmelidir')));
                         }else{
-                         GetIt.instance<FeedRepository>().addFeed(images.value,listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text).then((value) {
+                          isloading.value=true;
+                         GetIt.instance<FeedRepository>().addFeed(images.value,listingType.value=='free'?ListingTypes.free:ListingTypes.tradable , int.parse(widget.id!), titleController.value.text, descriptionController.value.text,context).then((value) {
                           value.fold((l) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l))), (r) {
                             ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(r)));
                             images.value.clear();
                             titleController.clear();
                             descriptionController.clear();
+                            isloading.value=false;
+                            context.pushRoute(const NavigatorRoute())
                             
 
                             
@@ -347,7 +351,7 @@ class _AdsInfoAddViewState extends ConsumerState<AdsInfoAddView> {
                          });
                         }
 
-                      })
+                      },) else const CircularProgressIndicator(color: Color(AppColors.primaryColor),)
                       
                     ],
                   ),
