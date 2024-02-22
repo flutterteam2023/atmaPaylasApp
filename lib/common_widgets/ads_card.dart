@@ -54,9 +54,9 @@ class AdsCard extends StatelessWidget {
       child: Container(
         width: 265.w,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.r),
+          borderRadius: BorderRadius.circular(9.r),
           color: Colors.white,
-          border: Border.all(color: Color(0xffE0E0E0), width: 2),
+          border: Border.all(color: const Color(0xffE0E0E0), width: 2),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,8 +65,8 @@ class AdsCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5.r),
-                    topRight: Radius.circular(5.r),
+                    topLeft: Radius.circular(3.5.r),
+                    topRight: Radius.circular(3.5.r),
                   ),
                   child: productImage != null
                       ? Image.network(
