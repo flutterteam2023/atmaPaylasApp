@@ -40,7 +40,7 @@ class Listing with _$Listing {
   }) = _Listing;
 
   factory Listing.fromJson(Map<String, dynamic> json) => _$ListingFromJson(json).copyWith(
-        image1Url: json['image1Url'] == null ? null : '$IMAGE_BASE_URL${json['image1_url']}',
+        image1Url: json['image1_url'] == null ? null : '$IMAGE_BASE_URL${json['image1_url']}',
       );
 }
 
@@ -55,6 +55,6 @@ class OtherUser with _$OtherUser {
   }) = _OtherUser;
 
   factory OtherUser.fromJson(Map<String, dynamic> json) => _$OtherUserFromJson(json).copyWith(
-        profileImage: json['profileImage'] == null ? null : '$IMAGE_BASE_URL${json['profileImage']}',
+        profileImage: json['profile_image'] == null ? null : '$IMAGE_BASE_URL${json['profile_image']}',
       );
 }

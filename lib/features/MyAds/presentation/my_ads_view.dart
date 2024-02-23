@@ -126,7 +126,7 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: MediaQuery.of(context).size.height / 2.6,
+                                              height: MediaQuery.of(context).size.width * .725,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
@@ -230,7 +230,7 @@ class MyAdsView extends ConsumerWidget {
                                             ),
                                           if (snapshot.data?.isNotEmpty ?? false)
                                             SizedBox(
-                                              height: MediaQuery.of(context).size.height / 2.6,
+                                              height: MediaQuery.of(context).size.width * .725,
                                               child: ListView.builder(
                                                 itemCount: snapshot.data?.length,
                                                 shrinkWrap: true,
