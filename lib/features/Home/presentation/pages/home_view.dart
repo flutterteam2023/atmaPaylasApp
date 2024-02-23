@@ -451,7 +451,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 350.h,
+                  height: MediaQuery.of(context).size.width * .725,
                   child: ListenableBuilder(
                     listenable: GetIt.instance<FeedRepository>(),
                     builder: (context, widget) {
@@ -539,7 +539,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 16.h,
                 ),
                 SizedBox(
-                  height: 359.h,
+                  height: MediaQuery.of(context).size.width * .725,
                   child: ListenableBuilder(
                     listenable: GetIt.instance<FeedRepository>(),
                     builder: (context, widget) {
