@@ -1,4 +1,4 @@
-package com.example.atma_paylas_app
+package com.app.atmapaylastakasla
 
 import io.flutter.embedding.android.FlutterActivity
 
