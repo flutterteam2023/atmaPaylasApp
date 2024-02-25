@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/ReportAndBlock/viewmodel/report.viewmodel.dart';
@@ -29,18 +28,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp(
+/*   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-final messaging = FirebaseMessaging.instance;
-  
+  );
+  final messaging = FirebaseMessaging.instance;
+  final settings = await messaging.requestPermission();
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    print('User granted provisional permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
   // Cihaz tokeninin alınması
   final token = await messaging.getToken();
-  
+
   // Konsola tokenin yazdırılması
   if (kDebugMode) {
     print('Cihaz tokeni: $token');
-  }
+  } */
   GetIt.I.registerSingleton<CategoryRepository>(CategoryRepository());
   GetIt.I.registerSingleton<AuthRepository>(AuthRepository());
   GetIt.I.registerSingleton<UserRepository>(UserRepository());

@@ -12,7 +12,7 @@ part of 'chat_room_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ChatRoomModel _$ChatRoomModelFromJson(Map<String, dynamic> json) {
   return _ChatRoomModel.fromJson(json);
@@ -213,7 +213,7 @@ class _$ChatRoomModelImpl implements _ChatRoomModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomModelImpl &&
@@ -430,7 +430,7 @@ class _$LatestMessageImpl implements _LatestMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LatestMessageImpl &&
@@ -641,7 +641,7 @@ class _$ListingImpl implements _Listing {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ListingImpl &&
@@ -873,7 +873,7 @@ class _$OtherUserImpl implements _OtherUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OtherUserImpl &&

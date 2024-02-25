@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Atma Paylaş</string>
+	<string>Atmapaylasapp</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>atma_paylas_app</string>
+	<string>atmapaylasapp</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,12 +26,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Uygulama kamerayı kullanmak istiyor</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Uygulama ses kaydı yapmak istiyor</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Uygulama fotoğraf albümüne erişim istiyor</string>
+	<string>Uygulamamız, seçtiğiniz fotoğrafları profil resmi olarak ayarlamanızı sağlar.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

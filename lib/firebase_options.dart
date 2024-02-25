@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,9 +43,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAAa0ceKfa3k6GEabjdvOUuIBcAOtmBPaU',
+    appId: '1:701886679203:web:cc6e44e5b5d5f9a5aad716',
+    messagingSenderId: '701886679203',
+    projectId: 'atmapaylas-412414',
+    authDomain: 'atmapaylas-412414.firebaseapp.com',
+    storageBucket: 'atmapaylas-412414.appspot.com',
+    measurementId: 'G-STZ9NQB2YM',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDmoqd9SRDJknVQZC981j4yRGdfdMVYjds',
-    appId: '1:701886679203:android:763b3ade5bcb5415aad716',
+    appId: '1:701886679203:android:60b5141f7a586cd2aad716',
     messagingSenderId: '701886679203',
     projectId: 'atmapaylas-412414',
     storageBucket: 'atmapaylas-412414.appspot.com',
@@ -59,10 +63,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBmk95656d0HnTX-Y3KDFpVqTuxHSo6vsk',
-    appId: '1:701886679203:ios:32c977e0789ebc06aad716',
+    appId: '1:701886679203:ios:367062ee57e62a8daad716',
     messagingSenderId: '701886679203',
     projectId: 'atmapaylas-412414',
     storageBucket: 'atmapaylas-412414.appspot.com',
-    iosBundleId: 'com.example.atmaPaylasApp',
+    iosBundleId: 'com.atmapaylas',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBmk95656d0HnTX-Y3KDFpVqTuxHSo6vsk',
+    appId: '1:701886679203:ios:009a48fbcee3acc6aad716',
+    messagingSenderId: '701886679203',
+    projectId: 'atmapaylas-412414',
+    storageBucket: 'atmapaylas-412414.appspot.com',
+    iosBundleId: 'com.example.atmaPaylasApp.RunnerTests',
   );
 }

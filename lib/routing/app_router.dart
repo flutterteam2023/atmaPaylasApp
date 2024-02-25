@@ -71,11 +71,11 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: EasySplashRoute.page,
-          initial: true,
+          initial: false,
         ),
         AutoRoute(
           page: WelcomeRoute.page,
-          initial: false,
+          initial: true,
           guards: [
             AutoRouteGuard.simple(
               (resolver, router) {

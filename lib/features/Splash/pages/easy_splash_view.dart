@@ -13,15 +13,17 @@ class EasySplashView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         body: FlutterSplashScreen.fadeIn(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.red,
       onEnd: () {
         context.replaceRoute(const WelcomeRoute());
       },
       childWidget: Padding(
         padding: EdgeInsets.only(left: 15.w, right: 15.w),
-        child: Center(child: Image.asset('assets/images/logo.png',
-        height:  200.h,
-        width: 200.w,
+        child: Center(
+            child: Image.asset(
+          'assets/images/logo.png',
+          height: 200.h,
+          width: 200.w,
         )),
       ),
       onAnimationEnd: () {

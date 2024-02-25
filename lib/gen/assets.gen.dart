@@ -83,6 +83,10 @@ class $AssetsImagesGen {
   AssetGenImage get persondemo =>
       const AssetGenImage('assets/images/persondemo.png');
 
+  /// File path: assets/images/play_store_512.png
+  AssetGenImage get playStore512 =>
+      const AssetGenImage('assets/images/play_store_512.png');
+
   /// File path: assets/images/splashLogo.png
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/splashLogo.png');
@@ -97,6 +101,7 @@ class $AssetsImagesGen {
         linee,
         logo,
         persondemo,
+        playStore512,
         splashLogo
       ];
 }

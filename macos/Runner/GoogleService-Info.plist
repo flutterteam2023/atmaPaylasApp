@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.atmapaylas</string>
+	<string>com.example.atmaPaylasApp.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>atmapaylas-412414</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:701886679203:ios:367062ee57e62a8daad716</string>
+	<string>1:701886679203:ios:009a48fbcee3acc6aad716</string>
 </dict>
 </plist>
