@@ -3,6 +3,7 @@
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/features/Messages/models/message_type_enum.dart';
 import 'package:atma_paylas_app/features/Messages/viewmodel/chat_viewmodel.dart';
+import 'package:atma_paylas_app/features/Messages/views/feed_info_chat_room_widget.dart';
 import 'package:atma_paylas_app/features/Messages/widgets/chat_bubbles_widget.dart';
 import 'package:atma_paylas_app/features/Messages/widgets/send_message_widget.dart';
 import 'package:atma_paylas_app/repositories/block_repository.dart';
@@ -54,24 +55,43 @@ class _ChatRoomViewState extends State<ChatRoomView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.userName),
-        actions: [
-          _buildOptions(context),
-        ],
-      ),
-      bottomNavigationBar: SendMessageField(
-        otherUser: widget.userName,
-        socket: channel,
-        onTap: () async {
-          await viewModel.sendImage();
-        },
-      ),
-      body: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          return ListView.builder(
+    return ListenableBuilder(
+      listenable: viewModel,
+      builder: (context, value) {
+        if (viewModel.isLoading) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(widget.userName),
+              actions: [
+                _buildOptions(context),
+              ],
+            ),
+            body: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.userName),
+            actions: [
+              _buildOptions(context),
+            ],
+            bottom: viewModel.listingModel == null
+                ? null
+                : PreferredSize(
+                    preferredSize: Size(MediaQuery.of(context).size.width, 80),
+                    child: FeedInfoChatRoomWidget(listingModel: viewModel.listingModel),
+                  ),
+          ),
+          bottomNavigationBar: SendMessageField(
+            otherUser: widget.userName,
+            socket: channel,
+            onTap: () async {
+              await viewModel.sendImage();
+            },
+          ),
+          body: ListView.builder(
             itemCount: viewModel.messages.length,
             reverse: true,
             itemBuilder: (context, index) {
@@ -88,9 +108,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                 return OtherMessageView(message: viewModel.messages[index].message);
               }
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -140,66 +160,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         );
       },
       icon: const Icon(Icons.more_vert),
-    );
-  }
-
-  AppBar _buildFeedInformation(BuildContext context) {
-    return AppBar(
-      toolbarHeight: 0,
-      bottom: PreferredSize(
-        preferredSize: Size(
-          MediaQuery.of(context).size.width,
-          72,
-        ),
-        child: InkWell(
-          onTap: () {
-            context.pushRoute(AdsDetailRoute(id: viewModel.feedInformationForChatModel!.listingId));
-          },
-          child: Container(
-            color: const Color(AppColors.primaryLightColor),
-            child: ListTile(
-              title: Text(
-                viewModel.feedInformationForChatModel?.title ?? 'null',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              subtitle: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.5, horizontal: 9),
-                    decoration: BoxDecoration(
-                      color: viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
-                          ? const Color(0xff6DCEBB)
-                          : const Color(0xffFD8435),
-                      borderRadius: BorderRadius.circular(9),
-                    ),
-                    child: Text(
-                      viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
-                          ? 'Ücretsiz Paylaşılıyor'
-                          : 'Takaslanıyor',
-                      style: TextStyle(
-                        color: viewModel.feedInformationForChatModel?.listingType == ListingTypes.free.name
-                            ? const Color(0xff05473A)
-                            : Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              leading: CircleAvatar(
-                radius: 32,
-                backgroundImage: NetworkImage(
-                  viewModel.feedInformationForChatModel?.image1Url ?? 'null',
-                ),
-              ),
-              trailing: const Icon(Icons.arrow_forward_ios),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Messages/models/feed_information_for_chat_model.dart';
+import 'package:atma_paylas_app/features/Messages/models/listing_model.dart';
 import 'package:atma_paylas_app/features/Messages/models/message_model.dart';
 import 'package:atma_paylas_app/features/Messages/models/message_type_enum.dart';
 import 'package:atma_paylas_app/helpers/image_picker_helper.dart';
@@ -24,6 +25,8 @@ class ChatViewModel extends ChangeNotifier {
   final WebSocketChannel channel;
 
   List<MessageModel> messages = [];
+  ListingModel? listingModel;
+  bool isLoading = true;
   FeedInformationForChatModel? feedInformationForChatModel;
   final dateFormat = DateFormat('HH:mm:ss dd-MM-yyyy');
   void listenToMessages() {
@@ -90,7 +93,13 @@ class ChatViewModel extends ChangeNotifier {
       }
       messages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
+      if (messageMap['listing_details'] != null) {
+        Log.error(messageMap['listing_details'], path: 'chat viewmodel listing details');
+        listingModel = ListingModel.fromJson(messageMap['listing_details'] as Map<String, dynamic>);
+      }
+
       // UI'ı güncellemek için dinleyicilere haber ver
+      isLoading = false;
       notifyListeners();
     });
   }

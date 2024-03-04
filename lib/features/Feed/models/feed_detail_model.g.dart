@@ -10,7 +10,6 @@ _$FeedDetailModelImpl _$$FeedDetailModelImplFromJson(
         Map<String, dynamic> json) =>
     _$FeedDetailModelImpl(
       id: json['id'] as int,
-      ownerInfo: OwnerInfo.fromJson(json['owner_info'] as Map<String, dynamic>),
       category: json['category'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -24,13 +23,23 @@ _$FeedDetailModelImpl _$$FeedDetailModelImplFromJson(
       receiverConfirmed: json['receiver_confirmed'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String),
       isArchived: json['is_archived'] as bool,
+      ownerInfo: json['owner_info'] == null
+          ? const OwnerInfo(
+              userId: null,
+              username: null,
+              name: null,
+              surname: null,
+              city: null,
+              district: null,
+              profileImage: null,
+              phoneNumber: null)
+          : OwnerInfo.fromJson(json['owner_info'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$FeedDetailModelImplToJson(
         _$FeedDetailModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'owner_info': instance.ownerInfo,
       'category': instance.category,
       'title': instance.title,
       'description': instance.description,
@@ -42,6 +51,7 @@ Map<String, dynamic> _$$FeedDetailModelImplToJson(
       'receiver_confirmed': instance.receiverConfirmed,
       'created_at': instance.createdAt.toIso8601String(),
       'is_archived': instance.isArchived,
+      'owner_info': instance.ownerInfo,
     };
 
 _$AdsImageImpl _$$AdsImageImplFromJson(Map<String, dynamic> json) =>

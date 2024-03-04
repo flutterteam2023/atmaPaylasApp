@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars, invalid_annotation_target
 
-import 'package:atma_paylas_app/api/api_service.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,7 +10,6 @@ part 'feed_detail_model.g.dart';
 class FeedDetailModel with _$FeedDetailModel {
   const factory FeedDetailModel({
     @JsonKey(name: 'id') required int id,
-    @JsonKey(name: 'owner_info') required OwnerInfo ownerInfo,
     @JsonKey(name: 'category') required int category,
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'description') required String description,
@@ -23,6 +21,20 @@ class FeedDetailModel with _$FeedDetailModel {
     @JsonKey(name: 'receiver_confirmed') required bool receiverConfirmed,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'is_archived') required bool isArchived,
+    @Default(
+      OwnerInfo(
+        userId: null,
+        username: null,
+        name: null,
+        surname: null,
+        city: null,
+        district: null,
+        profileImage: null,
+        phoneNumber: null,
+      ),
+    )
+    @JsonKey(name: 'owner_info')
+    OwnerInfo ownerInfo,
   }) = _FeedDetailModel;
 
   factory FeedDetailModel.fromJson(Map<String, dynamic> json) => _$FeedDetailModelFromJson(json).copyWith(
@@ -35,10 +47,8 @@ class FeedDetailModel with _$FeedDetailModel {
 @freezed
 class AdsImage with _$AdsImage {
   const factory AdsImage({
-   
     @JsonKey(name: 'image') required String image,
     @JsonKey(name: 'id') required int id,
-
   }) = _AdsImage;
 
   factory AdsImage.fromJson(Map<String, dynamic> json) => _$AdsImageFromJson(json).copyWith(

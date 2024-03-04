@@ -101,8 +101,6 @@ class FeedRepository extends ApiService with ChangeNotifier {
           await response.stream.bytesToString(),
         ) as Map<String, dynamic>)['success'] as String,
       );
-      
-      
     } else {
       Log.error(response.reasonPhrase);
       return Left(response.reasonPhrase ?? 'Error');
@@ -120,7 +118,10 @@ class FeedRepository extends ApiService with ChangeNotifier {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      responseConverter: (response) => FeedDetailModel.fromJson(response.data as Map<String, dynamic>),
+      responseConverter: (response) {
+        Log.info('gelen data : ${response.data}');
+        return FeedDetailModel.fromJson(response.data as Map<String, dynamic>);
+      },
     );
   }
 
@@ -372,7 +373,7 @@ class FeedRepository extends ApiService with ChangeNotifier {
     });
   }
 
- List<FeedDetailModel> _otherUserActiveFeeds = [];
+  List<FeedDetailModel> _otherUserActiveFeeds = [];
   List<FeedDetailModel> _otherUserActiveFeedsFree = [];
 
   Future<List<FeedDetailModel>> getOtherUserActiveFeeds(String userId) async {
@@ -395,15 +396,16 @@ class FeedRepository extends ApiService with ChangeNotifier {
         (r) {
           for (final element in r) {
             if (element.listingType == ListingTypes.tradable.name) {
-             _otherUserActiveFeeds.add(element);
+              _otherUserActiveFeeds.add(element);
             }
           }
         },
       );
 
-      return _otherUserActiveFeeds ;
+      return _otherUserActiveFeeds;
     });
   }
+
   Future<List<FeedDetailModel>> getOtherUserActiveFeedsFree(String userId) async {
     _otherUserActiveFeedsFree.clear();
     return requestMethod<List<FeedDetailModel>>(
@@ -526,8 +528,8 @@ class FeedRepository extends ApiService with ChangeNotifier {
     );
   }
 
-  Future<Either<String, String>> updateFeed(String feedId, List<int> id,List<XFile> images,
-      ListingTypes listingType, String title, String description, BuildContext context) async {
+  Future<Either<String, String>> updateFeed(String feedId, List<int> id, List<XFile> images, ListingTypes listingType,
+      String title, String description, BuildContext context) async {
     const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: 'access_token');
     final headers = {
@@ -542,30 +544,27 @@ class FeedRepository extends ApiService with ChangeNotifier {
       'description': description,
     });
     if (id.isNotEmpty) {
-       for (final i in id) {
-      request.fields.addAll({
-        'delete_images': i.toString(),
-      });
-    }
-    }else{
+      for (final i in id) {
+        request.fields.addAll({
+          'delete_images': i.toString(),
+        });
+      }
+    } else {
       request.fields.addAll({
         'delete_images': 0.toString(),
       });
     }
 
-   if (images.isNotEmpty) {
-    for (final image in images) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'new_images',
-          image.path,
-        ),
-      );
-        }
-     
-   }
-
-    
+    if (images.isNotEmpty) {
+      for (final image in images) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'new_images',
+            image.path,
+          ),
+        );
+      }
+    }
 
     request.headers.addAll(headers);
 
