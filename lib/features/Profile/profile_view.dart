@@ -3,6 +3,7 @@
 import 'package:atma_paylas_app/constants/colors/app_colors.dart';
 import 'package:atma_paylas_app/gen/assets.gen.dart';
 import 'package:atma_paylas_app/repositories/auth_repository.dart';
+import 'package:atma_paylas_app/repositories/feed_repository.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
@@ -23,7 +24,23 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
+
 class _ProfileViewState extends State<ProfileView> {
+  int waitingAdsCount = 0;
+  @override
+  void initState() {
+   FeedRepository().waitingMyAds().then((value) {
+     value.fold(
+       (l) => null,
+       (r){
+        setState(() {
+           waitingAdsCount = r.length;
+        });
+       },
+     );
+   });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -258,7 +275,7 @@ class _ProfileViewState extends State<ProfileView> {
                             smallSize: 15,
                             largeSize: 25,
                             label: Text(
-                              '${GetIt.instance<UserRepository>().user?.waitingToConfirmListingsCount} Bekleyen',
+                              '$waitingAdsCount Bekleyen',
                               style: GoogleFonts.rubik(
                                 color: Colors.white,
                                 fontSize: 14,
