@@ -8,6 +8,7 @@ import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
@@ -26,7 +27,8 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
     final formatter = DateFormat('dd/MM/yyyy');
     return FutureBuilder(
       future: Future.wait([
-        GetIt.instance<FeedRepository>().waitingMyAds(),
+        GetIt.instance<FeedRepository>().waitingInactiveFeeds,
+        GetIt.instance<FeedRepository>().waitingToConfirmFeeds,
       ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
@@ -36,7 +38,7 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
               appBar: AppBar(
                 centerTitle: false,
                 title: Text(
-                  'Onay Bekleyen İlanlar',
+                  'Onay Bekleyen Ürünlerim',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
@@ -114,7 +116,6 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
             ),
           );
         }
-        final waitingAds = snapshot.data?.first;
 
         return ListenableBuilder(
           listenable: GetIt.instance<FeedRepository>(),
@@ -125,7 +126,7 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
                 appBar: AppBar(
                   centerTitle: false,
                   title: Text(
-                    'Onay Bekleyen İlanlar',
+                    'Bekleyen İlanlar',
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
@@ -136,41 +137,18 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
                   bottom: const TabBar(
                     tabs: [
                       Tab(text: 'Onay Bekleyen'),
-                      // Tab(text: 'Onaylanacak'),
+                      Tab(text: 'Onaylanacak'),
                     ],
                   ),
                 ),
-                body: waitingAds!.fold((l) {
-                  return Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.feed,
-                          size: 100,
-                          color: Color(AppColors.primaryColor),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(9),
-                          child: Text(
-                            'Hiç ilan bulunamadı.',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                
-                }, (r)  {
-                  return TabBarView(
+                body: TabBarView(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
                         right: 16.w,
                         left: 16.w,
                       ),
-                      child: r.isEmpty 
+                      child: snapshot.data?.first.isEmpty ?? true
                           ? Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -192,191 +170,190 @@ class _WaitingToConfirmListingsViewState extends State<WaitingToConfirmListingsV
                               ),
                             )
                           : ListView.builder(
-                              itemCount: r.length,
+                              itemCount: snapshot.data?.first.length,
                               itemBuilder: (context, index) {
                                 return ShareAdsCard(
                                   isShimmer: false,
-                                  type: r[index].listingType == ListingTypes.free.name
+                                  type: snapshot.data?.first[index].listingType == ListingTypes.free.name
                                       ? 'Ücretsiz'
                                       : 'Takas',
-                                  textColor: r[index].listingType == ListingTypes.free.name
+                                  textColor: snapshot.data?.first[index].listingType == ListingTypes.free.name
                                       ? const Color(0xff05473A)
                                       : Colors.white,
-                                  color: r[index].listingType == ListingTypes.free.name
+                                  color: snapshot.data?.first[index].listingType == ListingTypes.free.name
                                       ? const Color(0xff6DCEBB)
                                       : const Color(0xffFD8435),
                                   onTap: () {
                                     if (GetIt.instance<UserRepository>().user?.userId ==
-                                        r[index].ownerInfo.userId) {
-                                      context.pushRoute(UserAdsDetailRoute(id: r[index].id));
+                                        snapshot.data?.first[index].ownerInfo.userId) {
+                                      context.pushRoute(UserAdsDetailRoute(id: snapshot.data?.first[index].id));
                                     } else {
-                                      context.pushRoute(AdsDetailRoute(id: r[index].id));
+                                      context.pushRoute(AdsDetailRoute(id: snapshot.data!.first[index].id));
                                     }
                                   },
-                                  image: r[index].image1,
-                                  title: r[index].title,
+                                  image: snapshot.data?.first[index].images.first.image,
+                                  title: snapshot.data?.first[index].title ?? 'impossible',
                                   address:
-                                      '${r[index].ownerInfo.district} / ${r[index].ownerInfo.city}',
-                                  date: formatter.format(r[index].createdAt),
-                                  userName: r[index].ownerInfo.username ?? 'impossible',
+                                      '${snapshot.data?.first[index].ownerInfo.district} / ${snapshot.data?.first[index].ownerInfo.city}',
+                                  date: formatter.format(snapshot.data!.first[index].createdAt),
+                                  userName: snapshot.data?.first[index].ownerInfo.username ?? 'impossible',
                                 );
                               },
                             ),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     right: 16.w,
-                    //     left: 16.w,
-                    //   ),
-                    //   child: snapshot.data?.last.isEmpty ?? true
-                    //       ? Center(
-                    //           child: Column(
-                    //             mainAxisSize: MainAxisSize.min,
-                    //             children: [
-                    //               const Icon(
-                    //                 Icons.feed,
-                    //                 size: 100,
-                    //                 color: Color(AppColors.primaryColor),
-                    //               ),
-                    //               Padding(
-                    //                 padding: const EdgeInsets.all(9),
-                    //                 child: Text(
-                    //                   'Hiç ilan bulunamadı.',
-                    //                   textAlign: TextAlign.center,
-                    //                   style: Theme.of(context).textTheme.titleMedium,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         )
-                    //       : ListView.builder(
-                    //           itemCount: snapshot.data?.last.length,
-                    //           itemBuilder: (context, index) {
-                    //             return Container(
-                    //               decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(5.r),
-                    //                 color: Colors.white,
-                    //                 boxShadow: [],
-                    //               ),
-                    //               child: Column(
-                    //                 mainAxisSize: MainAxisSize.min,
-                    //                 children: [
-                    //                   ShareAdsCard(
-                    //                     isShimmer: false,
-                    //                     type: snapshot.data?.last[index].listingType == ListingTypes.free.name
-                    //                         ? 'Ücretsiz'
-                    //                         : 'Takas',
-                    //                     textColor: snapshot.data?.last[index].listingType == ListingTypes.free.name
-                    //                         ? const Color(0xff05473A)
-                    //                         : Colors.white,
-                    //                     color: snapshot.data?.last[index].listingType == ListingTypes.free.name
-                    //                         ? const Color(0xff6DCEBB)
-                    //                         : const Color(0xffFD8435),
-                    //                     onTap: () {
-                    //                       if (GetIt.instance<UserRepository>().user?.userId ==
-                    //                           snapshot.data?.last[index].ownerInfo.userId) {
-                    //                         context.pushRoute(UserAdsDetailRoute(id: snapshot.data?.last[index].id));
-                    //                       } else {
-                    //                         context.pushRoute(AdsDetailRoute(id: snapshot.data!.last[index].id));
-                    //                       }
-                    //                     },
-                    //                     image: snapshot.data?.last[index].images.first.image,
-                    //                     title: snapshot.data?.last[index].title ?? 'impossible',
-                    //                     address:
-                    //                         '${snapshot.data?.last[index].ownerInfo.district} / ${snapshot.data?.last[index].ownerInfo.city}',
-                    //                     date: formatter.format(snapshot.data!.last[index].createdAt),
-                    //                     userName: snapshot.data?.last[index].ownerInfo.username ?? 'impossible',
-                    //                   ),
-                    //                   Row(
-                    //                     children: [
-                    //                       Expanded(
-                    //                         child: InkWell(
-                    //                           onTap: () async {
-                    //                             await GetIt.instance<FeedRepository>()
-                    //                                 .rejectToWaitingFeed(
-                    //                               snapshot.data!.last[index].id,
-                    //                             )
-                    //                                 .then((value) {
-                    //                               value.fold(
-                    //                                 EasyLoading.showError,
-                    //                                 (r) {
-                    //                                   GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
-                    //                                   EasyLoading.showToast('İlan başarıyla reddedildi.');
-                    //                                   setState(() {});
-                    //                                 },
-                    //                               );
-                    //                             });
-                    //                           },
-                    //                           child: Container(
-                    //                             padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
-                    //                             decoration: const BoxDecoration(
-                    //                               color: Color(AppColors.primaryLightColor),
-                    //                               borderRadius: BorderRadius.only(
-                    //                                 bottomLeft: Radius.circular(5),
-                    //                               ),
-                    //                             ),
-                    //                             child: Center(
-                    //                               child: Text(
-                    //                                 'Yoksay',
-                    //                                 style: Theme.of(context)
-                    //                                     .textTheme
-                    //                                     .titleMedium
-                    //                                     ?.copyWith(color: Color(AppColors.primaryColor)),
-                    //                               ),
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                       Expanded(
-                    //                         child: InkWell(
-                    //                           onTap: () async {
-                    //                             await GetIt.instance<FeedRepository>()
-                    //                                 .confirmToWaitingFeed(
-                    //                               snapshot.data!.last[index].id,
-                    //                             )
-                    //                                 .then((value) {
-                    //                               value.fold(
-                    //                                 EasyLoading.showError,
-                    //                                 (r) {
-                    //                                   GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
-                    //                                   EasyLoading.showToast('İlan başarıyla onaylandı.');
-                    //                                   setState(() {});
-                    //                                 },
-                    //                               );
-                    //                             });
-                    //                           },
-                    //                           child: Container(
-                    //                             padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
-                    //                             decoration: const BoxDecoration(
-                    //                               color: Color(
-                    //                                 AppColors.primaryColor,
-                    //                               ),
-                    //                               borderRadius: BorderRadius.only(
-                    //                                 bottomRight: Radius.circular(5),
-                    //                               ),
-                    //                             ),
-                    //                             child: Center(
-                    //                               child: Text(
-                    //                                 'Onayla',
-                    //                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    //                                       color: Colors.white,
-                    //                                     ),
-                    //                               ),
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             );
-                    //           },
-                    //         ),
-                    // ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: 16.w,
+                        left: 16.w,
+                      ),
+                      child: snapshot.data?.last.isEmpty ?? true
+                          ? Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.feed,
+                                    size: 100,
+                                    color: Color(AppColors.primaryColor),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Text(
+                                      'Hiç ilan bulunamadı.',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: snapshot.data?.last.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.r),
+                                    color: Colors.white,
+                                    boxShadow: [],
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ShareAdsCard(
+                                        isShimmer: false,
+                                        type: snapshot.data?.last[index].listingType == ListingTypes.free.name
+                                            ? 'Ücretsiz'
+                                            : 'Takas',
+                                        textColor: snapshot.data?.last[index].listingType == ListingTypes.free.name
+                                            ? const Color(0xff05473A)
+                                            : Colors.white,
+                                        color: snapshot.data?.last[index].listingType == ListingTypes.free.name
+                                            ? const Color(0xff6DCEBB)
+                                            : const Color(0xffFD8435),
+                                        onTap: () {
+                                          if (GetIt.instance<UserRepository>().user?.userId ==
+                                              snapshot.data?.last[index].ownerInfo.userId) {
+                                            context.pushRoute(UserAdsDetailRoute(id: snapshot.data?.last[index].id));
+                                          } else {
+                                            context.pushRoute(AdsDetailRoute(id: snapshot.data!.last[index].id));
+                                          }
+                                        },
+                                        image: snapshot.data?.last[index].images.first.image,
+                                        title: snapshot.data?.last[index].title ?? 'impossible',
+                                        address:
+                                            '${snapshot.data?.last[index].ownerInfo.district} / ${snapshot.data?.last[index].ownerInfo.city}',
+                                        date: formatter.format(snapshot.data!.last[index].createdAt),
+                                        userName: snapshot.data?.last[index].ownerInfo.username ?? 'impossible',
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () async {
+                                                await GetIt.instance<FeedRepository>()
+                                                    .rejectToWaitingFeed(
+                                                  snapshot.data!.last[index].id,
+                                                )
+                                                    .then((value) {
+                                                  value.fold(
+                                                    EasyLoading.showError,
+                                                    (r) {
+                                                      GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
+                                                      EasyLoading.showToast('İlan başarıyla reddedildi.');
+                                                      setState(() {});
+                                                    },
+                                                  );
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
+                                                decoration: const BoxDecoration(
+                                                  color: Color(AppColors.primaryLightColor),
+                                                  borderRadius: BorderRadius.only(
+                                                    bottomLeft: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Yoksay',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium
+                                                        ?.copyWith(color: Color(AppColors.primaryColor)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () async {
+                                                await GetIt.instance<FeedRepository>()
+                                                    .confirmToWaitingFeed(
+                                                  snapshot.data!.last[index].id,
+                                                )
+                                                    .then((value) {
+                                                  value.fold(
+                                                    EasyLoading.showError,
+                                                    (r) {
+                                                      GetIt.instance<FeedRepository>().clearWaitingToConfirmFeeds();
+                                                      EasyLoading.showToast('İlan başarıyla onaylandı.');
+                                                      setState(() {});
+                                                    },
+                                                  );
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 18),
+                                                decoration: const BoxDecoration(
+                                                  color: Color(
+                                                    AppColors.primaryColor,
+                                                  ),
+                                                  borderRadius: BorderRadius.only(
+                                                    bottomRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Onayla',
+                                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                          color: Colors.white,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
                   ],
-                );
-                })
+                ),
               ),
             );
           },

@@ -6,7 +6,6 @@ import 'package:atma_paylas_app/api/log.dart';
 import 'package:atma_paylas_app/features/Category/models/main_category_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_detail_model.dart';
 import 'package:atma_paylas_app/features/Feed/models/feed_model.dart';
-import 'package:atma_paylas_app/features/WaitingToConfirm/model/waitingMyAdsModel.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:atma_paylas_app/routing/app_router.dart';
 import 'package:auto_route/auto_route.dart';
@@ -311,29 +310,10 @@ class FeedRepository extends ApiService with ChangeNotifier {
       },
     );
   }
-  
 
   ///tamamlanmış ilanlar
   ///ücretsiz veya takaslanarak paylaşılmış ilanlar
   ///Paylaşılan kullanıcı tarafından onay bekleyen ilanlar
-
-  Future<ApiResponse<List<WaitingMyAdsModel>>> waitingMyAds() async {
-    return requestMethod<List<WaitingMyAdsModel>>(
-      path: '/user_listings/admin_approval_pending',
-      method: HttpMethod.get,
-      requestModel: null,
-      responseConverter: (response) => (response.data as List<dynamic>)
-          .map(
-            (e) => WaitingMyAdsModel.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-  }
-
 
   final Set<FeedDetailModel> _inactiveFeeds = {};
   Future<List<FeedDetailModel>> get allInactiveFeeds async {
@@ -364,8 +344,6 @@ class FeedRepository extends ApiService with ChangeNotifier {
         .where((element) => element.receiverConfirmed == false && element.receiverConfirmed == false)
         .toList();
   }
-
- 
 
   void _addInactiveFeed(FeedDetailModel feedModel) {
     _inactiveFeeds.add(feedModel);
