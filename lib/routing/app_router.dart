@@ -47,6 +47,7 @@ import 'package:atma_paylas_app/features/Splash/pages/splash_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swap_products_view.dart';
 import 'package:atma_paylas_app/features/SwapProducts/presentation/swapped_products_view.dart';
 import 'package:atma_paylas_app/features/UserAgreement/page/user_agreement_view.dart';
+import 'package:atma_paylas_app/features/WaitingToConfirm/publish_to_confirm_listings_view.dart';
 import 'package:atma_paylas_app/features/WaitingToConfirm/waiting_to_confirm_listings_view.dart';
 import 'package:atma_paylas_app/repositories/user_repository.dart';
 import 'package:auto_route/auto_route.dart';
@@ -101,6 +102,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: RegisterCitySelectRoute.page,
+          initial: false,
+        ),
+         AutoRoute(
+          page: PublishToConfirmListingsRoute.page,
           initial: false,
         ),
         AutoRoute(
